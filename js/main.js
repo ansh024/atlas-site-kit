@@ -18,15 +18,15 @@ ScrollTrigger.create({
 
 /* ---------- HERO ---------- */
 function hero() {
+  if (reduce) return;
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  tl.from('.hero .eyebrow', { y: 20, opacity: 0, duration: .6 })
-    .from('.hero__title .line', { yPercent: 110, duration: .9, stagger: .12 }, '-=.2')
-    .from('.hero__sub', { y: 24, opacity: 0, duration: .7 }, '-=.5')
-    .from('.hero__cta > *', { y: 18, opacity: 0, duration: .6, stagger: .1 }, '-=.4')
-    .from('.hero__proof li', { y: 18, opacity: 0, duration: .6, stagger: .1 }, '-=.4');
+  tl.from('.hero__eyebrow', { y: 20, opacity: 0, duration: .6 })
+    .from('.hero__title',   { y: 32, opacity: 0, duration: .9 }, '-=.2')
+    .from('.hero__sub',     { y: 24, opacity: 0, duration: .7 }, '-=.5')
+    .from('.hero__bottom .btn',        { y: 18, opacity: 0, duration: .5 }, '-=.4')
+    .from('.hero__stat',   { y: 18, opacity: 0, duration: .5, stagger: .1 }, '-=.3');
 
-  tl.from('.hero__visual', { x: 40, opacity: 0, duration: 1, ease: 'power3.out' }, '-=1.2');
-  frameClimb();
+  tl.from('.hero__visual', { x: 40, opacity: 0, duration: 1, ease: 'power3.out' }, '-=1.0');
 }
 
 /* ---------- HERO: play the supplied Google-SERP frames as a smooth eased climb
