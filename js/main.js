@@ -16,14 +16,30 @@ ScrollTrigger.create({
   onRefresh: self => nav.classList.toggle('is-stuck', self.scroll() > 80),
 });
 
+/* ---------- NAV: mobile hamburger ---------- */
+const navBurger = $('#navBurger');
+const navMobile = $('#navMenuMobile');
+if (navBurger && navMobile) {
+  navBurger.addEventListener('click', () => {
+    const open = navBurger.getAttribute('aria-expanded') === 'true';
+    navBurger.setAttribute('aria-expanded', String(!open));
+    navMobile.classList.toggle('is-open', !open);
+  });
+  $$('a', navMobile).forEach(a => a.addEventListener('click', () => {
+    navBurger.setAttribute('aria-expanded', 'false');
+    navMobile.classList.remove('is-open');
+  }));
+}
+
 /* ---------- HERO ---------- */
 function hero() {
   if (reduce) return;
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  // title + subhead animate together (rather than staggered) so the LCP
+  // text paints sooner instead of waiting on a sequential reveal.
   tl.from('.hero__eyebrow', { y: 20, opacity: 0, duration: .6 })
-    .from('.hero__title',   { y: 32, opacity: 0, duration: .9 }, '-=.2')
-    .from('.hero__sub',     { y: 24, opacity: 0, duration: .7 }, '-=.5')
-    .from('.hero__bottom .btn',        { y: 18, opacity: 0, duration: .5 }, '-=.4')
+    .from(['.hero__title', '.hero__sub'], { y: 28, opacity: 0, duration: .8, stagger: 0 }, '-=.2')
+    .from('.hero__bottom .btn',        { y: 18, opacity: 0, duration: .5 }, '-=.3')
     .from('.hero__stat',   { y: 18, opacity: 0, duration: .5, stagger: .1 }, '-=.3');
 
   tl.from('.hero__visual', { x: 40, opacity: 0, duration: 1, ease: 'power3.out' }, '-=1.0');
@@ -308,7 +324,13 @@ function servicesRoof() {
   gsap.set(center, { scale: .86, opacity: 0 });
   gsap.set(chips, { y: 18, opacity: 0 });
 
-  if (reduce) {
+  // mobile uses a stacked list (no hexagon map / connecting lines), and the
+  // taller layout combined with scroll-jank from other pinned sections can
+  // trip the scroll-triggered reveal's "reset" action, leaving chips stuck
+  // at opacity 0. Skip the staggered reveal there and just show everything.
+  const isMobile = window.matchMedia('(max-width: 860px)').matches;
+
+  if (reduce || isMobile) {
     paths.forEach(path => { path.style.strokeDashoffset = 0; });
     sparks.forEach(spark => { spark.style.opacity = 0; });
     gsap.set([title, center, chips], { clearProps: 'all' });

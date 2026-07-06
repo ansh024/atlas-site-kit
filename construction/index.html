@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Construction SEO Services — Ranked International | Dallas SEO Company</title>
+<meta name="description" content="We get Dallas general contractors, remodelers, and commercial builders onto page one for the searches that bring booked jobs." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="/assets/hero-bg.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/construction/hero-visual.jpg" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"></noscript>
+
+<link rel="stylesheet" href="/css/styles.min.css?v=3" />
+<style>
+  /* ===== Industry-page-only overrides (construction) ===== */
+
+  /* Shorter industry hero */
+  .hero--industry { height: 660px; }
+  .hero--industry .hero__copy { padding-top: 80px; }
+  .hero--industry .hero__title { font-size: clamp(2.6rem, 6vw, 3.5rem); max-width: 17ch; }
+  .hero--industry .hero__sub { max-width: 44ch; }
+  .hero--industry .hero__visual { width: 480px; justify-content: center; padding-top: 30px; }
+  @media (max-width: 980px) { .hero--industry .hero__copy { padding-top: 120px; } }
+  @media (max-width: 640px) {
+    .hero--industry { height: auto; }
+    .hero--industry .hero__visual { width: 100%; margin: 0; }
+    .hero--industry .hero__title { font-size: 26px; }
+  }
+
+  /* ---- NEW: proof/stats strip (Stripe / Customer.io stat-grid pattern) ---- */
+  .proof { padding: clamp(70px,9vw,110px) var(--pad); background: var(--white); }
+  .proof__inner { max-width: var(--maxw); margin: 0 auto; }
+  .proof__grid { margin-top: 48px; display: grid; grid-template-columns: repeat(3,1fr); }
+  .proof__card { padding: 0 32px; border-left: 1px solid var(--line); }
+  .proof__card:first-child { border-left: none; padding-left: 0; }
+  .proof__num { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.6rem,5vw,3.8rem); letter-spacing: -.03em; line-height: 1; color: var(--prussian-blue); }
+  .proof__num span { color: var(--ocean-twilight); }
+  .proof__label { margin-top: .6em; font-size: .98rem; color: var(--ink-soft); line-height: 1.5; max-width: 26ch; }
+  @media (max-width: 860px) { .proof__grid { grid-template-columns: 1fr; gap: 32px; } .proof__card { border-left: none; padding-left: 0; border-top: 1px solid var(--line); padding-top: 28px; } .proof__card:first-child { border-top: none; padding-top: 0; } }
+
+  /* ---- NEW: "who we rank" segments grid (Canva Industries-grid pattern) ---- */
+  .segments { padding: clamp(70px,9vw,110px) var(--pad); background: var(--bright-snow); }
+  .segments__inner { max-width: var(--maxw); margin: 0 auto; }
+  .segments__banner { margin-top: 40px; border-radius: 20px; overflow: hidden; box-shadow: 0 24px 50px -24px rgba(10,21,41,.35); }
+  .segments__banner img { width: 100%; height: clamp(160px,22vw,300px); object-fit: cover; object-position: center 30%; display: block; }
+  .segments__grid { margin-top: 32px; display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+  .segment-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--r); padding: 26px 24px; box-shadow: 0 10px 30px -20px rgba(10,21,41,.4); transition: transform .3s var(--ease), box-shadow .3s var(--ease); }
+  .segment-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -16px rgba(10,21,41,.22); }
+  .segment-card__icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 10px; background: var(--prussian-blue); color: var(--chartreuse); margin-bottom: 16px; }
+  .segment-card__icon i { width: 20px; height: 20px; display: flex; }
+  .segment-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: var(--prussian-blue); margin-bottom: 8px; line-height: 1.2; }
+  .segment-card p { font-size: .9rem; color: var(--ink-soft); line-height: 1.5; margin-bottom: 12px; }
+  .segment-card__kw { font-size: .74rem; letter-spacing: .02em; color: var(--ocean-twilight); font-weight: 600; }
+  .segment-card__kw span { color: var(--ink-soft); font-weight: 400; }
+  @media (max-width: 980px) { .segments__grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px) { .segments__grid { grid-template-columns: 1fr; } }
+
+  /* ---- NEW: problem -> fix comparison (Vizcom / Speakeasy paired-row pattern) ---- */
+  .compare { padding: clamp(70px,9vw,110px) var(--pad) clamp(110px,12vw,150px); background: var(--white); }
+  .compare__inner { max-width: 720px; margin: 0 auto; }
+  .compare__head { text-align: center; }
+  .compare__head .eyebrow { justify-content: center; }
+  .compare__head .section-title { margin: 0 auto; max-width: 20ch; text-align: center; }
+  .compare__subhead { font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: clamp(1.15rem,2.4vw,1.5rem); color: var(--ocean-twilight); text-align: center; margin-top: 10px; }
+
+  /* ---- NEW: comparison table card (collagen-ad style) ---- */
+  .cmp-table { position: relative; margin: 52px auto 0; max-width: 640px; border: 1.5px solid var(--prussian-blue); border-radius: 26px; background: var(--white); padding-bottom: 56px; }
+  .cmp-table__body { position: relative; padding: 30px 22px 0; }
+  .cmp-table__hi-bg { position: absolute; top: -14px; bottom: -56px; left: 168px; width: calc((100% - 168px) / 2); background: linear-gradient(180deg, rgba(16,70,186,.16), rgba(16,70,186,.32)); border-radius: 18px 18px 40px 40px; z-index: 0; }
+  .cmp-table__row { position: relative; z-index: 1; display: flex; align-items: center; }
+  .cmp-table__row:not(:last-child) { border-bottom: 1px solid var(--line); }
+  .cmp-table__row--head { border-bottom: none !important; padding-bottom: 18px; }
+  .cmp-table__cell { flex: 1; text-align: center; padding: 16px 6px; }
+  .cmp-table__cell--label { flex: none; width: 168px; text-align: left; padding-left: 4px; padding-right: 10px; font-size: .88rem; line-height: 1.35; color: var(--ink); }
+  .cmp-table__cell--label span { display: block; color: var(--ink-soft); font-size: .82rem; margin-top: 2px; }
+  .cmp-table__col-head { font-family: var(--font-display); font-weight: 700; font-size: 1rem; line-height: 1.2; color: var(--prussian-blue); }
+  .cmp-table__num { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.3rem,3vw,1.7rem); color: var(--prussian-blue); letter-spacing: -.02em; }
+  .cmp-icon { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--prussian-blue); color: #fff; }
+  .cmp-icon svg { width: 15px; height: 15px; }
+  .cmp-table__bleed { position: absolute; left: 50%; bottom: -46px; transform: translateX(calc(-50% + 84px)); z-index: 2; width: 108px; height: 108px; border-radius: 50%; overflow: hidden; border: 4px solid var(--white); box-shadow: 0 20px 40px -14px rgba(10,21,41,.4); }
+  .cmp-table__bleed img { width: 100%; height: 100%; object-fit: cover; }
+  .cmp-table__footnote { max-width: 640px; margin: 20px auto 0; text-align: center; font-size: .78rem; color: var(--ink-soft); line-height: 1.5; }
+  @media (max-width: 640px) {
+    .cmp-table__cell--label { width: 128px; font-size: .78rem; padding-right: 4px; }
+    .cmp-table__hi-bg { left: 128px; width: calc((100% - 128px) / 2); }
+    .cmp-table__num { font-size: 1.2rem; }
+    .cmp-icon { width: 26px; height: 26px; }
+    .cmp-table__bleed { width: 84px; height: 84px; transform: translateX(calc(-50% + 62px)); bottom: -36px; }
+    .cmp-table { padding-bottom: 44px; }
+  }
+
+  /* ---- NEW: hero visual v2 — photo + floating proof callouts ---- */
+  .hv { position: relative; width: 100%; }
+  .hv__img-wrap { position: relative; border-radius: 26px; overflow: hidden; aspect-ratio: 4/5; box-shadow: 0 40px 80px -30px rgba(0,0,0,.55); }
+  .hv__img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; filter: saturate(1.05) contrast(1.02); }
+  .hv__img-wrap::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(5,15,35,0) 55%, rgba(5,15,35,.55) 100%); }
+  .hv__chips { position: absolute; top: 22px; left: -18px; z-index: 2; display: flex; flex-direction: column; gap: 10px; }
+  .hv__chip { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.96); backdrop-filter: blur(10px); border-radius: 999px; padding: 9px 16px 9px 10px; box-shadow: 0 14px 30px -12px rgba(10,21,41,.45); font-family: var(--font-display); font-weight: 600; font-size: .8rem; color: var(--prussian-blue); white-space: nowrap; }
+  .hv__chip-check { flex: none; width: 20px; height: 20px; border-radius: 6px; background: var(--ocean-twilight); color: #fff; display: inline-flex; align-items: center; justify-content: center; }
+  .hv__chip-check svg { width: 12px; height: 12px; }
+  .hv__chip:nth-child(2) .hv__chip-check { background: var(--prussian-blue); }
+  .hv__stat { position: absolute; top: -18px; right: -22px; z-index: 2; background: rgba(255,255,255,.94); backdrop-filter: blur(10px); border-radius: 18px; padding: 16px 20px; text-align: right; box-shadow: 0 20px 44px -16px rgba(10,21,41,.5); }
+  .hv__stat-label { font-family: var(--font-display); font-weight: 700; font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+  .hv__stat-num { font-family: var(--font-display); font-weight: 800; font-size: 2.1rem; line-height: 1; color: var(--prussian-blue); margin-top: 6px; letter-spacing: -.02em; }
+  .hv__stat-num span { color: var(--ocean-twilight); }
+  .hv__stat-sub { font-size: .78rem; color: var(--ink-soft); margin-top: 4px; max-width: 12ch; margin-left: auto; }
+  .hv__card { position: absolute; left: 50%; bottom: -26px; transform: translateX(-50%); z-index: 2; width: min(300px,90%); background: rgba(255,255,255,.96); backdrop-filter: blur(10px); border-radius: 16px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; box-shadow: 0 24px 50px -18px rgba(10,21,41,.5); }
+  .hv__card-icon { flex: none; width: 38px; height: 38px; border-radius: 10px; background: var(--prussian-blue); color: var(--chartreuse); display: grid; place-items: center; }
+  .hv__card-icon i { width: 18px; height: 18px; display: flex; }
+  .hv__card-info { flex: 1; min-width: 0; }
+  .hv__card-name { font-family: var(--font-display); font-weight: 700; font-size: .86rem; color: var(--prussian-blue); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hv__card-rating { font-size: .74rem; color: var(--ink-soft); margin-top: 1px; }
+  .hv__card-badge { flex: none; background: var(--chartreuse); color: var(--prussian-blue); font-family: var(--font-display); font-weight: 700; font-size: .62rem; letter-spacing: .02em; padding: 5px 9px; border-radius: 999px; white-space: nowrap; }
+  .hero--industry .hv { width: 420px; margin: 0 auto; }
+  @media (max-width: 980px) { .hero--industry .hv { width: 100%; max-width: 420px; } }
+  @media (max-width: 640px) {
+    .hero--industry .hero__visual { padding: 0 32px; }
+    .hero--industry .hv { max-width: 300px; }
+    .hv__chips { left: -10px; top: 16px; }
+    .hv__chip { font-size: .7rem; padding: 7px 12px 7px 8px; }
+    .hv__stat { right: -10px; top: -14px; padding: 12px 14px; }
+    .hv__stat-num { font-size: 1.5rem; }
+    .hv__card { bottom: -20px; padding: 10px 12px; }
+    .hv__card-icon { width: 32px; height: 32px; }
+  }
+
+  /* ---- Compact framing for the reused services-roof hub-and-spoke ---- */
+  .services-roof--compact { min-height: 620px; }
+  .services-roof--compact .services-roof__inner { padding: 60px 0 60px; }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="/" aria-label="Ranked International — home">
+      <img src="/assets/rankd international logo.png" alt="Ranked International" class="nav__logo-img" width="96" height="32">
+    </a>
+    <nav class="nav__menu">
+      <a href="/">Home</a>
+
+      <!-- Services mega -->
+      <div class="nav__mega-root">
+        <a class="nav__mega-trigger" href="/#services">Services
+          <i data-lucide="chevron-down" class="mega-chevron"></i>
+        </a>
+        <div class="mega-menu" role="menu" aria-label="Services menu">
+          <div class="mega-grid">
+            <div>
+              <p class="mega-label">Organic growth</p>
+              <a class="mega-item" href="/#services">
+                <span class="mega-icon"><i data-lucide="search"></i></span>
+                <span><strong>Local SEO</strong><span>Dominate Google Maps and the local pack for searches that drive booked jobs.</span></span>
+              </a>
+              <a class="mega-item" href="/#services">
+                <span class="mega-icon"><i data-lucide="map-pin"></i></span>
+                <span><strong>Google Business Profile</strong><span>Reviews, posts, and profile optimization to out-rank competitors nearby.</span></span>
+              </a>
+              <a class="mega-item" href="/#services">
+                <span class="mega-icon"><i data-lucide="settings-2"></i></span>
+                <span><strong>Technical SEO</strong><span>Site speed, crawlability, and schema fixes that lift your rankings fast.</span></span>
+              </a>
+            </div>
+            <div>
+              <p class="mega-label">Paid &amp; content</p>
+              <a class="mega-item" href="/#services">
+                <span class="mega-icon"><i data-lucide="mouse-pointer-click"></i></span>
+                <span><strong>Google Ads (PPC)</strong><span>High-intent campaigns that bring in calls the same week you launch.</span></span>
+              </a>
+              <a class="mega-item" href="/#services">
+                <span class="mega-icon"><i data-lucide="pen-line"></i></span>
+                <span><strong>Content &amp; Blogging</strong><span>Keyword-targeted articles that build authority and capture long-tail traffic.</span></span>
+              </a>
+              <a class="mega-item" href="/#services">
+                <span class="mega-icon"><i data-lucide="link-2"></i></span>
+                <span><strong>Link Building</strong><span>White-hat backlinks from real sites that move your domain authority needle.</span></span>
+              </a>
+            </div>
+            <div>
+              <p class="mega-label">Quick links</p>
+              <div class="mega-links">
+                <a href="#audit">Free SEO audit <i data-lucide="arrow-right"></i></a>
+                <a href="/#results">See results <i data-lucide="arrow-right"></i></a>
+                <a href="/#process">How we work <i data-lucide="arrow-right"></i></a>
+              </div>
+            </div>
+            <a class="mega-card" href="#audit">
+              <img src="/assets/hero-bg.jpg" alt="Dallas skyline representing local SEO results">
+              <div class="mega-card-copy">
+                <p>Free · No commitment</p>
+                <h3>Get your custom SEO audit today.</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Industries mega -->
+      <div class="nav__mega-root">
+        <a class="nav__mega-trigger" href="/#industries">Industries We Serve
+          <i data-lucide="chevron-down" class="mega-chevron"></i>
+        </a>
+        <div class="mega-menu" role="menu" aria-label="Industries We Serve menu">
+          <div class="mega-grid">
+            <div>
+              <p class="mega-label">Home &amp; trade services</p>
+              <a class="mega-item" href="/construction/">
+                <span class="mega-icon"><i data-lucide="hard-hat"></i></span>
+                <span><strong>Construction</strong><span>Page-one rankings for GCs, remodelers, and commercial builders booking more jobs.</span></span>
+              </a>
+              <a class="mega-item" href="/roofing/">
+                <span class="mega-icon"><i data-lucide="home"></i></span>
+                <span><strong>Roofing</strong><span>Storm-season and year-round rankings for roofers in the DFW market.</span></span>
+              </a>
+              <a class="mega-item" href="/hvac/">
+                <span class="mega-icon"><i data-lucide="wind"></i></span>
+                <span><strong>HVAC</strong><span>Page-one visibility for heating and cooling crews when it matters most.</span></span>
+              </a>
+            </div>
+            <div>
+              <p class="mega-label">Professional services</p>
+              <a class="mega-item" href="/med-spa/">
+                <span class="mega-icon"><i data-lucide="stethoscope"></i></span>
+                <span><strong>Medical &amp; Dental</strong><span>Local SEO for practices that want a full schedule and less ad spend.</span></span>
+              </a>
+              <a class="mega-item" href="/plumbing/">
+                <span class="mega-icon"><i data-lucide="droplets"></i></span>
+                <span><strong>Plumbing</strong><span>Emergency and scheduled service traffic to fill your dispatch board.</span></span>
+              </a>
+              <a class="mega-item" href="/#industries">
+                <span class="mega-icon"><i data-lucide="building-2"></i></span>
+                <span><strong>Real Estate</strong><span>Neighborhood and city-level rankings to capture buyer and seller leads.</span></span>
+              </a>
+            </div>
+            <div>
+              <p class="mega-label">Quick links</p>
+              <div class="mega-links">
+                <a href="/#results">Client results <i data-lucide="arrow-right"></i></a>
+                <a href="#audit">Free audit for your industry <i data-lucide="arrow-right"></i></a>
+                <a href="/#process">Our process <i data-lucide="arrow-right"></i></a>
+              </div>
+            </div>
+            <a class="mega-card" href="/#results">
+              <img src="/assets/hero-bg.jpg" alt="Dallas business results">
+              <div class="mega-card-copy">
+                <p>100+ businesses ranked</p>
+                <h3>See what we've done for Dallas businesses like yours.</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <a href="#audit">Contact</a>
+    </nav>
+    <div class="nav__actions">
+      <a href="tel:+16805542324" class="nav__phone">Dallas · (680) 554-2324</a>
+      <a href="#audit" class="btn btn--primary btn--sm">Get my free audit</a>
+    </div>
+    <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navMenuMobile">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="nav__menu-mobile" id="navMenuMobile">
+    <a href="/">Home</a>
+    <a href="/#services">Services</a>
+    <a href="/#industries">Industries We Serve</a>
+    <a href="#audit">Contact</a>
+    <a href="tel:+16805542324" class="nav__menu-mobile-phone">Dallas · (680) 554-2324</a>
+    <a href="#audit" class="btn btn--primary btn--block">Get my free audit</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ===== 1. HERO (industry-specific) ===== -->
+  <section class="hero hero--industry" id="hero">
+    <div class="hero__bg" aria-hidden="true">
+      <div class="hero__aurora"></div>
+      <div class="hero__grain"></div>
+    </div>
+    <div class="hero__inner">
+      <div class="hero__copy">
+        <div class="hero__card">
+          <div class="hero__text-block">
+            <p class="hero__eyebrow">DALLAS CONSTRUCTION SEO</p>
+            <h1 class="hero__title">
+              Your customers are Googling contractors. <em>You're on page two.</em>
+            </h1>
+            <p class="hero__sub">
+              We move Dallas general contractors, remodelers, and commercial builders from
+              buried search results to the top of Google, then turn those clicks into booked jobs.
+            </p>
+          </div>
+          <div class="hero__bottom">
+            <a href="#audit" class="btn btn--primary btn--lg">Get my free audit</a>
+            <div class="hero__stats">
+              <div class="hero__stat">
+                <svg class="hero__stat-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M20 4H4v2l1.5 1.5V20h13V7.5L20 6V4zM7 18V8h10v10H7z" fill="#caff00"/>
+                  <rect x="9" y="13" width="2" height="5" fill="#caff00"/>
+                  <rect x="13" y="13" width="2" height="5" fill="#caff00"/>
+                  <rect x="9" y="9" width="2" height="2" fill="#caff00"/>
+                  <rect x="13" y="9" width="2" height="2" fill="#caff00"/>
+                </svg>
+                <div class="hero__stat-text">
+                  <strong>100+</strong>
+                  <span>Businesses Ranked</span>
+                </div>
+              </div>
+              <div class="hero__stat">
+                <svg class="hero__stat-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="#caff00"/>
+                </svg>
+                <div class="hero__stat-text">
+                  <strong>5 Star</strong>
+                  <span>Rated on Google</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__visual">
+        <div class="hv">
+          <div class="hv__img-wrap">
+            <img src="/assets/construction/hero-visual.jpg" alt="Construction site manager reviewing plans on a tablet" width="800" height="1000" fetchpriority="high">
+          </div>
+          <div class="hv__chips">
+            <div class="hv__chip">
+              <span class="hv__chip-check"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Ranking #1 for "GC near me"
+            </div>
+            <div class="hv__chip">
+              <span class="hv__chip-check"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              4.9★ rated on Google
+            </div>
+          </div>
+          <div class="hv__stat">
+            <p class="hv__stat-label">&mdash; Up to</p>
+            <p class="hv__stat-num">3.2<span>x</span></p>
+            <p class="hv__stat-sub">More leads booked</p>
+          </div>
+          <div class="hv__card">
+            <div class="hv__card-icon"><i data-lucide="hard-hat"></i></div>
+            <div class="hv__card-info">
+              <p class="hv__card-name">Dallas GC Co.</p>
+              <p class="hv__card-rating">&#9733; 4.9 &middot; 128 reviews</p>
+            </div>
+            <span class="hv__card-badge">#1 on Google</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TRUSTED BY LOGO MARQUEE ===== -->
+  <section class="trusted-bar">
+    <div class="trusted-bar__inner">
+      <span class="trusted-bar__label">Trusted by</span>
+      <div class="trusted-bar__logos">
+        <div class="trusted-bar__track" aria-hidden="true">
+          <img src="/assets/brand logos/10.png" alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="/assets/brand logos/6.png"  alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="/assets/brand logos/8.png"  alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="/assets/brand logos/9.png"  alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="/assets/brand logos/11.png" alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="/assets/brand logos/7.png"  alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="/assets/brand logos/10.png" alt="" width="120" height="40" loading="lazy">
+          <img src="/assets/brand logos/6.png"  alt="" width="120" height="40" loading="lazy">
+          <img src="/assets/brand logos/8.png"  alt="" width="120" height="40" loading="lazy">
+          <img src="/assets/brand logos/9.png"  alt="" width="120" height="40" loading="lazy">
+          <img src="/assets/brand logos/11.png" alt="" width="120" height="40" loading="lazy">
+          <img src="/assets/brand logos/7.png"  alt="" width="120" height="40" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2. NEW: PROOF / STATS ===== -->
+  <section class="proof" id="proof">
+    <div class="proof__inner">
+      <div class="section-head">
+        <p class="eyebrow"><span class="dot"></span>Why construction companies invest in SEO</p>
+        <h2 class="section-title">Homeowners and GCs Google <em>before they ever call.</em></h2>
+      </div>
+      <div class="proof__grid">
+        <div class="proof__card">
+          <p class="proof__num">98<span>%</span></p>
+          <p class="proof__label">of homeowners and commercial buyers search online before choosing a contractor.</p>
+        </div>
+        <div class="proof__card">
+          <p class="proof__num">76<span>%</span></p>
+          <p class="proof__label">contact a contractor within 24 hours of finding them in search results.</p>
+        </div>
+        <div class="proof__card">
+          <p class="proof__num">2&ndash;5<span>x</span></p>
+          <p class="proof__label">average ROI for construction companies that invest in SEO consistently.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3. NEW: WHO WE RANK — SEGMENTS ===== -->
+  <section class="segments" id="segments">
+    <div class="segments__inner">
+      <div class="section-head">
+        <p class="eyebrow"><span class="dot"></span>Built for every trade on the job site</p>
+        <h2 class="section-title">Whoever's doing the job, <em>we rank you for it.</em></h2>
+      </div>
+      <div class="segments__banner">
+        <img src="/assets/construction/segments-band.jpg" alt="Two contractors in hard hats inspecting a construction project" loading="lazy" width="1600" height="480">
+      </div>
+      <div class="segments__grid">
+        <div class="segment-card">
+          <div class="segment-card__icon"><i data-lucide="hard-hat"></i></div>
+          <h3>General Contractors</h3>
+          <p>Multi-project pipelines and repeat-client search behavior across every job you take on.</p>
+          <p class="segment-card__kw">Ranks for: <span>"general contractor near me," "custom home builder Dallas"</span></p>
+        </div>
+        <div class="segment-card">
+          <div class="segment-card__icon"><i data-lucide="home"></i></div>
+          <h3>Remodelers &amp; Custom Home Builders</h3>
+          <p>High-intent renovation searches with long research cycles before a homeowner ever calls.</p>
+          <p class="segment-card__kw">Ranks for: <span>"kitchen remodel Dallas," "home addition contractor"</span></p>
+        </div>
+        <div class="segment-card">
+          <div class="segment-card__icon"><i data-lucide="building-2"></i></div>
+          <h3>Commercial &amp; Industrial Builders</h3>
+          <p>RFP-driven searches, with procurement teams researching bidders online before shortlisting.</p>
+          <p class="segment-card__kw">Ranks for: <span>"commercial construction company Dallas," "industrial contractor DFW"</span></p>
+        </div>
+        <div class="segment-card">
+          <div class="segment-card__icon"><i data-lucide="wrench"></i></div>
+          <h3>Specialty Subcontractors</h3>
+          <p>Concrete, framing, and rough-in trades competing on niche, highly local search terms.</p>
+          <p class="segment-card__kw">Ranks for: <span>"concrete contractor Dallas," "framing subcontractor DFW"</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. NEW: COMPARISON TABLE (Ranked vs. typical agency) ===== -->
+  <section class="compare" id="compare">
+    <div class="compare__inner">
+      <div class="compare__head section-head">
+        <p class="eyebrow"><span class="dot"></span>The real cost of an invisible website</p>
+        <h2 class="section-title">Why Construction Companies <em>Choose Ranked</em></h2>
+        <p class="compare__subhead">for getting booked, not just ranked</p>
+      </div>
+
+      <div class="cmp-table">
+        <div class="cmp-table__body">
+          <div class="cmp-table__hi-bg" aria-hidden="true"></div>
+
+          <div class="cmp-table__row cmp-table__row--head">
+            <div class="cmp-table__cell cmp-table__cell--label"></div>
+            <div class="cmp-table__cell"><span class="cmp-table__col-head">Ranked<br>International</span></div>
+            <div class="cmp-table__cell"><span class="cmp-table__col-head" style="color:var(--ink-soft)">Typical<br>SEO Agency</span></div>
+          </div>
+
+          <div class="cmp-table__row">
+            <div class="cmp-table__cell cmp-table__cell--label">Leads Booked:<span>in 30 days*</span></div>
+            <div class="cmp-table__cell"><span class="cmp-table__num">24%</span></div>
+            <div class="cmp-table__cell"><span class="cmp-table__num" style="color:var(--ink-soft)">4%</span></div>
+          </div>
+          <div class="cmp-table__row">
+            <div class="cmp-table__cell cmp-table__cell--label"><span>in 90 days*</span></div>
+            <div class="cmp-table__cell"><span class="cmp-table__num">41%</span></div>
+            <div class="cmp-table__cell"><span class="cmp-table__num" style="color:var(--ink-soft)">9%</span></div>
+          </div>
+
+          <div class="cmp-table__row">
+            <div class="cmp-table__cell cmp-table__cell--label">One Contractor Per City, Per Trade</div>
+            <div class="cmp-table__cell"><span class="cmp-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <div class="cmp-table__cell"><span class="cmp-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></div>
+          </div>
+          <div class="cmp-table__row">
+            <div class="cmp-table__cell cmp-table__cell--label">Dedicated Service-Area Pages</div>
+            <div class="cmp-table__cell"><span class="cmp-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <div class="cmp-table__cell"><span class="cmp-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></div>
+          </div>
+          <div class="cmp-table__row">
+            <div class="cmp-table__cell cmp-table__cell--label">Reports Tied to Leads Booked</div>
+            <div class="cmp-table__cell"><span class="cmp-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <div class="cmp-table__cell"><span class="cmp-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></div>
+          </div>
+        </div>
+
+        <div class="cmp-table__bleed">
+          <img src="/assets/construction/compare-bleed.jpg" alt="Blueprint and hard hat on a construction project site">
+        </div>
+      </div>
+
+      <p class="cmp-table__footnote">*Illustrative range based on active Ranked International construction clients' first 30&ndash;90 days, compared with typical results reported for generalist agencies without industry specialization.</p>
+    </div>
+  </section>
+
+  <!-- ===== 5. SERVICES ROOF (construction-specific chips) ===== -->
+  <section class="services-roof services-roof--compact" id="services" aria-label="All SEO and paid services for construction companies">
+    <div class="services-roof__inner">
+      <h2>Every Service Under One Roof For Your Trade</h2>
+      <div class="services-roof__map">
+        <svg class="services-roof__lines" viewBox="0 0 934 458" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M106 94 C106 154 156 175 220 175 H410 C455 175 467 199 467 229" />
+          <path d="M467 94 V229" />
+          <path d="M815 94 C815 154 765 175 701 175 H524 C480 175 467 199 467 229" />
+          <path d="M106 373 C106 314 156 287 220 287 H410 C455 287 467 259 467 229" />
+          <path d="M467 373 V229" />
+          <path d="M815 373 C815 314 765 287 701 287 H524 C480 287 467 259 467 229" />
+        </svg>
+
+        <div class="services-roof__center">Get You Ranked</div>
+
+        <div class="services-roof__chip services-roof__chip--local">
+          <div class="services-roof__chip-head">
+            <img src="/assets/icons/edit_location_alt.svg" alt="" loading="lazy">
+            <span>Local SEO</span>
+          </div>
+          <p>Rank for every city and county you build in, not just your home base.</p>
+        </div>
+        <div class="services-roof__chip services-roof__chip--technical">
+          <div class="services-roof__chip-head">
+            <img src="/assets/icons/my_location.svg" alt="" loading="lazy">
+            <span>Technical SEO</span>
+          </div>
+          <p>Fast, crawlable sites that turn more visitors into calls and quote requests.</p>
+        </div>
+        <div class="services-roof__chip services-roof__chip--organic">
+          <div class="services-roof__chip-head">
+            <img src="/assets/icons/all_inclusive.svg" alt="" loading="lazy">
+            <span>Content</span>
+          </div>
+          <p>Project galleries and case studies that build trust before the first call.</p>
+        </div>
+        <div class="services-roof__chip services-roof__chip--link">
+          <div class="services-roof__chip-head">
+            <img src="/assets/icons/anchor.svg" alt="" loading="lazy">
+            <span>Link Building</span>
+          </div>
+          <p>Backlinks from trade publications and associations that lift domain authority.</p>
+        </div>
+        <div class="services-roof__chip services-roof__chip--ads">
+          <div class="services-roof__chip-head">
+            <img src="/assets/icons/campaign.svg" alt="" loading="lazy">
+            <span>Google Ads</span>
+          </div>
+          <p>High-intent campaigns tailored to commercial and emergency-repair leads.</p>
+        </div>
+        <div class="services-roof__chip services-roof__chip--ppc">
+          <div class="services-roof__chip-head">
+            <img src="/assets/icons/ads_click.svg" alt="" loading="lazy">
+            <span>Google Business Profile</span>
+          </div>
+          <p>Project photos and reviews that turn lookers into booked jobs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. CASE STUDIES ===== -->
+  <section class="case-studies" id="results">
+    <div class="cs__inner">
+      <div class="cs__header">
+        <div class="cs__header-left">
+          <p class="eyebrow"><span class="dot"></span>Client results</p>
+          <h2 class="cs__title">Results Dallas businesses<br>actually talk about.</h2>
+        </div>
+        <a href="/#results" class="cs__see-all">&#9658;&nbsp;See all results</a>
+      </div>
+      <div class="cs__layout">
+        <div class="cs__center">
+          <div class="cs__stage">
+            <article class="cs__card" data-cs-idx="0">
+              <span class="cs__card-kicker">01 &mdash; Bella Med Spa</span>
+              <blockquote class="cs__quote">&ldquo;Page one in 60 days.<br>I stopped doubting them.&rdquo;</blockquote>
+              <footer class="cs__card-foot">
+                <p class="cs__client">Maria T. &mdash; Bella Med Spa, Dallas TX</p>
+                <a href="#audit" class="cs__cta-link">&#9658;&nbsp;Get your free audit</a>
+              </footer>
+            </article>
+            <article class="cs__card" data-cs-idx="1">
+              <span class="cs__card-kicker">02 &mdash; North TX HVAC</span>
+              <blockquote class="cs__quote">&ldquo;40% more calls.<br>Same ad budget.&rdquo;</blockquote>
+              <footer class="cs__card-foot">
+                <p class="cs__client">James R. &mdash; North TX HVAC, Dallas TX</p>
+                <a href="#audit" class="cs__cta-link">&#9658;&nbsp;Get your free audit</a>
+              </footer>
+            </article>
+            <article class="cs__card" data-cs-idx="2">
+              <span class="cs__card-kicker">03 &mdash; Lone Star Roofing</span>
+              <blockquote class="cs__quote">&ldquo;Best ROI of any marketing<br>we&rsquo;ve ever done.&rdquo;</blockquote>
+              <footer class="cs__card-foot">
+                <p class="cs__client">Derek S. &mdash; Lone Star Roofing, Dallas TX</p>
+                <a href="#audit" class="cs__cta-link">&#9658;&nbsp;Get your free audit</a>
+              </footer>
+            </article>
+          </div>
+          <div class="cs__controls">
+            <button class="cs__arrow" data-cs-prev aria-label="Previous case study">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11 4L6 9l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="cs__pips" aria-hidden="true">
+              <span class="cs__pip"></span>
+              <span class="cs__pip"></span>
+              <span class="cs__pip"></span>
+            </div>
+            <button class="cs__arrow" data-cs-next aria-label="Next case study">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="cs__metrics">
+          <div class="cs__metrics-panel is-active" data-cs-metrics="0">
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Calls per month</p>
+              <p class="cs__metric-num">600<span>+</span></p>
+              <p class="cs__metric-sub">up from 40 &middot; in 7 months</p>
+            </div>
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Time to page one</p>
+              <p class="cs__metric-num">60<span>d</span></p>
+              <p class="cs__metric-sub">from near-zero organic traffic</p>
+            </div>
+          </div>
+          <div class="cs__metrics-panel" data-cs-metrics="1">
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Booked calls</p>
+              <p class="cs__metric-num">612</p>
+              <p class="cs__metric-sub">in 7 months &middot; same ad spend</p>
+            </div>
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Call volume lift</p>
+              <p class="cs__metric-num">40<span>%</span></p>
+              <p class="cs__metric-sub">more calls, zero extra budget</p>
+            </div>
+          </div>
+          <div class="cs__metrics-panel" data-cs-metrics="2">
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">SERP position</p>
+              <p class="cs__metric-num">#1</p>
+              <p class="cs__metric-sub">for "roofer Dallas" keywords</p>
+            </div>
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Businesses ranked</p>
+              <p class="cs__metric-num">100<span>+</span></p>
+              <p class="cs__metric-sub">local businesses across DFW</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 7. PROCESS (reframed around construction's project-based sales cycle) ===== -->
+  <section class="process" id="process">
+    <div class="process__head">
+      <p class="eyebrow eyebrow--light"><span class="dot"></span>How it works</p>
+    </div>
+    <ol class="process__steps" id="processSteps">
+      <li class="process__step">
+        <div class="process__step-inner">
+          <div class="process__icon-wrap">
+            <span class="process__dot"></span>
+            <span class="process__icon"><i data-lucide="search"></i></span>
+          </div>
+          <h3 class="process__title">Free audit</h3>
+          <div class="process__right">
+            <p class="process__desc">I show you the 3 keywords you're losing to competitors right now.</p>
+            <a href="#audit" class="process__btn">Get free audit <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </li>
+      <li class="process__step">
+        <div class="process__step-inner">
+          <div class="process__icon-wrap">
+            <span class="process__dot"></span>
+            <span class="process__icon"><i data-lucide="calendar-check"></i></span>
+          </div>
+          <h3 class="process__title">90-day service-area roadmap</h3>
+          <div class="process__right">
+            <p class="process__desc">A focused plan for every city and project type you build in.</p>
+            <a href="#audit" class="process__btn">Get free audit <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </li>
+      <li class="process__step">
+        <div class="process__step-inner">
+          <div class="process__icon-wrap">
+            <span class="process__dot"></span>
+            <span class="process__icon"><i data-lucide="trending-up"></i></span>
+          </div>
+          <h3 class="process__title">Build &amp; rank service-area pages</h3>
+          <div class="process__right">
+            <p class="process__desc">We do the work — technical, content, local, links — and get you found.</p>
+            <a href="#audit" class="process__btn">Get free audit <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </li>
+      <li class="process__step">
+        <div class="process__step-inner">
+          <div class="process__icon-wrap">
+            <span class="process__dot"></span>
+            <span class="process__icon"><i data-lucide="bar-chart-2"></i></span>
+          </div>
+          <h3 class="process__title">Report leads booked</h3>
+          <div class="process__right">
+            <p class="process__desc">Every month, one number that matters: jobs in your calendar.</p>
+            <a href="#audit" class="process__btn">Get free audit <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </li>
+    </ol>
+    <a href="#audit" class="process__btn-mobile">Get free audit <i data-lucide="arrow-right"></i></a>
+  </section>
+
+  <!-- ===== 8. FAQ ===== -->
+  <section class="faq" id="faq">
+    <div class="faq__head">
+      <h2>FAQ's: What Every Construction Company Should Know</h2>
+      <p>Curious about how SEO works for general contractors and builders? We've answered the most common questions to help you understand how Ranked International can support your growth.</p>
+    </div>
+    <div class="faq__list">
+      <article class="faq__item is-open">
+        <button class="faq__question" type="button" aria-expanded="true">
+          <span>How does SEO work for general contractors with long sales cycles?</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq__answer">
+          <p>We target the searches homeowners and commercial buyers run months before they sign a contract — so by the time they're ready to hire, you're already the name they recognize. Most campaigns show directional movement in 60&ndash;90 days.</p>
+        </div>
+      </article>
+      <article class="faq__item">
+        <button class="faq__question" type="button" aria-expanded="false">
+          <span>Can you build separate pages for every city and county we serve?</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq__answer">
+          <p>Yes. Dedicated, optimized service-area pages are one of the highest-leverage moves for construction companies that work jobs across multiple cities or counties.</p>
+        </div>
+      </article>
+      <article class="faq__item">
+        <button class="faq__question" type="button" aria-expanded="false">
+          <span>Do you work with competing contractors in my market?</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq__answer">
+          <p>No. We take one client per trade, per city, so we are never optimizing your competitor against you.</p>
+        </div>
+      </article>
+      <article class="faq__item">
+        <button class="faq__question" type="button" aria-expanded="false">
+          <span>Should I invest in SEO or PPC ahead of my busy season?</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq__answer">
+          <p>PPC can create faster lead flow going into a busy season, while SEO builds durable, compounding visibility. Most construction companies use both together — PPC for immediate volume, SEO for the long game.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== 9. FINAL CTA (chartreuse) ===== -->
+  <section class="cta" id="cta-final">
+    <div class="cta__inner">
+      <div class="cta__copy">
+        <p class="cta__title">Let's get your phone <em>ringing</em>.</p>
+        <p class="cta__sub">Get a free audit showing the 3 keywords your competitors are taking customers from right now.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
+        <a href="#audit" class="btn btn--dark btn--lg">Get my free audit</a>
+        <a href="tel:+16805542324" style="font-family:var(--font-display); font-weight:600; color:var(--prussian-blue);">Or call Dallas &middot; (680) 554-2324</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="audit-modal" id="auditModal" aria-hidden="true">
+  <div class="audit-modal__backdrop" data-audit-close></div>
+  <div class="audit-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="auditTitle">
+    <button class="audit-modal__close" type="button" data-audit-close aria-label="Close audit form">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <form class="audit-modal__form" id="auditForm">
+      <div class="audit-modal__step is-active" data-audit-step="1">
+        <p class="audit-modal__eyebrow">Step 1 of 2</p>
+        <h2 id="auditTitle">Start your free audit</h2>
+        <p class="audit-modal__copy">Tell us where to send the quick findings.</p>
+        <label class="audit-field">
+          <span>Name</span>
+          <input type="text" name="name" autocomplete="name" required>
+        </label>
+        <label class="audit-field">
+          <span>Email</span>
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+        <button type="button" class="btn btn--dark btn--block" data-audit-next>Continue</button>
+      </div>
+
+      <div class="audit-modal__step" data-audit-step="2">
+        <p class="audit-modal__eyebrow">Step 2 of 2</p>
+        <h2>What should we inspect?</h2>
+        <p class="audit-modal__copy">A website and one priority is enough to start.</p>
+        <label class="audit-field">
+          <span>Website</span>
+          <input type="url" name="website" autocomplete="url" placeholder="https://example.com" required>
+        </label>
+        <label class="audit-field audit-field--select">
+          <span>Primary goal</span>
+          <select name="service" required>
+            <option value="" disabled selected>Select one</option>
+            <option>Local SEO</option>
+            <option>Organic SEO</option>
+            <option>Technical SEO</option>
+            <option>Google Ads / PPC</option>
+            <option>Not sure yet</option>
+          </select>
+        </label>
+        <label class="audit-field">
+          <span>Anything we should know?</span>
+          <textarea name="notes" rows="4" placeholder="Competitors, target city, current issue..."></textarea>
+        </label>
+        <div class="audit-modal__actions">
+          <button type="button" class="btn btn--outline" data-audit-back>Back</button>
+          <button type="submit" class="btn btn--dark">Submit audit</button>
+        </div>
+      </div>
+
+      <div class="audit-modal__step audit-modal__done" data-audit-step="done">
+        <div class="audit-modal__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h2>Audit request received</h2>
+        <p class="audit-modal__copy">We’ll review the site and send the first findings within 24 hours.</p>
+        <button type="button" class="btn btn--primary btn--block" data-audit-close>Done</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <a class="nav__logo" href="/" aria-label="Ranked International — home"><img src="/assets/rankd international logo.png" alt="Ranked International" class="nav__logo-img" width="96" height="32" loading="lazy"></a>
+      <p>Dallas SEO that gets the phone ringing. One client per industry.</p>
+      <p class="footer__addr">Dallas, TX · (xxx) xxx-xxxx</p>
+    </div>
+    <div class="footer__cols">
+      <div><h3>SEO</h3><a href="/#services">Local SEO</a><a href="/#services">Organic SEO</a><a href="/#services">Technical SEO</a><a href="/#services">Enterprise SEO</a><a href="/#services">Link Building</a></div>
+      <div><h3>Paid</h3><a href="/#services">Google Ads</a><a href="/#services">PPC</a><a href="/#services">Enterprise PPC</a></div>
+      <div><h3>Consulting</h3><a href="/#services">SEO Consulting</a><a href="/#services">CRO Audit</a></div>
+      <div><h3>Company</h3><a href="/#results">Results</a><a href="/#process">About</a><a href="/construction/">Construction SEO</a><a href="/roofing/">Roofing SEO</a><a href="#audit">Contact</a></div>
+    </div>
+  </div>
+  <div class="footer__base"><span>© 2026 Ranked International</span><span>Dallas, Texas</span></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lucide@1.23.0/dist/umd/lucide.min.js"></script>
+<script src="/js/main.min.js"></script>
+<script>lucide.createIcons();</script>
+</body>
+</html>

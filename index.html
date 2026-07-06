@@ -8,18 +8,19 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/hero-bg.jpg" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"></noscript>
 
-<link rel="stylesheet" href="css/styles.css?v=2" />
+<link rel="stylesheet" href="css/styles.min.css?v=3" />
 </head>
 <body>
 
 <!-- ===== NAV ===== -->
 <header class="nav" id="nav">
   <div class="nav__inner">
-    <a class="nav__logo" href="#top">
-      <span class="nav__logo-mark"></span>
-      Ranked<span class="nav__logo-sub">International</span>
+    <a class="nav__logo" href="#top" aria-label="Ranked International — home">
+      <img src="assets/rankd international logo.png" alt="Ranked International" class="nav__logo-img" width="96" height="32">
     </a>
     <nav class="nav__menu">
       <a href="#top">Home</a>
@@ -90,8 +91,12 @@
           <div class="mega-grid">
             <div>
               <p class="mega-label">Home services</p>
-              <a class="mega-item" href="#industries">
+              <a class="mega-item" href="/construction/">
                 <span class="mega-icon"><i data-lucide="hard-hat"></i></span>
+                <span><strong>Construction</strong><span>Page-one rankings for GCs, remodelers, and commercial builders.</span></span>
+              </a>
+              <a class="mega-item" href="/roofing/">
+                <span class="mega-icon"><i data-lucide="home"></i></span>
                 <span><strong>Roofing</strong><span>Storm-season and year-round rankings for roofers in the DFW market.</span></span>
               </a>
               <a class="mega-item" href="#industries">
@@ -143,7 +148,18 @@
       <a href="tel:+16805542324" class="nav__phone">Dallas · (680) 554-2324</a>
       <a href="#audit" class="btn btn--primary btn--sm">Get my free audit</a>
     </div>
+    <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navMenuMobile">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+  <nav class="nav__menu-mobile" id="navMenuMobile">
+    <a href="#top">Home</a>
+    <a href="#services">Services</a>
+    <a href="#industries">Industries We Serve</a>
+    <a href="#audit">Contact</a>
+    <a href="tel:+16805542324" class="nav__menu-mobile-phone">Dallas · (680) 554-2324</a>
+    <a href="#audit" class="btn btn--primary btn--block">Get my free audit</a>
+  </nav>
 </header>
 
 <main id="top">
@@ -156,39 +172,41 @@
     </div>
     <div class="hero__inner">
       <div class="hero__copy">
-        <div class="hero__text-block">
-          <p class="hero__eyebrow">DALLAS SEO AGENCY</p>
-          <h1 class="hero__title">
-            Your customers are Googling. You're on page&nbsp;2.
-          </h1>
-          <p class="hero__sub">
-            We move Dallas roofers, HVAC crews, and clinics from buried on page two
-            to the top of Google, then turn those clicks into booked jobs.
-          </p>
-        </div>
-        <div class="hero__bottom">
-          <a href="#audit" class="btn btn--primary btn--lg">Get my free audit</a>
-          <div class="hero__stats">
-            <div class="hero__stat">
-              <svg class="hero__stat-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M20 4H4v2l1.5 1.5V20h13V7.5L20 6V4zM7 18V8h10v10H7z" fill="#caff00"/>
-                <rect x="9" y="13" width="2" height="5" fill="#caff00"/>
-                <rect x="13" y="13" width="2" height="5" fill="#caff00"/>
-                <rect x="9" y="9" width="2" height="2" fill="#caff00"/>
-                <rect x="13" y="9" width="2" height="2" fill="#caff00"/>
-              </svg>
-              <div class="hero__stat-text">
-                <strong>100+</strong>
-                <span>Businesses Ranked</span>
+        <div class="hero__card">
+          <div class="hero__text-block">
+            <p class="hero__eyebrow">DALLAS SEO AGENCY</p>
+            <h1 class="hero__title">
+              Your customers are Googling. You're on page&nbsp;2.
+            </h1>
+            <p class="hero__sub">
+              We move Dallas roofers, HVAC crews, and clinics from buried on page two
+              to the top of Google, then turn those clicks into booked jobs.
+            </p>
+          </div>
+          <div class="hero__bottom">
+            <a href="#audit" class="btn btn--primary btn--lg">Get my free audit</a>
+            <div class="hero__stats">
+              <div class="hero__stat">
+                <svg class="hero__stat-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M20 4H4v2l1.5 1.5V20h13V7.5L20 6V4zM7 18V8h10v10H7z" fill="#caff00"/>
+                  <rect x="9" y="13" width="2" height="5" fill="#caff00"/>
+                  <rect x="13" y="13" width="2" height="5" fill="#caff00"/>
+                  <rect x="9" y="9" width="2" height="2" fill="#caff00"/>
+                  <rect x="13" y="9" width="2" height="2" fill="#caff00"/>
+                </svg>
+                <div class="hero__stat-text">
+                  <strong>100+</strong>
+                  <span>Businesses Ranked</span>
+                </div>
               </div>
-            </div>
-            <div class="hero__stat">
-              <svg class="hero__stat-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="#caff00"/>
-              </svg>
-              <div class="hero__stat-text">
-                <strong>5 Star</strong>
-                <span>Rated on Google</span>
+              <div class="hero__stat">
+                <svg class="hero__stat-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="#caff00"/>
+                </svg>
+                <div class="hero__stat-text">
+                  <strong>5 Star</strong>
+                  <span>Rated on Google</span>
+                </div>
               </div>
             </div>
           </div>
@@ -212,19 +230,19 @@
       <span class="trusted-bar__label">Trusted by</span>
       <div class="trusted-bar__logos">
         <div class="trusted-bar__track" aria-hidden="true">
-          <img src="assets/brand logos/10.png" alt="Client logo">
-          <img src="assets/brand logos/6.png"  alt="Client logo">
-          <img src="assets/brand logos/8.png"  alt="Client logo">
-          <img src="assets/brand logos/9.png"  alt="Client logo">
-          <img src="assets/brand logos/11.png" alt="Client logo">
-          <img src="assets/brand logos/7.png"  alt="Client logo">
+          <img src="assets/brand logos/10.png" alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="assets/brand logos/6.png"  alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="assets/brand logos/8.png"  alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="assets/brand logos/9.png"  alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="assets/brand logos/11.png" alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="assets/brand logos/7.png"  alt="Client logo" width="120" height="40" loading="lazy">
           <!-- duplicate for seamless loop -->
-          <img src="assets/brand logos/10.png" alt="">
-          <img src="assets/brand logos/6.png"  alt="">
-          <img src="assets/brand logos/8.png"  alt="">
-          <img src="assets/brand logos/9.png"  alt="">
-          <img src="assets/brand logos/11.png" alt="">
-          <img src="assets/brand logos/7.png"  alt="">
+          <img src="assets/brand logos/10.png" alt="" width="120" height="40" loading="lazy">
+          <img src="assets/brand logos/6.png"  alt="" width="120" height="40" loading="lazy">
+          <img src="assets/brand logos/8.png"  alt="" width="120" height="40" loading="lazy">
+          <img src="assets/brand logos/9.png"  alt="" width="120" height="40" loading="lazy">
+          <img src="assets/brand logos/11.png" alt="" width="120" height="40" loading="lazy">
+          <img src="assets/brand logos/7.png"  alt="" width="120" height="40" loading="lazy">
         </div>
       </div>
     </div>
@@ -235,38 +253,38 @@
     <div class="practice-wrap">
       <div class="practice-accordion" aria-label="CSC operational advantages">
         <article class="practice-card is-active" tabindex="0" data-practice-card>
-          <video class="practice-video" poster="assets/family_business.png" playsinline muted loop aria-label="Family distribution office"></video>
+          <video class="practice-video" poster="assets/family_business.jpg" playsinline muted loop aria-label="Family distribution office"></video>
           <button class="card-play-btn" aria-label="Pause video" data-state="playing">
             <svg class="icon-pause" width="20" height="20" viewBox="0 0 20 20" fill="white"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
             <svg class="icon-play" width="20" height="20" viewBox="0 0 20 20" fill="white"><path d="M5 3.5l12 6.5-12 6.5V3.5z"/></svg>
           </button>
           <div class="practice-card-content">
             <div class="practice-card-kicker">01</div>
-            <h3>"Page one in 60 days.<br><span>I stopped doubting them."</span></h3>
+            <h2>"Page one in 60 days.<br><span>I stopped doubting them."</span></h2>
           </div>
         </article>
 
         <article class="practice-card" tabindex="0" data-practice-card>
-          <video class="practice-video" poster="assets/warehouse_inventory.png" playsinline muted loop aria-label="Dental supply warehouse inventory"></video>
+          <video class="practice-video" poster="assets/warehouse_inventory.jpg" playsinline muted loop aria-label="Dental supply warehouse inventory"></video>
           <button class="card-play-btn" aria-label="Play video" data-state="paused">
             <svg class="icon-pause" width="20" height="20" viewBox="0 0 20 20" fill="white"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
             <svg class="icon-play" width="20" height="20" viewBox="0 0 20 20" fill="white"><path d="M5 3.5l12 6.5-12 6.5V3.5z"/></svg>
           </button>
           <div class="practice-card-content">
             <div class="practice-card-kicker">02</div>
-            <h3>"40% more calls.<br><span>Same ad budget."</span></h3>
+            <h2>"40% more calls.<br><span>Same ad budget."</span></h2>
           </div>
         </article>
 
         <article class="practice-card" tabindex="0" data-practice-card>
-          <video class="practice-video" poster="assets/customer_service.png" playsinline muted loop aria-label="Customer service representative"></video>
+          <video class="practice-video" poster="assets/customer_service.jpg" playsinline muted loop aria-label="Customer service representative"></video>
           <button class="card-play-btn" aria-label="Play video" data-state="paused">
             <svg class="icon-pause" width="20" height="20" viewBox="0 0 20 20" fill="white"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
             <svg class="icon-play" width="20" height="20" viewBox="0 0 20 20" fill="white"><path d="M5 3.5l12 6.5-12 6.5V3.5z"/></svg>
           </button>
           <div class="practice-card-content">
             <div class="practice-card-kicker">03</div>
-            <h3>"Best ROI of any marketing<br><span>we've ever done."</span></h3>
+            <h2>"Best ROI of any marketing<br><span>we've ever done."</span></h2>
           </div>
         </article>
       </div>
@@ -306,42 +324,42 @@
 
         <div class="services-roof__chip services-roof__chip--local">
           <div class="services-roof__chip-head">
-            <img src="assets/icons/edit_location_alt.svg" alt="">
+            <img src="assets/icons/edit_location_alt.svg" alt="" loading="lazy">
             <span>Local SEO</span>
           </div>
           <p>Boost your visibility in local search results and map listings.</p>
         </div>
         <div class="services-roof__chip services-roof__chip--technical">
           <div class="services-roof__chip-head">
-            <img src="assets/icons/my_location.svg" alt="">
+            <img src="assets/icons/my_location.svg" alt="" loading="lazy">
             <span>Technical SEO</span>
           </div>
           <p>A strong technical foundation supports better rankings and user experience.</p>
         </div>
         <div class="services-roof__chip services-roof__chip--organic">
           <div class="services-roof__chip-head">
-            <img src="assets/icons/all_inclusive.svg" alt="">
+            <img src="assets/icons/all_inclusive.svg" alt="" loading="lazy">
             <span>Organic SEO</span>
           </div>
           <p>On-page SEO lays the groundwork for long-term success.</p>
         </div>
         <div class="services-roof__chip services-roof__chip--link">
           <div class="services-roof__chip-head">
-            <img src="assets/icons/anchor.svg" alt="">
+            <img src="assets/icons/anchor.svg" alt="" loading="lazy">
             <span>Link Building</span>
           </div>
           <p>High-quality backlinks that improve your domain authority &amp; rankings.</p>
         </div>
         <div class="services-roof__chip services-roof__chip--ads">
           <div class="services-roof__chip-head">
-            <img src="assets/icons/campaign.svg" alt="">
+            <img src="assets/icons/campaign.svg" alt="" loading="lazy">
             <span>Google Ads</span>
           </div>
           <p>Campaign tailored to your goals - increase traffic or generate leads.</p>
         </div>
         <div class="services-roof__chip services-roof__chip--ppc">
           <div class="services-roof__chip-head">
-            <img src="assets/icons/ads_click.svg" alt="">
+            <img src="assets/icons/ads_click.svg" alt="" loading="lazy">
             <span>PPC Management</span>
           </div>
           <p>Manage entire process across Google Ads, Microsoft Ads, and Meta Ads.</p>
@@ -515,6 +533,7 @@
         </div>
       </li>
     </ol>
+    <a href="#audit" class="process__btn-mobile">Get free audit <i data-lucide="arrow-right"></i></a>
   </section>
 
   <!-- ===== 10. FAQ ===== -->
@@ -634,15 +653,15 @@
 <footer class="footer">
   <div class="footer__inner">
     <div class="footer__brand">
-      <a class="nav__logo" href="#top"><span class="nav__logo-mark"></span>Ranked<span class="nav__logo-sub">International</span></a>
+      <a class="nav__logo" href="#top" aria-label="Ranked International — home"><img src="assets/rankd international logo.png" alt="Ranked International" class="nav__logo-img" width="96" height="32" loading="lazy"></a>
       <p>Dallas SEO that gets the phone ringing. One client per industry.</p>
       <p class="footer__addr">Dallas, TX · (xxx) xxx-xxxx</p>
     </div>
     <div class="footer__cols">
-      <div><h4>SEO</h4><a href="#">Local SEO</a><a href="#">Organic SEO</a><a href="#">Technical SEO</a><a href="#">Enterprise SEO</a><a href="#">Link Building</a></div>
-      <div><h4>Paid</h4><a href="#">Google Ads</a><a href="#">PPC</a><a href="#">Enterprise PPC</a></div>
-      <div><h4>Consulting</h4><a href="#">SEO Consulting</a><a href="#">CRO Audit</a></div>
-      <div><h4>Company</h4><a href="#results">Results</a><a href="#process">About</a><a href="#industries">Industries</a><a href="#audit">Contact</a></div>
+      <div><h3>SEO</h3><a href="#">Local SEO</a><a href="#">Organic SEO</a><a href="#">Technical SEO</a><a href="#">Enterprise SEO</a><a href="#">Link Building</a></div>
+      <div><h3>Paid</h3><a href="#">Google Ads</a><a href="#">PPC</a><a href="#">Enterprise PPC</a></div>
+      <div><h3>Consulting</h3><a href="#">SEO Consulting</a><a href="#">CRO Audit</a></div>
+      <div><h3>Company</h3><a href="#results">Results</a><a href="#process">About</a><a href="/construction/">Construction SEO</a><a href="/roofing/">Roofing SEO</a><a href="#audit">Contact</a></div>
     </div>
   </div>
   <div class="footer__base"><span>© 2026 Ranked International</span><span>Dallas, Texas</span></div>
@@ -650,8 +669,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-<script src="js/main.js"></script>
+<script src="https://unpkg.com/lucide@1.23.0/dist/umd/lucide.min.js"></script>
+<script src="js/main.min.js"></script>
 <script>lucide.createIcons();</script>
 </body>
 </html>
