@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ranked International — Dallas SEO Company</title>
+<meta name="description" content="We get Dallas roofers, HVAC crews, and clinics onto page one for the searches that bring paying customers — then turn those clicks into booked jobs." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="<?php echo rip_asset('hero-bg.jpg'); ?>" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"></noscript>
+
+<?php wp_head(); ?>
+</head>
+<body>
+<?php wp_body_open(); ?>
+
+<!-- ===== NAV ===== -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="#top" aria-label="Ranked International — home">
+      <img src="<?php echo rip_asset('rankd-international-logo.png'); ?>" alt="Ranked International" class="nav__logo-img" width="96" height="32">
+    </a>
+    <nav class="nav__menu">
+      <a href="#top">Home</a>
+
+      <!-- Services mega -->
+      <div class="nav__mega-root">
+        <a class="nav__mega-trigger" href="#services">Services
+          <i data-lucide="chevron-down" class="mega-chevron"></i>
+        </a>
+        <div class="mega-menu" role="menu" aria-label="Services menu">
+          <div class="mega-grid">
+            <div>
+              <p class="mega-label">Organic growth</p>
+              <a class="mega-item" href="#services">
+                <span class="mega-icon"><i data-lucide="search"></i></span>
+                <span><strong>Local SEO</strong><span>Dominate Google Maps and the local pack for searches that drive booked jobs.</span></span>
+              </a>
+              <a class="mega-item" href="#services">
+                <span class="mega-icon"><i data-lucide="map-pin"></i></span>
+                <span><strong>Google Business Profile</strong><span>Reviews, posts, and profile optimization to out-rank competitors nearby.</span></span>
+              </a>
+              <a class="mega-item" href="#services">
+                <span class="mega-icon"><i data-lucide="settings-2"></i></span>
+                <span><strong>Technical SEO</strong><span>Site speed, crawlability, and schema fixes that lift your rankings fast.</span></span>
+              </a>
+            </div>
+            <div>
+              <p class="mega-label">Paid &amp; content</p>
+              <a class="mega-item" href="#services">
+                <span class="mega-icon"><i data-lucide="mouse-pointer-click"></i></span>
+                <span><strong>Google Ads (PPC)</strong><span>High-intent campaigns that bring in calls the same week you launch.</span></span>
+              </a>
+              <a class="mega-item" href="#services">
+                <span class="mega-icon"><i data-lucide="pen-line"></i></span>
+                <span><strong>Content &amp; Blogging</strong><span>Keyword-targeted articles that build authority and capture long-tail traffic.</span></span>
+              </a>
+              <a class="mega-item" href="#services">
+                <span class="mega-icon"><i data-lucide="link-2"></i></span>
+                <span><strong>Link Building</strong><span>White-hat backlinks from real sites that move your domain authority needle.</span></span>
+              </a>
+            </div>
+            <div>
+              <p class="mega-label">Quick links</p>
+              <div class="mega-links">
+                <a href="#audit">Free SEO audit <i data-lucide="arrow-right"></i></a>
+                <a href="/case-studies/">See results <i data-lucide="arrow-right"></i></a>
+                <a href="#process">How we work <i data-lucide="arrow-right"></i></a>
+                <a href="#pricing">Pricing <i data-lucide="arrow-right"></i></a>
+              </div>
+            </div>
+            <a class="mega-card" href="#audit">
+              <img src="<?php echo rip_asset('hero-bg.jpg'); ?>" alt="Dallas skyline representing local SEO results">
+              <div class="mega-card-copy">
+                <p>Free · No commitment</p>
+                <h3>Get your custom SEO audit today.</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Industries mega -->
+      <div class="nav__mega-root">
+        <a class="nav__mega-trigger" href="#industries">Industries We Serve
+          <i data-lucide="chevron-down" class="mega-chevron"></i>
+        </a>
+        <div class="mega-menu" role="menu" aria-label="Industries We Serve menu">
+          <div class="mega-grid">
+            <div>
+              <p class="mega-label">Home services</p>
+              <a class="mega-item" href="/construction/">
+                <span class="mega-icon"><i data-lucide="hard-hat"></i></span>
+                <span><strong>Construction</strong><span>Page-one rankings for GCs, remodelers, and commercial builders.</span></span>
+              </a>
+              <a class="mega-item" href="#industries">
+                <span class="mega-icon"><i data-lucide="wind"></i></span>
+                <span><strong>HVAC</strong><span>Page-one visibility for heating and cooling crews when it matters most.</span></span>
+              </a>
+              <a class="mega-item" href="#industries">
+                <span class="mega-icon"><i data-lucide="droplets"></i></span>
+                <span><strong>Plumbing</strong><span>Emergency and scheduled service traffic to fill your dispatch board.</span></span>
+              </a>
+            </div>
+            <div>
+              <p class="mega-label">Professional services</p>
+              <a class="mega-item" href="#industries">
+                <span class="mega-icon"><i data-lucide="stethoscope"></i></span>
+                <span><strong>Medical &amp; Dental</strong><span>Local SEO for practices that want a full schedule and less ad spend.</span></span>
+              </a>
+              <a class="mega-item" href="#industries">
+                <span class="mega-icon"><i data-lucide="scale"></i></span>
+                <span><strong>Law Firms</strong><span>High-value keyword targeting for attorneys competing in a crowded market.</span></span>
+              </a>
+              <a class="mega-item" href="#industries">
+                <span class="mega-icon"><i data-lucide="building-2"></i></span>
+                <span><strong>Real Estate</strong><span>Neighborhood and city-level rankings to capture buyer and seller leads.</span></span>
+              </a>
+            </div>
+            <div>
+              <p class="mega-label">Quick links</p>
+              <div class="mega-links">
+                <a href="/case-studies/">Client results <i data-lucide="arrow-right"></i></a>
+                <a href="#audit">Free audit for your industry <i data-lucide="arrow-right"></i></a>
+                <a href="#process">Our process <i data-lucide="arrow-right"></i></a>
+              </div>
+            </div>
+            <a class="mega-card" href="/case-studies/">
+              <img src="<?php echo rip_asset('hero-bg.jpg'); ?>" alt="Dallas business results">
+              <div class="mega-card-copy">
+                <p>100+ businesses ranked</p>
+                <h3>See what we've done for Dallas businesses like yours.</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <a href="/case-studies/">Case Studies</a>
+      <a href="#audit">Contact</a>
+    </nav>
+    <div class="nav__actions">
+      <a href="tel:+16805542324" class="nav__phone">Dallas · (680) 554-2324</a>
+      <a href="#audit" class="btn btn--primary btn--sm">Get my free audit</a>
+    </div>
+    <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navMenuMobile">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="nav__menu-mobile" id="navMenuMobile">
+    <a href="#top">Home</a>
+    <a href="#services">Services</a>
+    <a href="#industries">Industries We Serve</a>
+    <a href="/case-studies/">Case Studies</a>
+    <a href="#audit">Contact</a>
+    <a href="tel:+16805542324" class="nav__menu-mobile-phone">Dallas · (680) 554-2324</a>
+    <a href="#audit" class="btn btn--primary btn--block">Get my free audit</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ===== 1. HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero__bg" aria-hidden="true">
+      <div class="hero__aurora"></div>
+      <div class="hero__grain"></div>
+    </div>
+    <div class="hero__inner">
+      <div class="hero__copy">
+        <div class="hero__card">
+          <div class="hero__text-block">
+            <p class="hero__eyebrow">DALLAS SEO AGENCY</p>
+            <h1 class="hero__title">
+              Your customers are Googling. You're on page&nbsp;2.
+            </h1>
+            <p class="hero__sub">
+              We move Dallas roofers, HVAC crews, and clinics from buried on page two
+              to the top of Google, then turn those clicks into booked jobs.
+            </p>
+          </div>
+          <div class="hero__bottom">
+            <a href="#audit" class="btn btn--primary btn--lg">Get my free audit</a>
+            <div class="hero__stats">
+              <div class="hero__stat">
+                <svg class="hero__stat-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M20 4H4v2l1.5 1.5V20h13V7.5L20 6V4zM7 18V8h10v10H7z" fill="#caff00"/>
+                  <rect x="9" y="13" width="2" height="5" fill="#caff00"/>
+                  <rect x="13" y="13" width="2" height="5" fill="#caff00"/>
+                  <rect x="9" y="9" width="2" height="2" fill="#caff00"/>
+                  <rect x="13" y="9" width="2" height="2" fill="#caff00"/>
+                </svg>
+                <div class="hero__stat-text">
+                  <strong>100+</strong>
+                  <span>Businesses Ranked</span>
+                </div>
+              </div>
+              <div class="hero__stat">
+                <svg class="hero__stat-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="#caff00"/>
+                </svg>
+                <div class="hero__stat-text">
+                  <strong>5 Star</strong>
+                  <span>Rated on Google</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero visual: animated GIF showing a local business climbing to #1 on Google -->
+      <div class="hero__visual">
+        <video class="hero__gif" autoplay muted playsinline disablepictureinpicture
+               aria-label="Google search results showing a local business rising to position #1">
+          <source src="<?php echo rip_asset('frames/hero.webm'); ?>" type="video/webm">
+          <source src="<?php echo rip_asset('frames/hero.mp4'); ?>"  type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TRUSTED BY LOGO MARQUEE ===== -->
+  <section class="trusted-bar">
+    <div class="trusted-bar__inner">
+      <span class="trusted-bar__label">Trusted by</span>
+      <div class="trusted-bar__logos">
+        <div class="trusted-bar__track" aria-hidden="true">
+          <img src="<?php echo rip_asset('brand-logos/10.png'); ?>" alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="<?php echo rip_asset('brand-logos/6.png'); ?>"  alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="<?php echo rip_asset('brand-logos/8.png'); ?>"  alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="<?php echo rip_asset('brand-logos/9.png'); ?>"  alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="<?php echo rip_asset('brand-logos/11.png'); ?>" alt="Client logo" width="120" height="40" loading="lazy">
+          <img src="<?php echo rip_asset('brand-logos/7.png'); ?>"  alt="Client logo" width="120" height="40" loading="lazy">
+          <!-- duplicate for seamless loop -->
+          <img src="<?php echo rip_asset('brand-logos/10.png'); ?>" alt="" width="120" height="40" loading="lazy">
+          <img src="<?php echo rip_asset('brand-logos/6.png'); ?>"  alt="" width="120" height="40" loading="lazy">
+          <img src="<?php echo rip_asset('brand-logos/8.png'); ?>"  alt="" width="120" height="40" loading="lazy">
+          <img src="<?php echo rip_asset('brand-logos/9.png'); ?>"  alt="" width="120" height="40" loading="lazy">
+          <img src="<?php echo rip_asset('brand-logos/11.png'); ?>" alt="" width="120" height="40" loading="lazy">
+          <img src="<?php echo rip_asset('brand-logos/7.png'); ?>"  alt="" width="120" height="40" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2. CSC OPERATIONAL ADVANTAGES ===== -->
+  <section class="practice-field" id="reviews">
+    <div class="practice-wrap">
+      <div class="practice-accordion" aria-label="CSC operational advantages">
+        <article class="practice-card is-active" tabindex="0" data-practice-card>
+          <video class="practice-video" poster="<?php echo rip_asset('family_business.jpg'); ?>" playsinline muted loop aria-label="Family distribution office"></video>
+          <button class="card-play-btn" aria-label="Pause video" data-state="playing">
+            <svg class="icon-pause" width="20" height="20" viewBox="0 0 20 20" fill="white"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
+            <svg class="icon-play" width="20" height="20" viewBox="0 0 20 20" fill="white"><path d="M5 3.5l12 6.5-12 6.5V3.5z"/></svg>
+          </button>
+          <div class="practice-card-content">
+            <div class="practice-card-kicker">01</div>
+            <h2>"Page one in 60 days.<br><span>I stopped doubting them."</span></h2>
+          </div>
+        </article>
+
+        <article class="practice-card" tabindex="0" data-practice-card>
+          <video class="practice-video" poster="<?php echo rip_asset('warehouse_inventory.jpg'); ?>" playsinline muted loop aria-label="Dental supply warehouse inventory"></video>
+          <button class="card-play-btn" aria-label="Play video" data-state="paused">
+            <svg class="icon-pause" width="20" height="20" viewBox="0 0 20 20" fill="white"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
+            <svg class="icon-play" width="20" height="20" viewBox="0 0 20 20" fill="white"><path d="M5 3.5l12 6.5-12 6.5V3.5z"/></svg>
+          </button>
+          <div class="practice-card-content">
+            <div class="practice-card-kicker">02</div>
+            <h2>"40% more calls.<br><span>Same ad budget."</span></h2>
+          </div>
+        </article>
+
+        <article class="practice-card" tabindex="0" data-practice-card>
+          <video class="practice-video" poster="<?php echo rip_asset('customer_service.jpg'); ?>" playsinline muted loop aria-label="Customer service representative"></video>
+          <button class="card-play-btn" aria-label="Play video" data-state="paused">
+            <svg class="icon-pause" width="20" height="20" viewBox="0 0 20 20" fill="white"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
+            <svg class="icon-play" width="20" height="20" viewBox="0 0 20 20" fill="white"><path d="M5 3.5l12 6.5-12 6.5V3.5z"/></svg>
+          </button>
+          <div class="practice-card-content">
+            <div class="practice-card-kicker">03</div>
+            <h2>"Best ROI of any marketing<br><span>we've ever done."</span></h2>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. PROMISE / HIGHLIGHT-SWEEP ===== -->
+  <section class="promise" id="promise">
+    <div class="promise__inner">
+      <p class="promise__tag">[ why we're different ]</p>
+      <h2 class="promise__statement" id="promiseText">
+        Ranked International takes
+        <span class="hl" data-icon="lock">one client per industry, per city</span>
+        so we <span class="hl" data-icon="shield">never optimize your competitor against you</span>.
+        <span class="hl" data-icon="bolt">No 12-month contracts.</span>
+        Every report ends with one number:
+        <span class="hl" data-icon="trending-up">keywords ranked.</span>
+      </h2>
+    </div>
+  </section>
+
+  <!-- ===== 6. SERVICES ROOF ===== -->
+  <section class="services-roof" id="services" aria-label="All SEO and paid services under one roof">
+    <div class="services-roof__inner">
+      <h2>All Services Under One Roof</h2>
+      <div class="services-roof__map">
+        <svg class="services-roof__lines" viewBox="0 0 934 458" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M106 94 C106 154 156 175 220 175 H410 C455 175 467 199 467 229" />
+          <path d="M467 94 V229" />
+          <path d="M815 94 C815 154 765 175 701 175 H524 C480 175 467 199 467 229" />
+          <path d="M106 373 C106 314 156 287 220 287 H410 C455 287 467 259 467 229" />
+          <path d="M467 373 V229" />
+          <path d="M815 373 C815 314 765 287 701 287 H524 C480 287 467 259 467 229" />
+        </svg>
+
+        <div class="services-roof__center">Get You Ranked</div>
+
+        <div class="services-roof__chip services-roof__chip--local">
+          <div class="services-roof__chip-head">
+            <img src="<?php echo rip_asset('icons/edit_location_alt.svg'); ?>" alt="" loading="lazy">
+            <span>Local SEO</span>
+          </div>
+          <p>Boost your visibility in local search results and map listings.</p>
+        </div>
+        <div class="services-roof__chip services-roof__chip--technical">
+          <div class="services-roof__chip-head">
+            <img src="<?php echo rip_asset('icons/my_location.svg'); ?>" alt="" loading="lazy">
+            <span>Technical SEO</span>
+          </div>
+          <p>A strong technical foundation supports better rankings and user experience.</p>
+        </div>
+        <div class="services-roof__chip services-roof__chip--organic">
+          <div class="services-roof__chip-head">
+            <img src="<?php echo rip_asset('icons/all_inclusive.svg'); ?>" alt="" loading="lazy">
+            <span>Organic SEO</span>
+          </div>
+          <p>On-page SEO lays the groundwork for long-term success.</p>
+        </div>
+        <div class="services-roof__chip services-roof__chip--link">
+          <div class="services-roof__chip-head">
+            <img src="<?php echo rip_asset('icons/anchor.svg'); ?>" alt="" loading="lazy">
+            <span>Link Building</span>
+          </div>
+          <p>High-quality backlinks that improve your domain authority &amp; rankings.</p>
+        </div>
+        <div class="services-roof__chip services-roof__chip--ads">
+          <div class="services-roof__chip-head">
+            <img src="<?php echo rip_asset('icons/campaign.svg'); ?>" alt="" loading="lazy">
+            <span>Google Ads</span>
+          </div>
+          <p>Campaign tailored to your goals - increase traffic or generate leads.</p>
+        </div>
+        <div class="services-roof__chip services-roof__chip--ppc">
+          <div class="services-roof__chip-head">
+            <img src="<?php echo rip_asset('icons/ads_click.svg'); ?>" alt="" loading="lazy">
+            <span>PPC Management</span>
+          </div>
+          <p>Manage entire process across Google Ads, Microsoft Ads, and Meta Ads.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. CASE STUDIES ===== -->
+  <section class="case-studies" id="results">
+    <div class="cs__inner">
+      <div class="cs__header">
+        <div class="cs__header-left">
+          <p class="eyebrow"><span class="dot"></span>Client results</p>
+          <h2 class="cs__title">Results Dallas businesses<br>actually talk about.</h2>
+        </div>
+        <a href="/case-studies/" class="cs__see-all">&#9658;&nbsp;See all results</a>
+      </div>
+      <div class="cs__layout">
+        <div class="cs__center">
+          <div class="cs__stage">
+            <article class="cs__card" data-cs-idx="0">
+              <span class="cs__card-kicker">01 &mdash; Bella Med Spa</span>
+              <blockquote class="cs__quote">&ldquo;Page one in 60 days.<br>I stopped doubting them.&rdquo;</blockquote>
+              <footer class="cs__card-foot">
+                <p class="cs__client">Maria T. &mdash; Bella Med Spa, Dallas TX</p>
+                <a href="#audit" class="cs__cta-link">&#9658;&nbsp;Get your free audit</a>
+              </footer>
+            </article>
+            <article class="cs__card" data-cs-idx="1">
+              <span class="cs__card-kicker">02 &mdash; North TX HVAC</span>
+              <blockquote class="cs__quote">&ldquo;40% more calls.<br>Same ad budget.&rdquo;</blockquote>
+              <footer class="cs__card-foot">
+                <p class="cs__client">James R. &mdash; North TX HVAC, Dallas TX</p>
+                <a href="#audit" class="cs__cta-link">&#9658;&nbsp;Get your free audit</a>
+              </footer>
+            </article>
+            <article class="cs__card" data-cs-idx="2">
+              <span class="cs__card-kicker">03 &mdash; Lone Star Roofing</span>
+              <blockquote class="cs__quote">&ldquo;Best ROI of any marketing<br>we&rsquo;ve ever done.&rdquo;</blockquote>
+              <footer class="cs__card-foot">
+                <p class="cs__client">Derek S. &mdash; Lone Star Roofing, Dallas TX</p>
+                <a href="#audit" class="cs__cta-link">&#9658;&nbsp;Get your free audit</a>
+              </footer>
+            </article>
+          </div>
+          <div class="cs__controls">
+            <button class="cs__arrow" data-cs-prev aria-label="Previous case study">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11 4L6 9l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="cs__pips" aria-hidden="true">
+              <span class="cs__pip"></span>
+              <span class="cs__pip"></span>
+              <span class="cs__pip"></span>
+            </div>
+            <button class="cs__arrow" data-cs-next aria-label="Next case study">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="cs__metrics">
+          <div class="cs__metrics-panel is-active" data-cs-metrics="0">
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Calls per month</p>
+              <p class="cs__metric-num">600<span>+</span></p>
+              <p class="cs__metric-sub">up from 40 &middot; in 7 months</p>
+            </div>
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Time to page one</p>
+              <p class="cs__metric-num">60<span>d</span></p>
+              <p class="cs__metric-sub">from near-zero organic traffic</p>
+            </div>
+          </div>
+          <div class="cs__metrics-panel" data-cs-metrics="1">
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Booked calls</p>
+              <p class="cs__metric-num">612</p>
+              <p class="cs__metric-sub">in 7 months &middot; same ad spend</p>
+            </div>
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Call volume lift</p>
+              <p class="cs__metric-num">40<span>%</span></p>
+              <p class="cs__metric-sub">more calls, zero extra budget</p>
+            </div>
+          </div>
+          <div class="cs__metrics-panel" data-cs-metrics="2">
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">SERP position</p>
+              <p class="cs__metric-num">#1</p>
+              <p class="cs__metric-sub">for "roofer Dallas" keywords</p>
+            </div>
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Businesses ranked</p>
+              <p class="cs__metric-num">100<span>+</span></p>
+              <p class="cs__metric-sub">local businesses across DFW</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 8. INDUSTRIES MARQUEE ===== -->
+  <section class="industries" id="industries">
+    <div class="section-head">
+      <p class="eyebrow eyebrow--light"><span class="dot"></span>Built for your trade</p>
+      <h2 class="section-title section-title--light">We rank the businesses Dallas searches for.</h2>
+    </div>
+    <div class="marquee" id="marquee">
+      <div class="marquee__row" data-dir="1"></div>
+      <div class="marquee__row" data-dir="-1"></div>
+    </div>
+  </section>
+
+  <!-- ===== 9. PROCESS ===== -->
+  <section class="process" id="process">
+    <div class="process__head">
+      <p class="eyebrow eyebrow--light"><span class="dot"></span>How it works</p>
+    </div>
+    <ol class="process__steps" id="processSteps">
+      <li class="process__step">
+        <div class="process__step-inner">
+          <div class="process__icon-wrap">
+            <span class="process__dot"></span>
+            <span class="process__icon"><i data-lucide="search"></i></span>
+          </div>
+          <h3 class="process__title">Free audit</h3>
+          <div class="process__right">
+            <p class="process__desc">I show you the 3 keywords you're losing to competitors right now.</p>
+            <a href="#audit" class="process__btn">Get free audit <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </li>
+      <li class="process__step">
+        <div class="process__step-inner">
+          <div class="process__icon-wrap">
+            <span class="process__dot"></span>
+            <span class="process__icon"><i data-lucide="calendar-check"></i></span>
+          </div>
+          <h3 class="process__title">90-day plan</h3>
+          <div class="process__right">
+            <p class="process__desc">A focused plan for the searches that bring you paying customers.</p>
+            <a href="#audit" class="process__btn">Get free audit <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </li>
+      <li class="process__step">
+        <div class="process__step-inner">
+          <div class="process__icon-wrap">
+            <span class="process__dot"></span>
+            <span class="process__icon"><i data-lucide="trending-up"></i></span>
+          </div>
+          <h3 class="process__title">Build &amp; rank</h3>
+          <div class="process__right">
+            <p class="process__desc">We do the work — technical, content, local, links — and get you up.</p>
+            <a href="#audit" class="process__btn">Get free audit <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </li>
+      <li class="process__step">
+        <div class="process__step-inner">
+          <div class="process__icon-wrap">
+            <span class="process__dot"></span>
+            <span class="process__icon"><i data-lucide="bar-chart-2"></i></span>
+          </div>
+          <h3 class="process__title">Report leads booked</h3>
+          <div class="process__right">
+            <p class="process__desc">Every month, one number that matters: jobs in your calendar.</p>
+            <a href="#audit" class="process__btn">Get free audit <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </li>
+    </ol>
+    <a href="#audit" class="process__btn-mobile">Get free audit <i data-lucide="arrow-right"></i></a>
+  </section>
+
+  <!-- ===== 10. FAQ ===== -->
+  <section class="faq" id="faq">
+    <div class="faq__head">
+
+      <h2>FAQ's: What Every Business Owner Should Know</h2>
+      <p>Curious about how SEO works or what to expect? We've answered the most common questions to help you understand how Ranked International can support your digital growth.</p>
+    </div>
+    <div class="faq__list">
+      <article class="faq__item is-open">
+        <button class="faq__question" type="button" aria-expanded="true">
+          <span>How long does SEO usually take?</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq__answer">
+          <p>Most local campaigns start showing directional movement in the first 60 to 90 days. Competitive markets can take longer, but you will know exactly what we are working on and why.</p>
+        </div>
+      </article>
+      <article class="faq__item">
+        <button class="faq__question" type="button" aria-expanded="false">
+          <span>What is included in the free audit?</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq__answer">
+          <p>We look at your search visibility, website fundamentals, local presence, competitors, and the highest-value keywords you are missing today.</p>
+        </div>
+      </article>
+      <article class="faq__item">
+        <button class="faq__question" type="button" aria-expanded="false">
+          <span>Do you work with competing businesses?</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq__answer">
+          <p>No. We take one client per industry, per city, so we are not optimizing your competitor against you.</p>
+        </div>
+      </article>
+      <article class="faq__item">
+        <button class="faq__question" type="button" aria-expanded="false">
+          <span>Do I need SEO, PPC, or both?</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq__answer">
+          <p>It depends on your timeline and market. PPC can create faster lead flow, while SEO builds durable visibility. Many businesses benefit from using both together.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<div class="audit-modal" id="auditModal" aria-hidden="true">
+  <div class="audit-modal__backdrop" data-audit-close></div>
+  <div class="audit-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="auditTitle">
+    <button class="audit-modal__close" type="button" data-audit-close aria-label="Close audit form">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <form class="audit-modal__form" id="auditForm">
+      <div class="audit-modal__step is-active" data-audit-step="1">
+        <p class="audit-modal__eyebrow">Step 1 of 2</p>
+        <h2 id="auditTitle">Start your free audit</h2>
+        <p class="audit-modal__copy">Tell us where to send the quick findings.</p>
+        <label class="audit-field">
+          <span>Name</span>
+          <input type="text" name="name" autocomplete="name" required>
+        </label>
+        <label class="audit-field">
+          <span>Email</span>
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+        <button type="button" class="btn btn--dark btn--block" data-audit-next>Continue</button>
+      </div>
+
+      <div class="audit-modal__step" data-audit-step="2">
+        <p class="audit-modal__eyebrow">Step 2 of 2</p>
+        <h2>What should we inspect?</h2>
+        <p class="audit-modal__copy">A website and one priority is enough to start.</p>
+        <label class="audit-field">
+          <span>Website</span>
+          <input type="url" name="website" autocomplete="url" placeholder="https://example.com" required>
+        </label>
+        <label class="audit-field audit-field--select">
+          <span>Primary goal</span>
+          <select name="service" required>
+            <option value="" disabled selected>Select one</option>
+            <option>Local SEO</option>
+            <option>Organic SEO</option>
+            <option>Technical SEO</option>
+            <option>Google Ads / PPC</option>
+            <option>Not sure yet</option>
+          </select>
+        </label>
+        <label class="audit-field">
+          <span>Anything we should know?</span>
+          <textarea name="notes" rows="4" placeholder="Competitors, target city, current issue..."></textarea>
+        </label>
+        <div class="audit-modal__actions">
+          <button type="button" class="btn btn--outline" data-audit-back>Back</button>
+          <button type="submit" class="btn btn--dark">Submit audit</button>
+        </div>
+      </div>
+
+      <div class="audit-modal__step audit-modal__done" data-audit-step="done">
+        <div class="audit-modal__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h2>Audit request received</h2>
+        <p class="audit-modal__copy">We’ll review the site and send the first findings within 24 hours.</p>
+        <button type="button" class="btn btn--primary btn--block" data-audit-close>Done</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <a class="nav__logo" href="#top" aria-label="Ranked International — home"><img src="<?php echo rip_asset('rankd-international-logo.png'); ?>" alt="Ranked International" class="nav__logo-img" width="96" height="32" loading="lazy"></a>
+      <p>Dallas SEO that gets the phone ringing. One client per industry.</p>
+      <p class="footer__addr">Dallas, TX · (xxx) xxx-xxxx</p>
+    </div>
+    <div class="footer__cols">
+      <div><h3>SEO</h3><a href="#">Local SEO</a><a href="#">Organic SEO</a><a href="#">Technical SEO</a><a href="#">Enterprise SEO</a><a href="#">Link Building</a></div>
+      <div><h3>Paid</h3><a href="#">Google Ads</a><a href="#">PPC</a><a href="#">Enterprise PPC</a></div>
+      <div><h3>Consulting</h3><a href="#">SEO Consulting</a><a href="#">CRO Audit</a></div>
+      <div><h3>Company</h3><a href="/case-studies/">Results</a><a href="#process">About</a><a href="/construction/">Construction SEO</a><a href="#audit">Contact</a></div>
+    </div>
+  </div>
+  <div class="footer__base"><span>© 2026 Ranked International</span><span>Dallas, Texas</span></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lucide@1.23.0/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
+<?php wp_footer(); ?>
+</body>
+</html>

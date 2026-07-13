@@ -72,17 +72,17 @@ Google Fonts, loaded in `<head>`:
 
 | Role | Spec |
 |---|---|
-| Hero H1 | display 800, `64px` (desktop) / `clamp(2.4rem,8vw,3.6rem)` mobile, `line-height:1.08`, `letter-spacing:-.03em` |
-| Section title (H2) | display 700, `clamp(2rem,5vw,3.6rem)`, `line-height:1.02`, `letter-spacing:-.02em`, `max-width:16ch` |
-| Big editorial statement | display 500, `clamp(1.625rem,4.05vw,3.8rem)`, `letter-spacing:-.045em` |
+| Hero H1 | display 800, `64px` (desktop) / `clamp(2.4rem,8vw,3.6rem)` mobile, `line-height:1.08`, `letter-spacing:0` |
+| Section title (H2) | display 700, `clamp(2rem,5vw,3.6rem)`, `line-height:1.02`, `letter-spacing:0`, `max-width:16ch` |
+| Big editorial statement | display 500, `clamp(1.625rem,4.05vw,3.8rem)`, `letter-spacing:0` |
 | Card H3 | display 600–700, `1.05–1.65rem` |
 | Body | body 400, `1rem–1.08rem`, `line-height:1.5–1.6`, color `--ink-soft` on light |
-| Eyebrow / label | display 600–700, `.66–.82rem`, `letter-spacing:.1–.16em`, UPPERCASE |
-| Big stat number | display 800, `clamp(2.4rem,5vw,3.6rem)` up to `clamp(4rem,14vw,9rem)`, `letter-spacing:-.03em`, `line-height:≤1` |
+| Eyebrow / label | display 600–700, `.66–.82rem`, `letter-spacing:0`, UPPERCASE |
+| Big stat number | display 800, `clamp(2.4rem,5vw,3.6rem)` up to `clamp(4rem,14vw,9rem)`, `letter-spacing:0`, `line-height:≤1` |
 
 **The italic-serif accent word:** `em` renders as Instrument Serif italic globally (`em{font-family:var(--font-serif);font-style:italic;font-weight:400}`). Use on **ONE word per major headline**. Color: `--ocean-twilight` on light sections, `--chartreuse` on dark sections. Example: `Real Dallas businesses. <em>Real results.</em>`
 
-- Headlines are always tight (negative letter-spacing) and large. Never small timid headings.
+- Letter-spacing is always `0` across all page typography, including headings, italic emphasis, labels, buttons, navigation, and body copy. Never use negative or positive tracking.
 - Quotes/testimonials: Instrument Serif italic, `clamp(1.55rem,2.6vw,2.4rem)`.
 
 ---
@@ -192,7 +192,43 @@ CDN includes at the end of `<body>` on every page:
 
 ---
 
-## 7. Page scaffold (boilerplate for every new page)
+## 7. Turf & Tree landing-page learnings
+
+These are non-negotiable defaults drawn from the Turf & Tree service-page review. Apply them to new landing pages unless the brief explicitly calls for a different treatment.
+
+### Copy and hierarchy
+
+- Keep copy direct, concrete and outcome-led. Lead with what the visitor gets, such as calls, rankings, map visibility or a clear audit result.
+- Use only documented client metrics and claims. Do not carry a revenue, lead-volume or timeline claim from another source unless it is verified for the client shown.
+- Avoid em dashes and en dashes in production copy. Use short sentences, commas or parentheses instead.
+- Eyebrows are optional, not mandatory. Remove them when the heading is already self-explanatory or a section needs a cleaner, quieter start.
+- Avoid redundant introductory lines under a strong section heading. A proof section should lead with the result and evidence, not filler such as “See real client results.”
+
+### Layout and spacing
+
+- Match vertical padding to content density. Compact utility sections such as audit deliverables, comparison tables and fit checks should use roughly half the standard section padding.
+- Validate the desktop hero as a stack: text block, CTA row and proof stats need explicit vertical gaps. Never allow CTA controls or stats to overlap.
+- Remove low-value sections rather than preserving them for page length. Trust strips, process explainers and headings that do not advance the conversion narrative should be omitted when they are not needed.
+- Final CTAs need a compact, balanced two-column layout: constrain the headline width and scale, reduce excess vertical padding, and align the action block deliberately.
+
+### Reusable section patterns
+
+- Free-audit sections should be concise: a clear headline plus three compact deliverable cards. Do not add tabs, simulated dashboards or supporting UI unless the brief requires them.
+- Proof sections should show the client logo, documented strategy, concrete metrics and a link to the full case study. Keep disclaimers and decorative copy out of the visible layout unless legally required.
+- Comparison sections belong directly before the FAQ when used. Use a readable three-column table with five or fewer decision-level rows and horizontal overflow on mobile.
+- On mobile, swipeable commitment cards should use native horizontal scroll snap, show a small preview of the next card, and remain fully usable without JavaScript controls.
+- Illustrations in card carousels should be simple, brand-color-led, text-free artwork. Let the illustration occupy the upper area and keep the copy on the card surface without a separate gradient panel behind it.
+
+### Quality checks before handoff
+
+- Check desktop and mobile for unintended white space, especially before and after short content blocks.
+- Check that all visible copy uses `letter-spacing: 0` when the page’s typography rule calls for neutral tracking.
+- Check that removed sections leave no orphaned in-page anchors or navigation links.
+- Check card images load before horizontal swipe interaction begins.
+
+---
+
+## 8. Page scaffold (boilerplate for every new page)
 
 ```html
 <!DOCTYPE html>
@@ -229,8 +265,8 @@ CDN includes at the end of `<body>` on every page:
 - [ ] Nav, footer, audit modal copied in; all `#audit` CTAs open the modal
 - [ ] ONE primary CTA ("Get my free audit"); phone is secondary
 - [ ] Exactly one chartreuse section (final CTA); ≤3 dark sections
-- [ ] Every H1/H2 uses display font, tight tracking, one italic-serif `em` max
-- [ ] Eyebrow + section-title pattern opens each section
+- [ ] Every H1/H2 uses the display font, `letter-spacing:0`, and one italic-serif `em` max
+- [ ] Each section has a clear heading; add an eyebrow only when it improves hierarchy
 - [ ] Entrance animations use the fade-up defaults; `reduce` respected
 - [ ] Title/meta description: outcome + "Dallas" + service keyword
 - [ ] Every claim sits next to proof (a number, a name, a screenshot)
@@ -240,7 +276,7 @@ CDN includes at the end of `<body>` on every page:
 
 ---
 
-## 8. Per-page-type guidance
+## 9. Per-page-type guidance
 
 ### Service page (e.g. /local-seo)
 Dark hero (service name as H1, outcome subhead, CTA) → "what you get" cards (white) → proof/results section with metric blocks → process strip (reuse `.process` pattern) → FAQ → chartreuse CTA. Pull the relevant mega-menu description as the meta description seed.
@@ -256,7 +292,7 @@ White/bright-snow, card grids with the standard card treatment, featured item us
 
 ---
 
-## 9. Assets & conventions
+## 10. Assets & conventions
 
 - `assets/` — images (`hero-bg.jpg`, `bg.jpg`), `assets/brand logos/` (client logos, ~40px tall, opacity .55 → 1 on hover), `assets/video/` (testimonials as `review1-3.mp4`), `assets/posters/`, `assets/frames/` (hero SERP-climb webm/mp4), `assets/icons/`.
 - Icons: **Lucide** via CDN (`data-lucide="..."` + `lucide.createIcons()`); inline SVGs (stroke-width 2.2–2.6, round caps) for bespoke marks; chartreuse-filled SVGs for stat icons on dark.
@@ -265,7 +301,7 @@ White/bright-snow, card grids with the standard card treatment, featured item us
 - CSS organization: one file, banner-comment section dividers (`/* ==== SECTION ==== */`), tokens on `:root` at top, responsive + reduced-motion at bottom.
 - Preview: `npx serve` on port 4599 (`.claude/launch.json`). Note: screenshots blank during continuous GSAP loops — pause/seek timelines to capture.
 
-## 10. Copy voice cheatsheet
+## 11. Copy voice cheatsheet
 
 - Second person, present tense, concrete: "Your customers are Googling. You're on page 2."
 - Verbs of outcome: rank, book, call, win. Banned: synergy, visibility, impressions-as-a-result, "solutions."

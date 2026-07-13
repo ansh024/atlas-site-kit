@@ -483,6 +483,8 @@ function results() {
 
 /* ---------- WHY list reveal ---------- */
 function why() {
+  const list = $('.why__list');
+  if (!list) return;
   gsap.from('.why__list li', {
     scrollTrigger: { trigger: '.why__list', start: 'top 75%' },
     y: 30, opacity: 0, duration: .6, stagger: .12, ease: 'power3.out',
@@ -566,7 +568,7 @@ function form() {
   $$('a[href="#audit"]').forEach(link => link.addEventListener('click', openAudit));
   $$('[data-audit-close]', modal).forEach(el => el.addEventListener('click', closeAudit));
   $('[data-audit-next]', f)?.addEventListener('click', () => {
-    const fields = [f.elements.name, f.elements.email];
+    const fields = $$('[data-audit-step="1"] [required]', f);
     if (fields.every(field => field.reportValidity())) {
       showStep('two');
       setTimeout(() => f.elements.website?.focus(), 40);
@@ -579,7 +581,7 @@ function form() {
 
   f.addEventListener('submit', e => {
     e.preventDefault();
-    const fields = [f.elements.website, f.elements.service];
+    const fields = $$('[data-audit-step="2"] [required]', f);
     if (fields.every(field => field.reportValidity())) {
       showStep('done');
     }

@@ -1,0 +1,336 @@
+{
+  "key": "group_rip_case_study",
+  "title": "Case Study Details",
+  "fields": [
+    {
+      "key": "field_rip_cs_client_name",
+      "label": "Client name",
+      "name": "client_name",
+      "type": "text",
+      "required": 1,
+      "instructions": "e.g. \"Alexis Delivery Service\" \u2014 used in the breadcrumb and page title."
+    },
+    {
+      "key": "field_rip_cs_client_logo",
+      "label": "Client logo",
+      "name": "client_logo",
+      "type": "image",
+      "return_format": "url",
+      "preview_size": "medium",
+      "instructions": "Wide logo mark, shown at ~150x14px."
+    },
+    {
+      "key": "field_rip_cs_industry_tag",
+      "label": "Industry / tag line",
+      "name": "industry_tag",
+      "type": "text",
+      "instructions": "e.g. \"Dallas \u00b7 Moving & Delivery\" \u2014 shown as the hero eyebrow."
+    },
+    {
+      "key": "field_rip_cs_live_url",
+      "label": "Client live site URL",
+      "name": "live_url",
+      "type": "url",
+      "instructions": "Optional \u2014 shown as \"View live site\" link in the hero."
+    },
+    {
+      "key": "field_rip_cs_hero_title",
+      "label": "Hero title",
+      "name": "hero_title",
+      "type": "text",
+      "required": 1,
+      "instructions": "HTML allowed, e.g. wrap a phrase in <em>...</em> to highlight it in italic serif."
+    },
+    {
+      "key": "field_rip_cs_hero_sub",
+      "label": "Hero subheading",
+      "name": "hero_sub",
+      "type": "textarea",
+      "rows": 3
+    },
+    {
+      "key": "field_rip_cs_hero_stats",
+      "label": "Hero stat rows",
+      "name": "hero_stats",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_cs_hero_stat_label",
+          "label": "Label",
+          "name": "label",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_cs_hero_stat_value",
+          "label": "Value",
+          "name": "value",
+          "type": "text",
+          "instructions": "e.g. \"25+\", \"#3\", \"8\" \u2014 plain text, HTML allowed for a superscript span."
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "instructions": "2-3 short stat rows shown under the hero copy.",
+      "min": 1,
+      "max": 3
+    },
+    {
+      "key": "field_rip_cs_chart_label",
+      "label": "Chart label",
+      "name": "chart_label",
+      "type": "text",
+      "default_value": "Monthly organic traffic"
+    },
+    {
+      "key": "field_rip_cs_chart_current_value",
+      "label": "Chart current value",
+      "name": "chart_current_value",
+      "type": "text",
+      "instructions": "e.g. \"1,297\" \u2014 the big number shown above the chart."
+    },
+    {
+      "key": "field_rip_cs_chart_current_unit",
+      "label": "Chart current unit",
+      "name": "chart_current_unit",
+      "type": "text",
+      "default_value": "visitors / month"
+    },
+    {
+      "key": "field_rip_cs_chart_badge",
+      "label": "Chart badge text",
+      "name": "chart_badge",
+      "type": "text",
+      "instructions": "e.g. \"Built from zero in 24 months\""
+    },
+    {
+      "key": "field_rip_cs_chart_start_label",
+      "label": "Chart axis start label",
+      "name": "chart_start_label",
+      "type": "text",
+      "instructions": "e.g. \"Jun 2024\""
+    },
+    {
+      "key": "field_rip_cs_chart_end_label",
+      "label": "Chart axis end label",
+      "name": "chart_end_label",
+      "type": "text",
+      "instructions": "e.g. \"Apr 2026\""
+    },
+    {
+      "key": "field_rip_cs_chart_points",
+      "label": "Chart data points",
+      "name": "chart_points",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_cs_chart_point_value",
+          "label": "Value",
+          "name": "value",
+          "type": "number"
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "instructions": "Plain numbers, in order (e.g. monthly traffic). The chart line/shape is drawn automatically from these \u2014 any number of points works.",
+      "min": 2
+    },
+    {
+      "key": "field_rip_cs_context_pills",
+      "label": "Context pills",
+      "name": "context_pills",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_cs_pill_icon",
+          "label": "Icon (lucide name)",
+          "name": "icon",
+          "type": "text",
+          "default_value": "tag",
+          "instructions": "A lucide.dev icon name: tag, map-pin, calendar, search, etc."
+        },
+        {
+          "key": "field_rip_cs_pill_text",
+          "label": "Text",
+          "name": "text",
+          "type": "text"
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "instructions": "Small pills under the hero \u2014 industry, location, engagement length, service type.",
+      "min": 1,
+      "max": 4
+    },
+    {
+      "key": "field_rip_cs_strategy_title",
+      "label": "Strategy section title",
+      "name": "strategy_title",
+      "type": "text",
+      "instructions": "HTML allowed, <br> for a line break."
+    },
+    {
+      "key": "field_rip_cs_strategy_lede",
+      "label": "Strategy lede paragraph",
+      "name": "strategy_lede",
+      "type": "textarea",
+      "rows": 3,
+      "instructions": "HTML allowed, e.g. wrap the last sentence in <em>...</em>."
+    },
+    {
+      "key": "field_rip_cs_strategy_cards",
+      "label": "Strategy cards",
+      "name": "strategy_cards",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_cs_strategy_card_title",
+          "label": "Title",
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_cs_strategy_card_text",
+          "label": "Text",
+          "name": "text",
+          "type": "textarea",
+          "rows": 3
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "instructions": "Usually 3 cards, numbered automatically (01, 02, 03...).",
+      "min": 1,
+      "max": 4
+    },
+    {
+      "key": "field_rip_cs_results_title",
+      "label": "Results section title",
+      "name": "results_title",
+      "type": "text",
+      "instructions": "HTML allowed, e.g. <em>emphasis</em>."
+    },
+    {
+      "key": "field_rip_cs_results_metrics",
+      "label": "Results metrics",
+      "name": "results_metrics",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_cs_metric_label",
+          "label": "Label",
+          "name": "label",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_cs_metric_value",
+          "label": "Value",
+          "name": "value",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_cs_metric_sub",
+          "label": "Sub-text",
+          "name": "sub",
+          "type": "text"
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "instructions": "2-4 metric tiles.",
+      "min": 1,
+      "max": 4
+    },
+    {
+      "key": "field_rip_cs_table_caption",
+      "label": "Keyword table caption",
+      "name": "table_caption",
+      "type": "text",
+      "default_value": "A sample of the keywords ranking today"
+    },
+    {
+      "key": "field_rip_cs_table_source",
+      "label": "Keyword table source note",
+      "name": "table_source",
+      "type": "text",
+      "default_value": "Source: live rank tracking"
+    },
+    {
+      "key": "field_rip_cs_keyword_rows",
+      "label": "Keyword rows",
+      "name": "keyword_rows",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_cs_kw_keyword",
+          "label": "Keyword",
+          "name": "keyword",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_cs_kw_position",
+          "label": "Position",
+          "name": "position",
+          "type": "text",
+          "instructions": "e.g. \"#1\", \"#14\""
+        },
+        {
+          "key": "field_rip_cs_kw_volume",
+          "label": "Search volume",
+          "name": "volume",
+          "type": "text",
+          "instructions": "e.g. \"480/mo\" or \"\u2014\""
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "instructions": "Optional keyword ranking table.",
+      "min": 0,
+      "max": 8
+    },
+    {
+      "key": "field_rip_cs_related",
+      "label": "Related case studies",
+      "name": "related_case_studies",
+      "type": "relationship",
+      "post_type": [
+        "rip_case_study"
+      ],
+      "filters": [
+        "search"
+      ],
+      "max": 2,
+      "return_format": "id",
+      "instructions": "Pick up to 2 other case studies to feature at the bottom of this page."
+    },
+    {
+      "key": "field_rip_cs_seo_title",
+      "label": "SEO title tag",
+      "name": "seo_title",
+      "type": "text",
+      "instructions": "Leave blank to auto-generate from client name."
+    },
+    {
+      "key": "field_rip_cs_seo_description",
+      "label": "SEO meta description",
+      "name": "seo_description",
+      "type": "textarea",
+      "rows": 2
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "rip_case_study"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "modified": 1783627995
+}
