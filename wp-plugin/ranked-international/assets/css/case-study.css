@@ -148,17 +148,18 @@
 /* =========================================================
    Hub page — /case-studies/
    ========================================================= */
-.csp-hub-hero{position:relative;padding:170px var(--pad) 90px;background:var(--prussian-blue);
-  color:#fff;overflow:hidden}
+.csp-hub-hero{position:relative;padding:112px 24px 60px;background:var(--prussian-blue);
+  color:#fff;overflow:hidden;text-align:center}
 .csp-hub-hero::before{content:"";position:absolute;inset:0;
   background:linear-gradient(160deg,var(--ocean-twilight),var(--egyptian-blue));opacity:.55}
-.csp-hub-hero__inner{position:relative;max-width:var(--maxw);margin:0 auto}
+.csp-hub-hero__inner{position:relative;max-width:900px;margin:0 auto;display:flex;
+  flex-direction:column;align-items:center}
 .csp-hub-hero h1{font-family:var(--font-display);font-weight:800;
-  font-size:clamp(2.4rem,5.5vw,4rem);line-height:1.2;letter-spacing:0;max-width:16ch}
+  font-size:clamp(2.4rem,5.5vw,4rem);line-height:1.12;letter-spacing:0;max-width:18ch;color:#fff}
 .csp-hub-hero h1 em{font-family:inherit;font-style:inherit;font-weight:inherit;
-  -webkit-text-stroke:0}
+  -webkit-text-stroke:0;color:#fff}
 .csp-hub-hero p{margin-top:20px;font-size:18px;font-weight:400;line-height:1.4;
-  letter-spacing:-.54px;color:#fff;max-width:46ch}
+  letter-spacing:-.54px;color:#fff;max-width:52ch}
 
 .csp-hub-grid-section{padding:clamp(70px,9vw,110px) var(--pad);background:var(--bright-snow)}
 .csp-hub-grid-section__inner{max-width:var(--maxw);margin:0 auto}
@@ -214,6 +215,9 @@
   .csp-table th,.csp-table td{padding:11px 12px}
 }
 @media(max-width:640px){
+  .csp-hub-hero{padding:82px 20px 48px}
+  .csp-hub-hero h1{font-size:clamp(2.1rem,10vw,2.7rem);max-width:12ch}
+  .csp-hub-hero p{margin-top:16px;font-size:1rem;max-width:34ch}
   .hero--case-study{background:var(--prussian-blue);min-height:0;padding-bottom:48px;color:#fff}
   .nav,.nav.is-stuck{background:rgba(10,21,41,.96);box-shadow:0 1px 0 rgba(255,255,255,.08)}
   .nav .nav__burger span,.nav.is-stuck .nav__burger span{background:#fff}
