@@ -209,10 +209,17 @@ One-time setup on the WordPress site:
 2. The repo (`ansh024/atlas-site-kit`) is public, so no GitHub token is
    needed — Git Updater's free tier reads it directly. (A token in
    Settings → Git Updater is optional, only to raise API rate limits.)
-3. Optional, for fully hands-free deploys: enable auto-updates for this
-   plugin on the Plugins screen — updates then install themselves shortly
-   after each push. Otherwise it shows as a normal "update available" you
-   click once.
+3. **Push-based updates (recommended — polling is unreliable on shared
+   hosting, whose IPs often exhaust GitHub's anonymous API rate limit):**
+   in wp-admin go to Settings → Git Updater → **Remote Management** tab and
+   copy the REST API key. Then in GitHub: repo → Settings → Secrets and
+   variables → Actions → New repository secret:
+   - Name: `GITUPDATER_WEBHOOK_URL`
+   - Value: `https://rankedinternational.com/wp-json/git-updater/v1/update/?key=<THE-KEY>&plugin=atlas-site-kit&tag=plugin-deploy`
+
+   The CI workflow calls that URL after each publish, so the site installs
+   the new version within a minute of every push — no update screens at all.
+   (Pasting that same URL in a browser manually forces an update any time.)
 
 What a deploy can and cannot touch:
 
