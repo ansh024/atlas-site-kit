@@ -50,6 +50,9 @@ function rip_load_page_template( $template ) {
 	if ( is_singular( 'rip_case_study' ) ) {
 		return RIP_DIR . 'templates/template-case-study-single.php';
 	}
+	if ( is_singular( 'rip_service' ) ) {
+		return RIP_DIR . 'templates/template-service.php';
+	}
 
 	if ( ! is_page() ) return $template;
 
@@ -67,7 +70,7 @@ function rip_load_page_template( $template ) {
  * Case Study post.
  */
 function rip_is_our_template() {
-	if ( is_singular( array( 'rip_industry', 'rip_case_study' ) ) ) return true;
+	if ( is_singular( array( 'rip_industry', 'rip_case_study', 'rip_service' ) ) ) return true;
 	if ( ! is_page() ) return false;
 	$slug = get_page_template_slug();
 	return $slug && array_key_exists( $slug, rip_templates() );
@@ -84,8 +87,12 @@ function rip_enqueue_assets() {
 	wp_enqueue_style( 'rip-styles', RIP_URL . 'assets/css/styles.min.css', array(), RIP_VERSION );
 
 	$is_case_study = is_singular( 'rip_case_study' ) || get_page_template_slug() === 'templates/template-case-studies-hub.php';
+	$is_service = is_singular( 'rip_service' );
 	if ( $is_case_study ) {
 		wp_enqueue_style( 'rip-case-study', RIP_URL . 'assets/css/case-study.css', array( 'rip-styles' ), RIP_VERSION );
+	}
+	if ( $is_service ) {
+		wp_enqueue_style( 'rip-service', RIP_URL . 'assets/css/service.css', array( 'rip-styles' ), RIP_VERSION );
 	}
 
 	wp_enqueue_script( 'gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js', array(), '3.12.5', true );
@@ -101,6 +108,9 @@ function rip_enqueue_assets() {
 
 	if ( $is_case_study ) {
 		wp_enqueue_script( 'rip-case-study', RIP_URL . 'assets/js/case-study.js', array( 'gsap', 'gsap-scrolltrigger' ), RIP_VERSION, true );
+	}
+	if ( $is_service ) {
+		wp_enqueue_script( 'rip-service', RIP_URL . 'assets/js/service.js', array( 'gsap', 'gsap-scrolltrigger', 'rip-main' ), RIP_VERSION, true );
 	}
 }
 
@@ -222,12 +232,15 @@ function rip_handle_audit_lead() {
 		'email'    => sanitize_email( wp_unslash( $_POST['email'] ?? '' ) ),
 		'website'  => sanitize_text_field( wp_unslash( $_POST['website'] ?? '' ) ),
 		'service'  => sanitize_text_field( wp_unslash( $_POST['service'] ?? '' ) ),
+		'phone'    => sanitize_text_field( wp_unslash( $_POST['phone'] ?? '' ) ),
+		'market'   => sanitize_text_field( wp_unslash( $_POST['market'] ?? '' ) ),
+		'notes'    => sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) ),
 		'page_url' => esc_url_raw( wp_unslash( $_POST['page_url'] ?? '' ) ),
 	);
 
 	$to      = apply_filters( 'rip_audit_lead_recipient', get_option( 'admin_email' ) );
 	$subject = 'New free SEO audit request — ' . $lead['name'];
-	$body    = "Name: {$lead['name']}\nEmail: {$lead['email']}\nWebsite: {$lead['website']}\nService: {$lead['service']}\nSubmitted from: {$lead['page_url']}";
+	$body    = "Name: {$lead['name']}\nEmail: {$lead['email']}\nPhone: {$lead['phone']}\nWebsite: {$lead['website']}\nService: {$lead['service']}\nPrimary market: {$lead['market']}\nNotes: {$lead['notes']}\nSubmitted from: {$lead['page_url']}";
 	wp_mail( $to, $subject, $body );
 
 	/**

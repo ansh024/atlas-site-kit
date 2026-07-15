@@ -29,6 +29,75 @@ function rip_seed_content() {
 	update_option( 'rip_content_seeded', true );
 }
 
+/** Seed the Local SEO reference independently so existing installs receive it. */
+function rip_seed_service_content() {
+	if ( get_option( 'rip_service_content_seeded' ) ) return;
+	if ( ! function_exists( 'update_field' ) || ! function_exists( 'acf_get_field' ) || ! acf_get_field( 'field_rip_svc_name' ) ) return;
+
+	$existing = get_page_by_path( 'local-seo-services', OBJECT, 'rip_service' );
+	$post_id = $existing ? $existing->ID : wp_insert_post( array(
+		'post_type' => 'rip_service', 'post_status' => 'draft',
+		'post_title' => 'Local SEO Services', 'post_name' => 'local-seo-services',
+	) );
+	if ( is_wp_error( $post_id ) || ! $post_id ) return;
+
+	$fields = array(
+		'service_name' => 'Local SEO', 'service_family' => 'seo', 'primary_market' => 'Dallas–Fort Worth, Texas',
+		'hero_eyebrow' => 'Local SEO services',
+		'hero_title' => 'Own the searches happening <em>five miles</em> from your business.',
+		'hero_summary' => 'Show up in Google Maps and local results when nearby customers are ready to call, book, or visit—not after they have already chosen a competitor.',
+		'hero_cta_label' => 'Get my free local SEO audit', 'hero_proof' => '100+ businesses ranked',
+		'service_definition' => 'Local SEO improves how a business appears in location-based Google results, including Maps and the local pack, through its website, Business Profile, reviews, listings and local authority.',
+		'evidence_type' => 'map', 'evidence_business' => 'Your Business', 'evidence_calls' => '186', 'evidence_directions' => '94', 'evidence_position' => '3.2',
+		'outcomes' => array(
+			array( 'label' => 'Map Pack visibility', 'detail' => 'Show up where nearby buyers click first.' ),
+			array( 'label' => 'More qualified calls', 'detail' => 'Turn high-intent searches into conversations.' ),
+			array( 'label' => 'A stronger local reputation', 'detail' => 'Build the trust signals that earn the click.' ),
+		),
+		'problems' => array(
+			array( 'title' => 'Your profile is incomplete or inactive', 'symptom' => 'Competitors look more established before a customer reaches your website.', 'consequence' => 'Fewer calls from high-intent local searches.', 'response' => 'We rebuild, categorize, publish, and optimize the profile around searches that lead to work.', 'status' => 'Profile opportunity' ),
+			array( 'title' => 'You disappear outside your immediate neighborhood', 'symptom' => 'Rankings fall away a few miles from your office or service area.', 'consequence' => 'Large parts of your viable market never see you.', 'response' => 'We map geographic gaps and reinforce them with relevant pages, links, and local signals.', 'status' => 'Coverage gap' ),
+			array( 'title' => 'Your business details conflict across the web', 'symptom' => 'Names, addresses, categories, or service areas do not line up.', 'consequence' => 'Google has less confidence in which information to trust.', 'response' => 'We clean up priority listings and build a consistent local entity footprint.', 'status' => 'Signal mismatch' ),
+			array( 'title' => 'Reviews are not helping the sale', 'symptom' => 'Review volume, recency, or responses lag behind the businesses outranking you.', 'consequence' => 'Customers choose the competitor who looks safer.', 'response' => 'We install a practical review workflow and improve how reputation is presented.', 'status' => 'Trust gap' ),
+		),
+		'workstream_layout' => 'blueprint',
+		'workstreams' => array(
+			array( 'title' => 'Google Business Profile', 'icon' => 'map-pin', 'description' => 'Turn the profile into a complete, active local storefront.', 'deliverable' => 'Category, service, photo, post, Q&A and conversion optimization.', 'outcome' => 'More discovery searches become calls and visits.' ),
+			array( 'title' => 'Local keyword strategy', 'icon' => 'search', 'description' => 'Prioritize service, intent, and location combinations that indicate a buyer.', 'deliverable' => 'Keyword map and page-to-query plan.', 'outcome' => 'Effort goes toward searches that can create revenue.' ),
+			array( 'title' => 'Service and location pages', 'icon' => 'file-text', 'description' => 'Give each valuable service-market combination a useful destination.', 'deliverable' => 'Conversion-led pages with internal links and structured data.', 'outcome' => 'Broader coverage without thin or repetitive content.' ),
+			array( 'title' => 'Listings and citations', 'icon' => 'list-checks', 'description' => 'Make core business information consistent where search engines verify it.', 'deliverable' => 'Priority citation cleanup and expansion.', 'outcome' => 'A cleaner, more credible local entity footprint.' ),
+			array( 'title' => 'Review system', 'icon' => 'star', 'description' => 'Create a repeatable way to earn, respond to, and learn from reviews.', 'deliverable' => 'Request workflow, response guidance and monitoring.', 'outcome' => 'Stronger trust and a better profile conversion rate.' ),
+			array( 'title' => 'Local authority', 'icon' => 'link-2', 'description' => 'Earn locally relevant mentions and links competitors cannot easily copy.', 'deliverable' => 'Local link and partnership campaign.', 'outcome' => 'More authority in the markets that matter.' ),
+			array( 'title' => 'Tracking and reporting', 'icon' => 'line-chart', 'description' => 'Connect rankings and profile actions to calls, forms, and booked work.', 'deliverable' => 'Monthly lead and market-coverage reporting.', 'outcome' => 'A clear view of what is creating business.' ),
+		),
+		'proof_mode' => 'agency', 'proof_client' => 'Bella MedSpa & Aesthetics', 'proof_context' => 'Relevant agency result · Dallas local SEO',
+		'proof_problem' => 'Paid acquisition was doing too much of the work, while organic search contributed only about 200 monthly visits.',
+		'proof_change' => 'We rebuilt service intent, local relevance and trust signals so search could become a primary acquisition channel.',
+		'proof_metric' => '7.5×', 'proof_metric_label' => 'organic traffic growth', 'proof_support_1' => '200 → 1,500 monthly visitors', 'proof_support_2' => 'Organic became a primary channel',
+		'phases' => array(
+			array( 'timeframe' => 'Week 1', 'title' => 'Audit and opportunity map', 'actions' => 'Profile, rankings, site, citations, reviews, competitors and tracking.', 'client_input' => 'Access, priority services and service areas.', 'output' => 'A prioritized 90-day opportunity map.', 'signal' => 'Tracking and critical profile gaps are corrected.' ),
+			array( 'timeframe' => 'First 30 days', 'title' => 'Build the foundation', 'actions' => 'Fix priority technical, profile, page and entity issues.', 'client_input' => 'Approvals, accurate business details and brand assets.', 'output' => 'A stable local-search foundation.', 'signal' => 'Improved profile completeness and early movement.' ),
+			array( 'timeframe' => 'Days 31–90', 'title' => 'Expand market coverage', 'actions' => 'Publish pages, strengthen reviews, citations and local authority.', 'client_input' => 'Fast feedback and participation in the review workflow.', 'output' => 'More relevant entry points across the target market.', 'signal' => 'Broader rankings and more qualified actions.' ),
+			array( 'timeframe' => 'Ongoing', 'title' => 'Optimize what creates leads', 'actions' => 'Measure, test, maintain and focus resources on the winners.', 'client_input' => 'Lead-quality and booked-work feedback.', 'output' => 'Monthly work and outcome reporting.', 'signal' => 'Compounding calls, forms and market coverage.' ),
+		),
+		'fit_items' => array( array('text'=>'You can respond quickly when qualified leads arrive.'), array('text'=>'You are willing to participate in review generation.'), array('text'=>'You see search as a sustained growth channel.'), array('text'=>'You want clear work and outcome reporting.') ),
+		'not_fit_items' => array( array('text'=>'You need guaranteed rankings by a fixed date.'), array('text'=>'No one can answer or follow up with new leads.'), array('text'=>'The business details or offer are still changing weekly.'), array('text'=>'You want a one-time trick instead of ongoing improvement.') ),
+		'faqs' => array(
+			array( 'question' => 'How long does local SEO take?', 'answer' => 'Early corrections can create movement within weeks, while competitive market coverage usually builds over several months. Timing depends on your starting point, competition, location and ability to support the work. We report progress without guaranteeing rankings.' ),
+			array( 'question' => 'Do I need a physical storefront?', 'answer' => 'Not always. Eligible service-area businesses can use local SEO without displaying a public address, provided the Google Business Profile follows the applicable guidelines.' ),
+			array( 'question' => 'What do I own?', 'answer' => 'Your profiles, website content, tracking accounts and approved assets remain yours. We do not hold core business assets hostage.' ),
+			array( 'question' => 'How do you measure results?', 'answer' => 'We connect market coverage and profile activity to calls, forms and other lead actions, then use your feedback to understand lead quality and booked work.' ),
+			array( 'question' => 'How is this different from organic SEO?', 'answer' => 'Local SEO emphasizes proximity, Google Business Profile, reviews and local entity signals. Organic SEO focuses more broadly on website rankings. Strong local campaigns usually coordinate both.' ),
+		),
+		'final_cta_title' => 'Find out why you’re missing from the <em>Map Pack</em>.', 'final_cta_summary' => 'We’ll show you the three local-search gaps costing you calls.', 'final_cta_label' => 'Get my free local SEO audit',
+		'seo_title' => 'Local SEO Services in Dallas — Ranked International',
+		'seo_description' => 'Local SEO services that improve Google Maps visibility and turn nearby searches into qualified calls, bookings, and visits.',
+	);
+
+	rip_update_fields( $post_id, $fields, 'group_rip_service_page.json' );
+	update_option( 'rip_service_content_seeded', true );
+}
+
 /**
  * ACF's update_field() only works with field NAMES on posts that were
  * previously saved through the ACF UI (the field-key reference must already

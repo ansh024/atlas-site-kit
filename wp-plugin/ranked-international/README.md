@@ -10,7 +10,7 @@ There are two different mechanisms in this plugin, for two different needs:
 1. **Home and the Case Studies hub** are one-off, hand-built **Page
    Templates** — pick them from Page Attributes on a Page, like any theme
    template.
-2. **Industry Pages** (e.g. Construction SEO) and **Case Studies** (e.g.
+2. **Industry Pages** (e.g. Construction SEO), **Service Pages** (e.g. Local SEO), and **Case Studies** (e.g.
    Alexis Delivery Service) are **Custom Post Types with ACF fields**. These
    are the pages the client needs to duplicate and edit going forward, so
    instead of a PHP file per page, there's one shared template per type and
@@ -26,8 +26,8 @@ There are two different mechanisms in this plugin, for two different needs:
 3. WP Admin → Plugins → Add New → Upload Plugin → upload the zip → Activate.
 4. On activation the plugin automatically:
    - flushes permalinks so the new URLs work immediately, and
-   - seeds the existing content — the Construction Industry Page and all 6
-     Case Studies — as **drafts**, so nothing from the current site is lost
+   - seeds the existing content — the Construction Industry Page, Local SEO
+     reference Service Page, and all 6 Case Studies — as **drafts**, so nothing from the current site is lost
      and nothing new goes live. Activating the plugin changes zero public
      URLs; every page goes live only by an explicit action in wp-admin.
 5. Create two Pages for the hand-built templates, and assign each via Page
@@ -49,10 +49,11 @@ switch, and each is independently reversible:
 | Case Studies hub | you assign "Ranked Intl: Case Studies (Hub)" to a `/case-studies/` Page | same |
 | Each case study | you Publish its seeded draft under **Case Studies** | reverting it to draft |
 | Construction | you Publish its seeded draft under **Industry Pages** AND trash/re-slug the old `/construction/` Page (the old Page wins until then) | restoring the old Page from trash |
+| Local SEO | you Publish its seeded draft under **Service Pages** AND trash/re-slug the old `/local-seo-services/` Page (the old Page wins until then) | restoring the old Page from trash |
 
-## How the client adds a new Industry Page or Case Study
+## How the client adds a new Industry, Service, or Case Study page
 
-1. WP Admin → **Industry Pages** (or **Case Studies**) → Add New.
+1. WP Admin → **Industry Pages**, **Service Pages**, or **Case Studies** → Add New.
 2. Give it a title and a URL slug (Industry Pages are top-level, e.g. `hvac`
    → `/hvac/`; Case Studies are always under `/case-studies/`, e.g.
    `acme-plumbing` → `/case-studies/acme-plumbing/`).
@@ -79,8 +80,15 @@ any duplication plugin) or just copy field values across manually into a new
   table, 1-3 rotating client spotlight quotes, a 6-chip services diagram,
   process steps, and FAQ.
 
-Both field groups are bundled as ACF "local JSON" (`acf-json/`), so they
+All field groups are bundled as ACF "local JSON" (`acf-json/`), so they
 appear automatically the moment ACF is active — nothing to configure by hand.
+
+- **Service Page Details** (`acf-json/group_rip_service_page.json`) — controlled
+  service identity and evidence-object type, outcomes, diagnostic problems,
+  workstreams, proof policy, engagement phases, qualification, FAQs, optional
+  long-form guide, CTA, and SEO metadata. Local SEO is seeded as the reference.
+  Service URLs stay top-level and existing WordPress Pages always win, making
+  migration reversible page by page.
 
 ### The traffic chart
 
@@ -122,9 +130,9 @@ theme's own header/nav/footer markup, fonts, or CSS.
 
 ## Assets
 
-- `assets/css/styles.min.css`, `assets/css/case-study.css` — site + case
+- `assets/css/styles.min.css`, `assets/css/case-study.css`, `assets/css/service.css` — site + case
   study styles, enqueued only on pages using one of these templates.
-- `assets/js/main.js`, `assets/js/case-study.js` — page behavior (nav,
+- `assets/js/main.js`, `assets/js/case-study.js`, `assets/js/service.js` — page behavior (nav,
   hero animation, FAQ accordion, the audit-form modal, GSAP scroll effects).
   Unminified on purpose, so future edits don't require a build step.
 - `assets/images/` — the shared design-chrome images (logo, hero backgrounds,

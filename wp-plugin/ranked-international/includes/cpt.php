@@ -49,6 +49,22 @@ function rip_register_post_types() {
 		'supports'     => array( 'title' ),
 		'rewrite'      => array( 'slug' => 'case-studies', 'with_front' => false ),
 	) );
+
+	register_post_type( 'rip_service', array(
+		'label'        => 'Service Pages',
+		'labels'       => array(
+			'name'          => 'Service Pages',
+			'singular_name' => 'Service Page',
+			'add_new_item'  => 'Add New Service Page',
+			'edit_item'     => 'Edit Service Page',
+		),
+		'public'        => true,
+		'show_in_rest'  => true,
+		'has_archive'   => false,
+		'menu_icon'     => 'dashicons-search',
+		'supports'      => array( 'title' ),
+		'rewrite'       => false,
+	) );
 }
 
 /**
@@ -56,7 +72,7 @@ function rip_register_post_types() {
  */
 add_filter( 'post_type_link', 'rip_industry_permalink', 10, 2 );
 function rip_industry_permalink( $permalink, $post ) {
-	if ( $post->post_type === 'rip_industry' && $post->post_status === 'publish' ) {
+	if ( in_array( $post->post_type, array( 'rip_industry', 'rip_service' ), true ) && $post->post_status === 'publish' ) {
 		return home_url( '/' . $post->post_name . '/' );
 	}
 	return $permalink;
@@ -86,16 +102,17 @@ function rip_industry_url_fallback( $query ) {
 	if ( get_page_by_path( $slug ) ) return;                  // existing Page
 	if ( get_page_by_path( $slug, OBJECT, 'post' ) ) return;  // existing blog post
 
-	$industry = get_posts( array(
-		'post_type'      => 'rip_industry',
+	$landing = get_posts( array(
+		'post_type'      => array( 'rip_industry', 'rip_service' ),
 		'name'           => $slug,
 		'post_status'    => 'publish',
 		'posts_per_page' => 1,
 	) );
-	if ( ! $industry ) return;
+	if ( ! $landing ) return;
 
-	$query->set( 'post_type', 'rip_industry' );
-	$query->set( 'rip_industry', $slug );
+	$post_type = $landing[0]->post_type;
+	$query->set( 'post_type', $post_type );
+	$query->set( $post_type, $slug );
 	$query->set( 'name', $slug );
 	$query->set( 'pagename', '' );
 	$query->is_page     = false;
@@ -138,6 +155,7 @@ function rip_on_activate() {
  * after the first successful run.
  */
 add_action( 'init', 'rip_seed_content', 20 );
+add_action( 'init', 'rip_seed_service_content', 21 );
 
 /**
  * Recovery switch: visiting /wp-admin/?rip_reseed=1 as an administrator
@@ -154,6 +172,7 @@ function rip_maybe_reseed() {
 	$seed_slugs = array(
 		'rip_case_study' => array( 'alexis-delivery-service', 'bella-med-spa', 'dfw-flower-wall', 'reyes-custom-millwork', 'social-pro-photo-booth', 'turf-and-design' ),
 		'rip_industry'   => array( 'construction' ),
+		'rip_service'    => array( 'local-seo-services' ),
 	);
 	foreach ( $seed_slugs as $post_type => $slugs ) {
 		$posts = get_posts( array(
@@ -169,7 +188,9 @@ function rip_maybe_reseed() {
 	}
 
 	delete_option( 'rip_content_seeded' );
+	delete_option( 'rip_service_content_seeded' );
 	rip_seed_content();
+	rip_seed_service_content();
 
 	add_action( 'admin_notices', function () {
 		$done = get_option( 'rip_content_seeded' ) ? 'Content re-seeded successfully.' : 'Re-seed could not run — is ACF active?';

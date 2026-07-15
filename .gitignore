@@ -2,3 +2,8 @@
 .DS_Store
 node_modules
 wp-plugin/dist/
+.wp-env.override.json
+.wp-env/
+test-results/
+playwright-report/
+.preview/

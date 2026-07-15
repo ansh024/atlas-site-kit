@@ -1,0 +1,21 @@
+{
+  "name": "ranked-international-local-wordpress",
+  "private": true,
+  "description": "Isolated local WordPress test environment for the Ranked International plugin.",
+  "scripts": {
+    "wp:start": "wp-env start && bash scripts/wp-local-bootstrap.sh",
+    "wp:stop": "wp-env stop",
+    "wp:reset": "bash scripts/wp-local-reset.sh",
+    "wp:destroy": "bash scripts/wp-local-destroy.sh",
+    "wp:status": "wp-env status",
+    "wp:cli": "wp-env run cli wp",
+    "wp:test": "bash scripts/wp-local-smoke.sh && playwright test",
+    "wp:test:smoke": "bash scripts/wp-local-smoke.sh",
+    "wp:test:e2e": "playwright test",
+    "wp:preview": "playwright test tests/service-preview.spec.js --project=desktop --headed"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1",
+    "@wordpress/env": "11.11.0"
+  }
+}
