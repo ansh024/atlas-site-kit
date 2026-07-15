@@ -14,13 +14,13 @@
 .csp-crumb em{font-style:normal;color:rgba(255,255,255,.85);font-family:inherit}
 
 /* ---------- hero ---------- */
-.hero--case-study{height:auto;min-height:700px;padding-bottom:70px}
-.hero--case-study .hero__inner{flex-direction:row;align-items:flex-start;
-  padding:68px 64px 0;gap:48px}
-.hero--case-study .hero__copy{width:708px;max-width:708px;padding-top:100px;gap:32px;flex-shrink:0}
+.hero--case-study{height:auto;min-height:0;padding-bottom:64px}
+.hero--case-study .hero__inner{flex-direction:row;align-items:center;
+  padding:112px 64px 0;gap:48px}
+.hero--case-study .hero__copy{width:708px;max-width:708px;padding-top:0;gap:32px;flex-shrink:0}
 
-.csp-logo-badge{display:inline-flex;align-items:center;justify-content:center;
-  height:44px;padding:0 4px;margin-bottom:4px}
+.csp-logo-badge{display:flex;align-items:center;justify-content:flex-start;
+  height:32px;padding:0;margin-bottom:0}
 .csp-logo-badge img{height:100%;width:auto;display:block;object-fit:contain}
 
 .hero--case-study .hero__title{font-family:var(--font-display);font-weight:800;
@@ -218,14 +218,14 @@
   .csp-table th,.csp-table td{padding:11px 12px}
 }
 @media(max-width:640px){
-  .hero--case-study{background:var(--prussian-blue);padding-bottom:48px;color:#fff}
-  .hero--case-study .hero__inner{align-items:flex-start;text-align:left;padding:96px 20px 0;gap:28px}
+  .hero--case-study{background:var(--prussian-blue);min-height:0;padding-bottom:48px;color:#fff}
+  .hero--case-study .hero__inner{align-items:flex-start;text-align:left;padding:76px 20px 0;gap:28px}
   .hero--case-study .hero__copy{order:0;gap:24px}
   .hero--case-study .hero__text-block{align-items:flex-start;text-align:left;gap:12px}
   .hero--case-study .hero__eyebrow{color:var(--chartreuse)}
   .hero--case-study .hero__title{font-size:28px;line-height:1.2;letter-spacing:0;color:#fff}
   .hero--case-study .hero__sub{color:#fff;font-size:14px;line-height:1.2;max-width:34ch;text-align:left;margin:0}
-  .hero--case-study .hero__bottom{align-items:flex-start;gap:0}
+  .hero--case-study .hero__bottom{flex-direction:column;align-items:flex-start;gap:14px}
   .hero--case-study .hero__bottom .btn--primary{background:var(--chartreuse);color:var(--prussian-blue)}
   .csp-stat-row__num{font-size:1.7rem}
   .csp-metric-grid{grid-template-columns:1fr}
