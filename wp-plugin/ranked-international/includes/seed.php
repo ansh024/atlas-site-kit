@@ -12,6 +12,12 @@ function rip_seed_content() {
 	if ( get_option( 'rip_content_seeded' ) ) return;
 	if ( ! function_exists( 'update_field' ) ) return; // ACF not active yet — nothing to populate safely
 
+	// ACF must be able to resolve our field definitions (loaded from
+	// acf-json at ACF boot), or update_field() would silently write values
+	// under wrong meta names. If it can't, bail WITHOUT setting the seeded
+	// flag — the init hook retries on the next request.
+	if ( ! function_exists( 'acf_get_field' ) || ! acf_get_field( 'field_rip_cs_client_name' ) ) return;
+
 	require_once ABSPATH . 'wp-admin/includes/image.php';
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	require_once ABSPATH . 'wp-admin/includes/media.php';

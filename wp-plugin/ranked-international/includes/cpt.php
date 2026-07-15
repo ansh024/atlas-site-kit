@@ -124,17 +124,58 @@ register_activation_hook( RIP_DIR . 'ranked-international.php', 'rip_on_activate
 function rip_on_activate() {
 	rip_register_post_types();
 	flush_rewrite_rules();
-	rip_seed_content();
+	// Deliberately NOT seeding here: during the activation request ACF has
+	// already booted BEFORE this plugin was loaded, so our acf-json field
+	// definitions aren't registered yet and update_field() would write the
+	// values under wrong meta names. The init-20 hook below seeds on the
+	// next request instead, when ACF has loaded our field groups.
 }
 
 /**
- * If ACF wasn't active yet when this plugin was activated, the seed is
- * skipped (it needs update_field()). Retry on init — priority 20 so it runs
- * AFTER both ACF boots (init 5) and our post types register (init 10). The
+ * Seed on init priority 20 — after ACF boots (init 5, which loads our
+ * acf-json field groups) and after our post types register (init 10). The
  * seeded-option guard inside rip_seed_content() makes this a cheap no-op
  * after the first successful run.
  */
 add_action( 'init', 'rip_seed_content', 20 );
+
+/**
+ * Recovery switch: visiting /wp-admin/?rip_reseed=1 as an administrator
+ * deletes the seeded DRAFTS (published or client-renamed posts are left
+ * alone) and re-runs the seed. For repairing a site where the seed ran
+ * before ACF could resolve our fields. Imported media is reused, not
+ * duplicated (see rip_seed_attachment cache).
+ */
+add_action( 'admin_init', 'rip_maybe_reseed' );
+function rip_maybe_reseed() {
+	if ( ! isset( $_GET['rip_reseed'] ) || $_GET['rip_reseed'] !== '1' ) return;
+	if ( ! current_user_can( 'manage_options' ) ) return;
+
+	$seed_slugs = array(
+		'rip_case_study' => array( 'alexis-delivery-service', 'bella-med-spa', 'dfw-flower-wall', 'reyes-custom-millwork', 'social-pro-photo-booth', 'turf-and-design' ),
+		'rip_industry'   => array( 'construction' ),
+	);
+	foreach ( $seed_slugs as $post_type => $slugs ) {
+		$posts = get_posts( array(
+			'post_type'      => $post_type,
+			'post_name__in'  => $slugs,
+			'post_status'    => 'draft', // only drafts — never delete anything the client published
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+		) );
+		foreach ( $posts as $pid ) {
+			wp_delete_post( $pid, true );
+		}
+	}
+
+	delete_option( 'rip_content_seeded' );
+	rip_seed_content();
+
+	add_action( 'admin_notices', function () {
+		$done = get_option( 'rip_content_seeded' ) ? 'Content re-seeded successfully.' : 'Re-seed could not run — is ACF active?';
+		echo '<div class="notice notice-info"><p><strong>Ranked International Pages:</strong> ' . esc_html( $done ) . '</p></div>';
+	} );
+}
 
 /**
  * Admin notice if ACF isn't installed — the field groups (and therefore the
