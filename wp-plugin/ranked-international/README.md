@@ -206,9 +206,9 @@ The pipeline (`.github/workflows/publish-wp-plugin.yml` in the repo root):
 One-time setup on the WordPress site:
 
 1. Install the Git Updater plugin and activate it.
-2. Since this repo is private: create a fine-grained GitHub personal access
-   token with read-only **Contents** access to `ansh024/ranked-international`
-   only, and paste it in Settings → Git Updater → GitHub Access Token.
+2. The repo (`ansh024/atlas-site-kit`) is public, so no GitHub token is
+   needed — Git Updater's free tier reads it directly. (A token in
+   Settings → Git Updater is optional, only to raise API rate limits.)
 3. Optional, for fully hands-free deploys: enable auto-updates for this
    plugin on the Plugins screen — updates then install themselves shortly
    after each push. Otherwise it shows as a normal "update available" you

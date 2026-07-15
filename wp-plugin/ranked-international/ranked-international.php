@@ -5,7 +5,7 @@
  * Version: 1.0.0
  * Author: Ranked International
  * Text Domain: ranked-international
- * GitHub Plugin URI: ansh024/ranked-international
+ * GitHub Plugin URI: ansh024/atlas-site-kit
  * Primary Branch: plugin-deploy
  */
 
