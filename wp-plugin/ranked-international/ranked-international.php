@@ -5,6 +5,8 @@
  * Version: 1.0.0
  * Author: Ranked International
  * Text Domain: ranked-international
+ * GitHub Plugin URI: ansh024/ranked-international
+ * Primary Branch: plugin-deploy
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -100,6 +102,44 @@ function rip_enqueue_assets() {
 	if ( $is_case_study ) {
 		wp_enqueue_script( 'rip-case-study', RIP_URL . 'assets/js/case-study.js', array( 'gsap', 'gsap-scrolltrigger' ), RIP_VERSION, true );
 	}
+}
+
+/**
+ * Our templates print their own <title> and canonical in the template file.
+ * WordPress core (via the theme's title-tag support) and SEO plugins (Yoast,
+ * RankMath, AIOSEO) would otherwise inject a second <title>/canonical through
+ * wp_head(), giving Google duplicate/conflicting tags. On our templates only,
+ * suppress those duplicates; everywhere else the site behaves as before.
+ */
+add_action( 'template_redirect', 'rip_dedupe_head_tags' );
+function rip_dedupe_head_tags() {
+	if ( ! rip_is_our_template() ) return;
+
+	// WP core title tag (printed when the theme declares title-tag support)
+	remove_action( 'wp_head', '_wp_render_title_tag', 1 );
+	// WP core canonical on singular views
+	remove_action( 'wp_head', 'rel_canonical' );
+
+	// Yoast SEO (14+): remove the presenters for the tags our templates
+	// print themselves. Removing the presenter is the reliable way — filters
+	// like wpseo_title returning false can still emit an EMPTY <title>.
+	// Yoast's other output (robots meta, schema, og:*) is left intact.
+	add_filter( 'wpseo_frontend_presenters', 'rip_strip_yoast_presenters' );
+	add_filter( 'wpseo_canonical', '__return_false' );
+
+	// RankMath: same idea, via its documented disable filters
+	add_filter( 'rank_math/frontend/canonical', '__return_false' );
+	add_filter( 'rank_math/frontend/title', '__return_false' );
+	add_filter( 'rank_math/frontend/description', '__return_false' );
+}
+
+function rip_strip_yoast_presenters( $presenters ) {
+	return array_filter( $presenters, function ( $presenter ) {
+		return ! preg_match(
+			'/\\\\(Title|Meta_Description|Canonical)_Presenter$/',
+			get_class( $presenter )
+		);
+	} );
 }
 
 /**

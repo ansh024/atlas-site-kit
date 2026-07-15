@@ -24,6 +24,40 @@ function rip_seed_content() {
 }
 
 /**
+ * ACF's update_field() only works with field NAMES on posts that were
+ * previously saved through the ACF UI (the field-key reference must already
+ * exist in postmeta). For brand-new seeded posts we must write by field KEY,
+ * or get_field()/have_rows() will silently return nothing on the front end.
+ * Build the name=>key map from the same acf-json files ACF itself loads.
+ */
+function rip_field_key_map( $group_file ) {
+	static $maps = array();
+	if ( ! isset( $maps[ $group_file ] ) ) {
+		$json = json_decode( file_get_contents( RIP_DIR . 'acf-json/' . $group_file ), true );
+		$map  = array();
+		foreach ( ( $json['fields'] ?? array() ) as $f ) {
+			$map[ $f['name'] ] = $f['key'];
+		}
+		$maps[ $group_file ] = $map;
+	}
+	return $maps[ $group_file ];
+}
+
+function rip_update_fields( $post_id, $fields, $group_file ) {
+	$keys = rip_field_key_map( $group_file );
+	foreach ( $fields as $name => $value ) {
+		update_field( $keys[ $name ] ?? $name, $value, $post_id );
+	}
+}
+
+/**
+ * PHP 7.2-safe replacement for the arrow-function one-liners.
+ */
+function rip_chart_points( $values ) {
+	return array_map( function ( $v ) { return array( 'value' => $v ); }, $values );
+}
+
+/**
  * Imports one of this plugin's bundled images into the Media Library so it
  * can be used as an ACF image field value (which stores an attachment ID).
  * Cached in an option so repeat seeding doesn't duplicate media items.
@@ -83,7 +117,7 @@ function rip_seed_case_studies() {
 				'chart_current_value' => '19', 'chart_current_unit' => 'visitors / month',
 				'chart_badge' => 'Campaign live 12 months — still climbing',
 				'chart_start_label' => 'May 2025', 'chart_end_label' => 'May 2026',
-				'chart_points' => array_map( fn( $v ) => array( 'value' => $v ), array( 6,7,5,8,10,11,17,19,19,29,13,15,15 ) ),
+				'chart_points' => rip_chart_points( array( 6,7,5,8,10,11,17,19,19,29,13,15,15 ) ),
 				'context_pills' => array(
 					array( 'icon' => 'tag', 'text' => 'Moving & delivery services' ),
 					array( 'icon' => 'map-pin', 'text' => 'Based in DFW · 25+ city pages' ),
@@ -129,7 +163,7 @@ function rip_seed_case_studies() {
 				'chart_current_value' => '1,500', 'chart_current_unit' => 'visitors / month',
 				'chart_badge' => '7.5&times; growth',
 				'chart_start_label' => 'Campaign start', 'chart_end_label' => 'Today',
-				'chart_points' => array_map( fn( $v ) => array( 'value' => $v ), array( 200,220,250,290,340,400,470,550,650,780,950,1150,1500 ) ),
+				'chart_points' => rip_chart_points( array( 200,220,250,290,340,400,470,550,650,780,950,1150,1500 ) ),
 				'context_pills' => array(
 					array( 'icon' => 'tag', 'text' => 'Medical spa & aesthetics' ),
 					array( 'icon' => 'map-pin', 'text' => 'Based in Dallas, TX' ),
@@ -166,7 +200,7 @@ function rip_seed_case_studies() {
 				'chart_current_value' => '1,297', 'chart_current_unit' => 'visitors / month',
 				'chart_badge' => 'Built from zero in 24 months',
 				'chart_start_label' => 'Jun 2024', 'chart_end_label' => 'Apr 2026',
-				'chart_points' => array_map( fn( $v ) => array( 'value' => $v ), array( 130,128,125,110,102,58,32,138,90,150,145,110,60,68,50,55,55,32,15,63,68,88,88,55 ) ),
+				'chart_points' => rip_chart_points( array( 130,128,125,110,102,58,32,138,90,150,145,110,60,68,50,55,55,32,15,63,68,88,88,55 ) ),
 				'context_pills' => array(
 					array( 'icon' => 'tag', 'text' => 'Event & party rentals' ),
 					array( 'icon' => 'map-pin', 'text' => 'Based in Dallas, TX · serves DFW' ),
@@ -214,7 +248,7 @@ function rip_seed_case_studies() {
 				'chart_current_value' => '234', 'chart_current_unit' => 'visitors / month',
 				'chart_badge' => '6.7&times; growth in 24 months',
 				'chart_start_label' => 'Jun 2024', 'chart_end_label' => 'Apr 2026',
-				'chart_points' => array_map( fn( $v ) => array( 'value' => $v ), array( 35,42,50,68,105,75,80,32,36,42,32,36,45,37,45,44,80,84,42,42,45,45,90,120 ) ),
+				'chart_points' => rip_chart_points( array( 35,42,50,68,105,75,80,32,36,42,32,36,45,37,45,44,80,84,42,42,45,45,90,120 ) ),
 				'context_pills' => array(
 					array( 'icon' => 'tag', 'text' => 'Custom cabinetry & millwork' ),
 					array( 'icon' => 'map-pin', 'text' => 'Based in Dallas, TX' ),
@@ -260,7 +294,7 @@ function rip_seed_case_studies() {
 				'chart_current_value' => '1,632', 'chart_current_unit' => 'visitors / month',
 				'chart_badge' => '2.4&times; growth in 24 months',
 				'chart_start_label' => 'Jun 2024', 'chart_end_label' => 'Apr 2026',
-				'chart_points' => array_map( fn( $v ) => array( 'value' => $v ), array( 680,700,780,800,850,830,800,970,955,1010,985,995,1080,1105,1160,1180,1250,1140,1300,1150,1230,750,760,1632 ) ),
+				'chart_points' => rip_chart_points( array( 680,700,780,800,850,830,800,970,955,1010,985,995,1080,1105,1160,1180,1250,1140,1300,1150,1230,750,760,1632 ) ),
 				'context_pills' => array(
 					array( 'icon' => 'tag', 'text' => 'Experiential marketing & event rentals' ),
 					array( 'icon' => 'map-pin', 'text' => 'Based in Dallas, TX · ranking nationwide' ),
@@ -308,7 +342,7 @@ function rip_seed_case_studies() {
 				'chart_current_value' => '221', 'chart_current_unit' => 'visitors / month',
 				'chart_badge' => 'Broke out after 18 months of building authority',
 				'chart_start_label' => 'Jun 2024', 'chart_end_label' => 'Apr 2026',
-				'chart_points' => array_map( fn( $v ) => array( 'value' => $v ), array( 45,50,25,25,35,15,5,15,26,50,50,32,45,30,20,15,10,15,90,140,135,150,135,120 ) ),
+				'chart_points' => rip_chart_points( array( 45,50,25,25,35,15,5,15,26,50,50,32,45,30,20,15,10,15,90,140,135,150,135,120 ) ),
 				'context_pills' => array(
 					array( 'icon' => 'tag', 'text' => 'Artificial turf installation' ),
 					array( 'icon' => 'map-pin', 'text' => 'Richardson, Plano, Fort Worth, Frisco' ),
@@ -348,16 +382,14 @@ function rip_seed_case_studies() {
 			'post_type'   => 'rip_case_study',
 			'post_title'  => $cs['title'],
 			'post_name'   => $slug,
-			'post_status' => 'publish',
+			'post_status' => 'draft', // nothing goes live on activation — publish each one deliberately from wp-admin
 		) );
 		if ( is_wp_error( $post_id ) || ! $post_id ) continue;
 
 		$logo_id = rip_seed_attachment( $logos[ $slug ] );
-		if ( $logo_id ) update_field( 'client_logo', $logo_id, $post_id );
+		if ( $logo_id ) $cs['fields']['client_logo'] = $logo_id;
 
-		foreach ( $cs['fields'] as $field_name => $value ) {
-			update_field( $field_name, $value, $post_id );
-		}
+		rip_update_fields( $post_id, $cs['fields'], 'group_rip_case_study.json' );
 		$ids[ $slug ] = $post_id;
 	}
 	return $ids;
@@ -374,8 +406,11 @@ function rip_link_related_case_studies( $ids ) {
 	);
 	foreach ( $related_map as $slug => $related_slugs ) {
 		if ( empty( $ids[ $slug ] ) ) continue;
-		$related_ids = array_values( array_filter( array_map( fn( $s ) => $ids[ $s ] ?? 0, $related_slugs ) ) );
-		update_field( 'related_case_studies', $related_ids, $ids[ $slug ] );
+		$related_ids = array();
+		foreach ( $related_slugs as $rs ) {
+			if ( ! empty( $ids[ $rs ] ) ) $related_ids[] = $ids[ $rs ];
+		}
+		rip_update_fields( $ids[ $slug ], array( 'related_case_studies' => $related_ids ), 'group_rip_case_study.json' );
 	}
 }
 
@@ -384,7 +419,7 @@ function rip_seed_construction() {
 		'post_type'   => 'rip_industry',
 		'post_title'  => 'Construction SEO',
 		'post_name'   => 'construction',
-		'post_status' => 'publish',
+		'post_status' => 'draft', // nothing goes live on activation — publish deliberately from wp-admin
 	) );
 	if ( is_wp_error( $post_id ) || ! $post_id ) return;
 
@@ -467,19 +502,19 @@ function rip_seed_construction() {
 		'cta_sub' => 'Get a free audit showing the 3 keywords your competitors are taking customers from right now.',
 	);
 
-	foreach ( $fields as $field_name => $value ) {
-		update_field( $field_name, $value, $post_id );
-	}
-
 	$logo_ids = array_map( 'rip_seed_attachment', array( 'brand-logos/10.png', 'brand-logos/6.png', 'brand-logos/8.png', 'brand-logos/9.png', 'brand-logos/11.png', 'brand-logos/7.png' ) );
-	update_field( 'trusted_logos', array_map( fn( $id ) => array( 'logo' => $id ), array_filter( $logo_ids ) ), $post_id );
+	$trusted = array();
+	foreach ( array_filter( $logo_ids ) as $lid ) $trusted[] = array( 'logo' => $lid );
+	$fields['trusted_logos'] = $trusted;
 
 	$poster_id = rip_seed_attachment( 'construction/hero-visual.jpg' );
-	if ( $poster_id ) update_field( 'hero_video_poster', $poster_id, $post_id );
+	if ( $poster_id ) $fields['hero_video_poster'] = $poster_id;
 
 	$video_id = rip_seed_attachment( 'construction/hero-visual.mp4' );
-	if ( $video_id ) update_field( 'hero_video', $video_id, $post_id );
+	if ( $video_id ) $fields['hero_video'] = $video_id;
 
 	$banner_id = rip_seed_attachment( 'construction/segments-band.jpg' );
-	if ( $banner_id ) update_field( 'segments_banner', $banner_id, $post_id );
+	if ( $banner_id ) $fields['segments_banner'] = $banner_id;
+
+	rip_update_fields( $post_id, $fields, 'group_rip_industry_page.json' );
 }

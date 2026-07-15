@@ -325,7 +325,7 @@ $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php
   </section>
   <?php endif; ?>
 
-  <?php if ( have_rows( 'spotlights' ) ) : $spotlights = get_field( 'spotlights' ); ?>
+  <?php $spotlights = get_field( 'spotlights' ); if ( $spotlights ) : // plain get_field — an un-iterated have_rows() would leave a dangling ACF loop ?>
   <!-- ===== CLIENT SPOTLIGHT CAROUSEL ===== -->
   <section class="case-studies" id="results">
     <div class="cs__inner">

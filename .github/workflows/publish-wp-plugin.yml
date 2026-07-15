@@ -1,0 +1,53 @@
+# Publishes wp-plugin/ranked-international/ to the `plugin-deploy` branch on
+# every push to main that touches it. The WordPress site (via the free Git
+# Updater plugin) tracks that branch and offers/installs the new version like
+# any normal plugin update — content in the WP database is never touched.
+#
+# The version is stamped as 1.<run_number>.0 so WordPress detects an update
+# and RIP_VERSION cache-busts the enqueued CSS/JS on visitors' browsers.
+name: Publish WordPress plugin
+
+on:
+  push:
+    branches: [main]
+    paths: ['wp-plugin/ranked-international/**']
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stamp version
+        run: |
+          VERSION="1.${{ github.run_number }}.0"
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          cd wp-plugin/ranked-international
+          sed -i "s/^ \* Version: .*/ * Version: $VERSION/" ranked-international.php
+          sed -i "s/define( 'RIP_VERSION', '[^']*' )/define( 'RIP_VERSION', '$VERSION' )/" ranked-international.php
+          grep -E "Version: |RIP_VERSION" ranked-international.php | head -2
+
+      - name: Sanity-check PHP syntax
+        run: |
+          sudo apt-get install -y php-cli >/dev/null 2>&1 || true
+          if command -v php >/dev/null; then
+            find wp-plugin/ranked-international -name '*.php' -print0 | xargs -0 -n1 php -l
+          else
+            echo "php-cli unavailable; skipping lint"
+          fi
+
+      - name: Push plugin folder to plugin-deploy branch
+        run: |
+          cd wp-plugin/ranked-international
+          git init -b plugin-deploy
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Deploy $VERSION from ${GITHUB_SHA::7}"
+          git push --force \
+            "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" \
+            plugin-deploy

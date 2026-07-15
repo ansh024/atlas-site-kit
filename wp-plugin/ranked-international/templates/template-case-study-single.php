@@ -24,7 +24,8 @@ $strategy_lede  = get_field( 'strategy_lede' );
 $results_title  = get_field( 'results_title' );
 $table_caption  = get_field( 'table_caption' ) ?: 'A sample of the keywords ranking today';
 $table_source   = get_field( 'table_source' ) ?: 'Source: live rank tracking';
-$related_ids    = get_field( 'related_case_studies' ) ?: array();
+$related_ids    = array_filter( (array) ( get_field( 'related_case_studies' ) ?: array() ),
+	function ( $rid ) { return get_post_status( $rid ) === 'publish'; } ); // hide drafts from related cards
 $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php', '/case-studies/' );
 
 $chart_points = array();

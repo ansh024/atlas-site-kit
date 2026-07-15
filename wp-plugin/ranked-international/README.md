@@ -27,7 +27,9 @@ There are two different mechanisms in this plugin, for two different needs:
 4. On activation the plugin automatically:
    - flushes permalinks so the new URLs work immediately, and
    - seeds the existing content — the Construction Industry Page and all 6
-     Case Studies — as real posts, so nothing from the current site is lost.
+     Case Studies — as **drafts**, so nothing from the current site is lost
+     and nothing new goes live. Activating the plugin changes zero public
+     URLs; every page goes live only by an explicit action in wp-admin.
 5. Create two Pages for the hand-built templates, and assign each via Page
    Attributes → Template:
 
@@ -36,8 +38,17 @@ There are two different mechanisms in this plugin, for two different needs:
    | `/` (site home, or whatever page you set as the front page) | Ranked Intl: Home |
    | `/case-studies/` | Ranked Intl: Case Studies (Hub) |
 
-That's it — Construction and the 6 case studies are already live at
-`/construction/` and `/case-studies/<slug>/` from the activation seed.
+### Go-live is a per-page switch
+
+Nothing ships automatically. Each page goes live only when you flip its
+switch, and each is independently reversible:
+
+| Page | Goes live when… | Roll back by… |
+|---|---|---|
+| Home | you assign "Ranked Intl: Home" to a Page (or the front page) | switching the Page's template back |
+| Case Studies hub | you assign "Ranked Intl: Case Studies (Hub)" to a `/case-studies/` Page | same |
+| Each case study | you Publish its seeded draft under **Case Studies** | reverting it to draft |
+| Construction | you Publish its seeded draft under **Industry Pages** AND trash/re-slug the old `/construction/` Page (the old Page wins until then) | restoring the old Page from trash |
 
 ## How the client adds a new Industry Page or Case Study
 
@@ -140,6 +151,80 @@ static build it just showed a fake "thanks" step with no backend. Here:
   fires `do_action( 'rip_audit_lead_captured', $lead )` so a real CRM webhook
   can be wired up later in a small mu-plugin or theme snippet — no need to
   edit this plugin.
+
+## Deploying onto the EXISTING rankedinternational.com WordPress site
+
+The live site already has ~35 pages (services, about, contact, blog, and 19
+old industry pages at top-level slugs like /roofing/, /hvac/, /med-spa/),
+managed by Yoast SEO. The plugin is designed so activating it changes
+**none** of them:
+
+- **Existing Pages always win.** Industry Page posts resolve top-level URLs
+  only as a fallback (`rip_industry_url_fallback()`): if a WordPress Page
+  already exists at that slug, it keeps serving exactly as before. So the
+  seeded Construction post does NOT take over `/construction/` until you
+  deliberately trash (or re-slug) the old Page — that's the cutover switch,
+  page by page, reversible by restoring the old Page from trash.
+- **No duplicate meta tags.** Our templates print their own `<title>`,
+  meta description, and canonical. On our templates only, the plugin
+  suppresses WP core's and Yoast's/RankMath's versions of those tags
+  (`rip_dedupe_head_tags()`), so there's exactly one of each. All other
+  pages keep their Yoast meta untouched.
+
+### Verifying nothing broke (../meta-audit.py)
+
+A snapshot of every live URL's SEO meta (title, description, canonical,
+robots, og tags, h1, status) is in `../baseline-live.json`. After installing
+the plugin — on a staging copy first, ideally — run:
+
+    python3 meta-audit.py snapshot https://<staging-or-live-host> after.json
+    python3 meta-audit.py diff baseline-live.json after.json
+
+The diff separates **existing pages** (any change = regression, exit code 1)
+from **redesign pages** (changes expected — just review them). It also flags
+duplicate `<title>`/canonical tags, the classic symptom of an SEO-plugin
+conflict.
+
+## CI/CD: pushing template updates from local → live
+
+Templates, CSS, and JS live in this plugin's **files**; all page copy and
+data live in the WordPress **database** (posts + ACF fields). Deploying new
+plugin files therefore updates the design/layout everywhere while leaving
+every word of live content untouched — that separation is structural, not a
+convention to be careful about.
+
+The pipeline (`.github/workflows/publish-wp-plugin.yml` in the repo root):
+
+1. You edit templates/CSS/JS locally and push to `main`.
+2. GitHub Actions lints the PHP, stamps a new version number (so WordPress
+   sees an update and browser caches bust), and force-publishes just this
+   plugin folder to the **`plugin-deploy`** branch.
+3. The WordPress site pulls it via **Git Updater** (free plugin,
+   git-updater.com). The `GitHub Plugin URI` / `Primary Branch` headers in
+   `ranked-international.php` tell it what to track.
+
+One-time setup on the WordPress site:
+
+1. Install the Git Updater plugin and activate it.
+2. Since this repo is private: create a fine-grained GitHub personal access
+   token with read-only **Contents** access to `ansh024/ranked-international`
+   only, and paste it in Settings → Git Updater → GitHub Access Token.
+3. Optional, for fully hands-free deploys: enable auto-updates for this
+   plugin on the Plugins screen — updates then install themselves shortly
+   after each push. Otherwise it shows as a normal "update available" you
+   click once.
+
+What a deploy can and cannot touch:
+
+- **Updated by a deploy:** templates (`templates/`), styles/scripts
+  (`assets/css`, `assets/js`), plugin logic (`includes/`,
+  `ranked-international.php`), ACF field definitions (`acf-json/`).
+- **Never touched:** published/draft pages, all field content the client
+  entered, media library uploads, leads, Yoast settings. The content seed is
+  guarded by a one-time option flag, so redeploys never re-run it.
+- **Caveat — field renames:** editing a field's *label* or instructions in
+  `acf-json/` is free. Renaming a field's `name`/key orphans the content
+  stored under the old name; treat that as a migration, not a deploy.
 
 ## Things to double-check before a real deploy
 
