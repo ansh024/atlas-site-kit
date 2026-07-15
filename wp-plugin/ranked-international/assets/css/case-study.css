@@ -217,7 +217,7 @@
   .hero--case-study{background:var(--prussian-blue);min-height:0;padding-bottom:48px;color:#fff}
   .nav,.nav.is-stuck{background:rgba(10,21,41,.96);box-shadow:0 1px 0 rgba(255,255,255,.08)}
   .nav .nav__burger span,.nav.is-stuck .nav__burger span{background:#fff}
-  .hero--case-study .hero__inner{align-items:flex-start;text-align:left;padding:64px 20px 0;gap:28px}
+  .hero--case-study .hero__inner{align-items:flex-start;text-align:left;padding:18px 20px 0;gap:28px}
   .hero--case-study .hero__copy{order:0;gap:24px}
   .hero--case-study .hero__text-block{align-items:flex-start;text-align:left;gap:12px}
   .hero--case-study .hero__eyebrow{color:var(--chartreuse)}
