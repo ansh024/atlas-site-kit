@@ -52,7 +52,12 @@
   .proof__num { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.6rem,5vw,3.8rem); letter-spacing: -.03em; line-height: 1; color: var(--prussian-blue); }
   .proof__num span { color: var(--ocean-twilight); }
   .proof__label { margin-top: .6em; font-size: .98rem; color: var(--ink-soft); line-height: 1.5; max-width: 26ch; }
-  @media (max-width: 860px) { .proof__grid { grid-template-columns: 1fr; gap: 32px; } .proof__card { border-left: none; padding-left: 0; border-top: 1px solid var(--line); padding-top: 28px; } .proof__card:first-child { border-top: none; padding-top: 0; } }
+  @media (max-width: 860px) {
+    .proof { overflow: hidden; }
+    .proof__grid { display: flex; gap: 16px; overflow-x: auto; margin-right: calc(-1 * var(--pad)); padding: 0 var(--pad) 10px 0; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+    .proof__grid::-webkit-scrollbar { display: none; }
+    .proof__card, .proof__card:first-child { flex: 0 0 min(78vw, 320px); min-height: 220px; padding: 28px 24px; border: 1px solid var(--line); border-radius: var(--r); scroll-snap-align: start; }
+  }
 
   /* ---- NEW: "who we rank" segments grid (Canva Industries-grid pattern) ---- */
   .segments { padding: clamp(70px,9vw,110px) var(--pad); background: var(--bright-snow); }
@@ -69,7 +74,12 @@
   .segment-card__kw { font-size: .74rem; letter-spacing: .02em; color: var(--ocean-twilight); font-weight: 600; }
   .segment-card__kw span { color: var(--ink-soft); font-weight: 400; }
   @media (max-width: 980px) { .segments__grid { grid-template-columns: repeat(2,1fr); } }
-  @media (max-width: 560px) { .segments__grid { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) {
+    .segments { overflow: hidden; }
+    .segments__grid { display: flex; gap: 16px; overflow-x: auto; margin-right: calc(-1 * var(--pad)); padding: 0 var(--pad) 10px 0; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+    .segments__grid::-webkit-scrollbar { display: none; }
+    .segment-card { flex: 0 0 min(82vw, 340px); scroll-snap-align: start; }
+  }
 
   /* ---- NEW: problem -> fix comparison (Vizcom / Speakeasy paired-row pattern) ---- */
   .compare { padding: clamp(70px,9vw,110px) var(--pad) clamp(110px,12vw,150px); background: var(--white); }
@@ -83,7 +93,7 @@
   .cmp-table__body { position: relative; padding: 30px 22px 0; }
   .cmp-table__row { position: relative; z-index: 1; display: flex; align-items: stretch; }
   .cmp-table__row:not(:last-child) { border-bottom: 1px solid var(--line); }
-  .cmp-table__row--head { border-bottom: none !important; padding-bottom: 18px; }
+  .cmp-table__row--head { border-bottom: none !important; }
   .cmp-table__cell { flex: 1; text-align: center; padding: 16px 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
   .cmp-table__cell--label { flex: none; width: 168px; text-align: left; align-items: flex-start; justify-content: center; padding-left: 4px; padding-right: 10px; font-size: .88rem; line-height: 1.35; color: var(--ink); }
   .cmp-table__cell--label span { display: block; color: var(--ink-soft); font-size: .82rem; margin-top: 2px; }
@@ -139,6 +149,10 @@
   /* ---- Compact framing for the reused services-roof hub-and-spoke ---- */
   .services-roof--compact { min-height: 620px; }
   .services-roof--compact .services-roof__inner { padding: 60px 0 60px; }
+
+  @media (max-width: 860px) {
+    .services-roof--compact .services-roof__map { padding-left: 12px; padding-right: 12px; }
+  }
 
   /* Keep the first result visible even if scroll-trigger animation initialization is delayed. */
   .case-studies .cs__card.is-active,
@@ -218,9 +232,9 @@
           <i data-lucide="chevron-down" class="mega-chevron"></i>
         </a>
         <div class="mega-menu" role="menu" aria-label="Industries We Serve menu">
-          <div class="mega-grid">
+          <div class="mega-grid mega-grid--industries">
             <div>
-              <p class="mega-label">Home &amp; trade services</p>
+              <p class="mega-label">Live industry pages</p>
               <a class="mega-item" href="/construction/">
                 <span class="mega-icon"><i data-lucide="hard-hat"></i></span>
                 <span><strong>Construction</strong><span>Page-one rankings for GCs, remodelers, and commercial builders booking more jobs.</span></span>
@@ -229,24 +243,9 @@
                 <span class="mega-icon"><i data-lucide="home"></i></span>
                 <span><strong>Roofing</strong><span>Storm-season and year-round rankings for roofers in the DFW market.</span></span>
               </a>
-              <a class="mega-item" href="/hvac/">
-                <span class="mega-icon"><i data-lucide="wind"></i></span>
-                <span><strong>HVAC</strong><span>Page-one visibility for heating and cooling crews when it matters most.</span></span>
-              </a>
-            </div>
-            <div>
-              <p class="mega-label">Professional services</p>
-              <a class="mega-item" href="/med-spa/">
-                <span class="mega-icon"><i data-lucide="stethoscope"></i></span>
-                <span><strong>Medical &amp; Dental</strong><span>Local SEO for practices that want a full schedule and less ad spend.</span></span>
-              </a>
-              <a class="mega-item" href="/plumbing/">
-                <span class="mega-icon"><i data-lucide="droplets"></i></span>
-                <span><strong>Plumbing</strong><span>Emergency and scheduled service traffic to fill your dispatch board.</span></span>
-              </a>
-              <a class="mega-item" href="/#industries">
-                <span class="mega-icon"><i data-lucide="building-2"></i></span>
-                <span><strong>Real Estate</strong><span>Neighborhood and city-level rankings to capture buyer and seller leads.</span></span>
+              <a class="mega-item" href="/turf-tree-service/">
+                <span class="mega-icon"><i data-lucide="trees"></i></span>
+                <span><strong>Turf &amp; Tree Care</strong><span>Map-pack and city rankings for outdoor-service operators.</span></span>
               </a>
             </div>
             <div>
@@ -281,8 +280,23 @@
   </div>
   <nav class="nav__menu-mobile" id="navMenuMobile">
     <a href="/">Home</a>
-    <a href="/#services">Services</a>
-    <a href="/#industries">Industries We Serve</a>
+    <div class="nav__mobile-group">
+      <button class="nav__mobile-toggle" type="button" aria-expanded="false" aria-controls="mobileServices">Services <i data-lucide="chevron-down"></i></button>
+      <div class="nav__mobile-submenu" id="mobileServices" hidden>
+        <a href="/#services">Local SEO</a>
+        <a href="/#services">Technical SEO</a>
+        <a href="/#services">Google Ads</a>
+        <a href="/#services">Content &amp; Link Building</a>
+      </div>
+    </div>
+    <div class="nav__mobile-group">
+      <button class="nav__mobile-toggle" type="button" aria-expanded="false" aria-controls="mobileIndustries">Industries We Serve <i data-lucide="chevron-down"></i></button>
+      <div class="nav__mobile-submenu" id="mobileIndustries" hidden>
+        <a href="/construction/">Construction</a>
+        <a href="/roofing/">Roofing</a>
+        <a href="/turf-tree-service/">Turf &amp; Tree Care</a>
+      </div>
+    </div>
     <a href="/case-studies/">Case Studies</a>
     <a href="#audit">Contact</a>
     <a href="tel:+16805542324" class="nav__menu-mobile-phone">Dallas · (680) 554-2324</a>
@@ -620,7 +634,7 @@
           <path d="M815 373 C815 314 765 287 701 287 H524 C480 287 467 259 467 229" />
         </svg>
 
-        <div class="services-roof__center">Get You Ranked</div>
+        <a href="#audit" class="services-roof__center">Get You Ranked</a>
 
         <div class="services-roof__chip services-roof__chip--local">
           <div class="services-roof__chip-head">
@@ -877,7 +891,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lucide@1.23.0/dist/umd/lucide.min.js"></script>
-<script src="/js/main.min.js"></script>
+<script src="/js/main.js"></script>
 <script>lucide.createIcons();</script>
 <script>
 (function(){

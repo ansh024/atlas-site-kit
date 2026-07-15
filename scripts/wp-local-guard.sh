@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-WP_LOCAL_URL="${WP_LOCAL_URL:-http://127.0.0.1:8891}"
+WP_LOCAL_URL="${WP_LOCAL_URL:-http://localhost:8891}"
 case "$WP_LOCAL_URL" in
   http://127.0.0.1:8891|http://localhost:8891) ;;
   *)

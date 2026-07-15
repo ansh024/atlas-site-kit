@@ -3,7 +3,7 @@
   "private": true,
   "description": "Isolated local WordPress test environment for the Ranked International plugin.",
   "scripts": {
-    "wp:start": "wp-env start && bash scripts/wp-local-bootstrap.sh",
+    "wp:start": "bash scripts/wp-local-start.sh",
     "wp:stop": "wp-env stop",
     "wp:reset": "bash scripts/wp-local-reset.sh",
     "wp:destroy": "bash scripts/wp-local-destroy.sh",

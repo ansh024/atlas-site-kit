@@ -5,6 +5,78 @@ theme, without touching the theme at all: no `header.php`, `footer.php`, or
 theme `functions.php` edits. Install it, uninstall it, and the rest of the
 site is untouched either way.
 
+## Recent case-study presentation updates (2026-07-16)
+
+The case-study presentation was refined in both the static source site and
+the WordPress plugin:
+
+- Client logos were removed from individual case-study heroes.
+- Hero outcome rows are now three compact horizontal result cards, rather
+  than a tall stacked table. On mobile the cards remain readable without
+  expanding the hero unnecessarily.
+- The mobile case-study hero now has a dark navigation bar, a tighter top
+  offset, a shorter audit CTA, and the “View live site” link beside it.
+- Context pills below a case-study hero stack full-width on mobile, with
+  explicit icon/text spacing.
+- The Case Studies hub hero is text-only, centre-aligned, compact, and
+  white on both desktop and mobile.
+- Hero CTA entrance animation no longer applies a vertical `18px` offset.
+
+For any future case-study styling or JavaScript update, make the source edit
+in the repo root and synchronise it before deployment:
+
+| Source of truth | Plugin copy |
+|---|---|
+| `css/case-study.css` | `assets/css/case-study.css` |
+| `js/main.js` | `assets/js/main.js` |
+| `js/main.min.js` (static pages only) | N/A |
+
+## Safe local development and testing
+
+This repository includes an isolated local WordPress environment powered by
+the official `@wordpress/env` package, Docker, ACF, WP-CLI, and Playwright.
+It does not read production credentials, import the client database, or call
+the production site. The safety guard refuses any base URL except
+`http://localhost:8891` or `http://127.0.0.1:8891`.
+
+Prerequisites: Docker Desktop running, Node.js 22+, and npm.
+
+```bash
+npm install
+npx --no-install playwright install chromium
+npm run wp:start
+```
+
+Local URLs:
+
+- Service preview: `http://localhost:8891/local-seo-services/`
+- WordPress admin: `http://localhost:8891/wp-admin/`
+- Local-only login: `admin` / `password`
+
+Common commands:
+
+```bash
+npm run wp:test        # smoke + desktop/mobile/reduced-motion browser tests
+npm run wp:test:smoke  # routing, schema, SEO tags, plugin state, legacy-copy guard
+npm run wp:test:e2e    # browser interactions and real local AJAX submission
+npm run wp:stop        # stop containers, retain the local database
+npm run wp:reset       # erase and rebuild only the disposable local database
+npm run wp:destroy     # destroy only this repository's wp-env containers/volumes
+```
+
+`wp:start` mounts `wp-plugin/ranked-international/` directly, installs a fresh
+local WordPress + ACF, activates the plugin, publishes the Local SEO fixture in
+the disposable database, and flushes local rewrites. Source edits are reflected
+without copying files into a client site.
+
+Production publishing is manual. Pushing to `main` no longer deploys anything.
+The `Publish WordPress plugin` GitHub workflow must be deliberately dispatched;
+it runs this same local WordPress test suite before the publish job can begin.
+
+For the completed Local SEO reference-page implementation, responsive review
+decisions, and its local-only publish boundary, see
+[`docs/05-local-seo-service-template.md`](../../docs/05-local-seo-service-template.md).
+
 There are two different mechanisms in this plugin, for two different needs:
 
 1. **Home and the Case Studies hub** are one-off, hand-built **Page
@@ -89,6 +161,32 @@ appear automatically the moment ACF is active — nothing to configure by hand.
   long-form guide, CTA, and SEO metadata. Local SEO is seeded as the reference.
   Service URLs stay top-level and existing WordPress Pages always win, making
   migration reversible page by page.
+
+### Construction industry template repairs (July 2026)
+
+The original static page at `construction/index.html` remains the visual source
+of truth for the shared Industry Page template. Two production fixes restored
+the WordPress version to that reference:
+
+- Commit `2d42ca3` restored the construction-only responsive CSS that had not
+  been carried into `templates/template-industry-page.php`. This includes the
+  desktop/tablet/mobile hero layout, hero visual and floating proof callouts,
+  proof-stat grid, industry segment cards, comparison table, and compact
+  services diagram. It also restored the page-specific GSAP reveals and makes
+  the comparison table round its actual final ACF row.
+- Commit `d28913e` made the client-results carousel fail-safe. The first ACF
+  testimonial is rendered with `is-active`, active cards and metric panels are
+  visible without waiting for JavaScript, and GSAP no longer pre-hides their
+  inner text before the section's scroll trigger fires. This prevents empty
+  navy/white carousel shells on preview loads, restored-scroll loads, or when
+  animation initialization is delayed.
+
+When changing this page, keep `js/main.js` synchronized with
+`assets/js/main.js`. Any construction-only CSS or markup behavior added to the
+static reference must also be reflected in the WordPress industry template.
+The repairs were validated with PHP/JavaScript syntax checks, `git diff
+--check`, desktop and mobile browser captures, an anchored `#results` load,
+and computed-opacity checks for the active testimonial and metrics panel.
 
 ### The traffic chart
 

@@ -12,6 +12,10 @@ test('renders the service narrative and structured UI', async ({ page }) => {
   await expect(page.locator('.problem-row')).toHaveCount(4);
   await expect(page.locator('.blueprint__tabs [role="tab"]')).toHaveCount(7);
   await expect(page.locator('.svc-faq__item')).toHaveCount(5);
+  await expect(page.locator('.svc-definition')).toBeVisible();
+  await expect(page.locator('.svc-journey details')).toHaveCount(0);
+  await expect(page.locator('.chapter-rail')).toHaveCount(0);
+  await expect(page.locator('#problems h2')).toContainText('What is costing you leads?');
   await expect(page.locator('body')).not.toContainText(/Benchling|Outgrid|Biopharmaceutical/);
 });
 
@@ -29,6 +33,15 @@ test('section headings use a vertical eyebrow-heading-copy stack', async ({ page
   }
 });
 
+test('keeps service copy legible and avoids long dashes', async ({ page }) => {
+  await expect(page.locator('body')).not.toContainText(/[—–]/);
+
+  for (const selector of ['.svc-hero__summary', '.problem-row__cost p', '.blueprint__tabs button strong', '.phase-list p', '.fit-grid li']) {
+    const fontSize = await page.locator(selector).first().evaluate(element => Number.parseFloat(getComputedStyle(element).fontSize));
+    expect(fontSize, `${selector} should remain readable`).toBeGreaterThanOrEqual(15);
+  }
+});
+
 test('workstream tabs and FAQ are keyboard operable', async ({ page }) => {
   const firstTab = page.locator('.blueprint__tabs [role="tab"]').first();
   await firstTab.focus();
@@ -42,7 +55,7 @@ test('workstream tabs and FAQ are keyboard operable', async ({ page }) => {
 });
 
 test('audit form submits through the real local WordPress AJAX endpoint', async ({ page }) => {
-  await page.locator('a[href="#audit"]').first().click();
+  await page.locator('.svc-hero__actions a[href="#audit"]').click();
   await page.getByLabel('Name').fill('Local QA');
   await page.getByLabel('Work email').fill('qa@example.test');
   await page.getByLabel('Phone').fill('469-555-0100');
@@ -58,6 +71,55 @@ test('audit form submits through the real local WordPress AJAX endpoint', async 
 
 test('mobile layout has no horizontal document overflow', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile');
-  const dimensions = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
+  const dimensions = await page.evaluate(() => ({ scroll: document.body.scrollWidth, client: document.documentElement.clientWidth }));
   expect(dimensions.scroll).toBeLessThanOrEqual(dimensions.client + 1);
+});
+
+test('mobile process phases use a horizontal card rail', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile');
+  const rail = await page.locator('.phase-list').evaluate(element => ({ scroll: element.scrollWidth, client: element.clientWidth }));
+  expect(rail.scroll).toBeGreaterThan(rail.client);
+  await expect(page.locator('.phase-list li')).toHaveCount(4);
+});
+
+test('mobile diagnostic problems use a horizontal card rail', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile');
+  const rail = await page.locator('.problem-list').evaluate(element => ({ scroll: element.scrollWidth, client: element.clientWidth }));
+  expect(rail.scroll).toBeGreaterThan(rail.client);
+  await expect(page.locator('.problem-row')).toHaveCount(4);
+});
+
+test('mobile customer journey uses a horizontal card rail', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile');
+  const rail = await page.locator('.journey-flow').evaluate(element => ({ scroll: element.scrollWidth, client: element.clientWidth }));
+  expect(rail.scroll).toBeGreaterThan(rail.client);
+  await expect(page.locator('.journey-flow > div')).toHaveCount(4);
+});
+
+test('mobile blueprint keeps its explanation and deliverables separate', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile');
+  const layout = await page.locator('.blueprint__canvas').evaluate(canvas => {
+    const description = canvas.querySelector('#blueprintDescription').getBoundingClientRect();
+    const output = canvas.querySelector('.blueprint__output').getBoundingClientRect();
+    return { descriptionBottom: description.bottom, outputTop: output.top, height: canvas.getBoundingClientRect().height };
+  });
+  expect(layout.descriptionBottom).toBeLessThanOrEqual(layout.outputTop);
+  expect(layout.height).toBeLessThan(520);
+});
+
+test('mobile workstream selectors stay compact and touch-safe', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile');
+  const height = await page.locator('.blueprint__tabs [role="tab"]').first().evaluate(element => element.getBoundingClientRect().height);
+  expect(height).toBeGreaterThanOrEqual(44);
+  expect(height).toBeLessThanOrEqual(50);
+});
+
+test('mobile system outcome label does not overlap its icon', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile');
+  const layout = await page.locator('.system-map__core').evaluate(core => {
+    const icon = core.querySelector('svg').getBoundingClientRect();
+    const label = core.querySelector('strong').getBoundingClientRect();
+    return { iconBottom: icon.bottom, labelTop: label.top };
+  });
+  expect(layout.iconBottom).toBeLessThanOrEqual(layout.labelTop);
 });

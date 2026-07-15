@@ -24,7 +24,8 @@ assert_present '"@type":"FAQPage"' 'FAQ schema'
 assert_absent 'Benchling|Outgrid|Biopharmaceutical|Industrial Biotech' 'legacy template content'
 
 "$WP_ENV_BIN" run cli wp plugin is-active ranked-international
-"$WP_ENV_BIN" run cli wp plugin is-active advanced-custom-fields
+ACF_SLUG="$("$WP_ENV_BIN" run cli wp plugin list --status=active --field=name | grep '^advanced-custom-fields' | head -1 | tr -d '\r')"
+[[ -n "$ACF_SLUG" ]] || { echo "Advanced Custom Fields is not active." >&2; exit 1; }
 "$WP_ENV_BIN" run cli wp eval 'if (get_post_type_object("rip_service") === null) { exit(1); }'
 
 echo "Smoke tests passed: routing, plugin activation, single H1/title/canonical, schema, and legacy-content guard."

@@ -32,3 +32,107 @@
 .svc-faq__grid>div:first-child{width:100%}
 .svc-faq__grid>div:first-child h2{max-width:17ch}
 .svc-faq__grid>div:first-child>p:last-child{max-width:680px;margin:22px 0 0;color:var(--ink-soft);line-height:1.6}
+
+/* Service hero: 25% smaller while retaining a fluid mobile-to-desktop scale. */
+.svc-hero__copy h1{font-size:clamp(2.475rem,4.2vw,4.0125rem);max-width:none;width:100%}
+
+/* Accessibility baseline: readable supporting copy, contrast-safe labels, and visible focus. */
+.rip-service-page{font-size:16px;line-height:1.5}
+.rip-service-page :where(p,li,summary){font-size:clamp(.9375rem,.3vw + .875rem,1rem)}
+.svc-eyebrow,.svc-breadcrumb,.svc-hero__proof,.search-console__top,.svc-outcomes p,.chapter-rail__links a,.chapter-rail__cta,.problem-row__num,.problem-row small,.problem-row__status,.blueprint__tabs button>span,.blueprint__canvas>p,.blueprint__output small,.proof-card__story small,.proof-card__result>p,.compare-row--head span,.phase-index,.phase-list small,.phase-signal,.svc-final p{font-size:.8125rem}
+.svc-breadcrumb{color:rgba(255,255,255,.82)}
+.svc-hero__summary{color:rgba(255,255,255,.9);font-size:clamp(1rem,.45vw + .925rem,1.125rem)}
+.svc-hero__proof{color:rgba(255,255,255,.86)}
+.search-console__top{color:rgba(255,255,255,.78)}
+.console-sidebar span{color:rgba(255,255,255,.78)}
+.map-card small{font-size:.75rem;color:#40516a}.map-card span{font-size:.8125rem}.map-card em{font-size:.8125rem;color:#36554c}
+.console-metrics small{color:rgba(255,255,255,.78);font-size:.75rem}.console-metrics span{font-size:.75rem}
+.svc-outcomes p{color:rgba(255,255,255,.8)}.svc-outcomes strong{font-size:1rem}.svc-outcomes span{color:rgba(255,255,255,.84);font-size:.875rem}
+.chapter-rail__links a{color:#3e4e66}.chapter-rail__cta{font-size:.875rem}
+.svc-section-head p:last-child,.svc-journey details p,.problem-row p,.proof-card__story p,.phase-list p,.fit-grid li,.svc-faq__grid>div:first-child>p:last-child,.svc-faq__answer p,.svc-guide__content{color:#40516a}
+.svc-journey summary{font-size:1rem}.journey-flow span{font-size:.75rem;color:#5b687d}.journey-flow strong{font-size:1rem}.journey-flow small{font-size:.8125rem;color:#40516a}
+.problem-row__num{color:#53617a}.problem-row p{font-size:1rem}.problem-row small{font-size:.8125rem;color:#53617a}.problem-row__status{font-size:.8125rem!important}
+.blueprint__tabs button{color:#40516a;min-height:76px}.blueprint__tabs button>span{font-size:.8125rem;color:#53617a}.blueprint__tabs button strong{font-size:1rem}.blueprint__canvas>p{color:rgba(255,255,255,.84);font-size:.8125rem}#blueprintDescription{color:rgba(255,255,255,.9);font-size:1rem}.blueprint__output small{font-size:.75rem}.blueprint__output strong{font-size:.875rem}
+.svc-system__grid>div:first-child>p:not(.svc-eyebrow){color:rgba(255,255,255,.88);font-size:1rem}.system-node{font-size:.875rem}.proof-card__story small,.proof-card__result>p{font-size:.75rem;color:#53617a}.proof-card__result>p{color:rgba(255,255,255,.84)}.proof-card__result li{font-size:.875rem;color:rgba(255,255,255,.9)}
+.compare-row--head span{font-size:.8125rem;color:#53617a}.phase-list small{font-size:.8125rem;color:#53617a}.phase-list p{font-size:.9375rem}.phase-signal{font-size:.8125rem}.fit-grid li{font-size:1rem}.svc-final p{font-size:.8125rem}.svc-final span{font-size:1rem}
+.rip-service-page :where(a,button,input,textarea,summary):focus-visible{outline:3px solid #1046ba;outline-offset:3px}.svc-hero :where(a,button,input,textarea,summary):focus-visible,.svc-system :where(a,button,input,textarea,summary):focus-visible{outline-color:#caff00}
+@media(max-width:720px){.rip-service-page :where(p,li,summary){font-size:1rem}.svc-eyebrow,.svc-breadcrumb,.svc-hero__proof,.search-console__top,.svc-outcomes p,.chapter-rail__links a,.chapter-rail__cta,.problem-row__num,.problem-row small,.problem-row__status,.blueprint__tabs button>span,.blueprint__canvas>p,.blueprint__output small,.proof-card__story small,.proof-card__result>p,.compare-row--head span,.phase-index,.phase-list small,.phase-signal,.svc-final p{font-size:.8125rem}.problem-row p,.phase-list p{font-size:1rem}.svc-hero__copy h1{font-size:clamp(2.475rem,11vw,3.4rem)}}
+
+/* Keep the definition visible: it is context for the journey, not a disclosure. */
+.svc-definition{margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
+.svc-definition h3{margin:0 0 9px;font:700 1rem var(--font-display);color:var(--prussian-blue)}
+.svc-definition p{max-width:42ch;margin:0;color:#40516a;font-size:1rem;line-height:1.65}
+
+@media(max-width:720px){.svc-hero__copy h1{font-size:clamp(2.25rem,10vw,3rem);max-width:none}}
+
+/* Fixed overlays must use the layout viewport, not the wider mobile visual viewport. */
+@media(max-width:720px){.audit-modal{left:0;right:auto;width:100%;max-width:100%;overflow-x:clip}.chapter-rail{max-width:100%;overflow-x:hidden}}
+
+/* A closed modal should not create page width or remain in the tab sequence. */
+.audit-modal{display:none}.audit-modal.is-open{display:grid}
+
+@media(max-width:720px){.console-map,.chapter-rail .svc-wrap{contain:paint}}
+
+/* The generated grain read as a low-resolution enlarged image. Keep the hero crisp. */
+.svc-hero__grain{display:none}
+
+/* Keep the outcome label centered independently from its icon. */
+.system-map__core{position:absolute}
+.system-map__core svg{position:absolute;inset:24px auto auto 50%;width:24px;height:24px;transform:translateX(-50%)}
+.system-map__core strong{position:absolute;inset:auto 8px 24px;display:block;padding:0;text-align:center;line-height:1.1}
+
+/* The response column is the Ranked International action, so carry the brand blue. */
+.problem-row__response{border-left-color:var(--ocean-twilight)}
+.problem-row__response small,.problem-row__response p{color:var(--ocean-twilight)}
+
+/* Mobile process: each phase is a deliberate, swipeable card instead of a long stacked grid. */
+@media(max-width:720px){
+  .phase-list{display:flex;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:8px 16px 20px 0;margin:0 -16px 0 -4px;-webkit-overflow-scrolling:touch}
+  .phase-list::-webkit-scrollbar{height:6px}.phase-list::-webkit-scrollbar-thumb{background:#b9c3d2;border-radius:999px}
+  .phase-list li{display:grid;grid-template-columns:1fr;gap:20px;flex:0 0 min(76vw,315px);min-height:470px;padding:28px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:0 18px 48px -36px rgba(10,21,41,.45);scroll-snap-align:start}
+  .phase-list li>div,.phase-list li>div:nth-child(4),.phase-list li>div:nth-child(5){grid-column:auto!important}
+  .phase-index{display:flex;flex-direction:row;justify-content:flex-start;align-items:center;gap:10px;grid-row:auto;grid-column:auto!important;font-size:.875rem}
+  .phase-index i{width:48px;height:1px;flex:0 0 auto}
+  .phase-title{padding-top:4px}.phase-list h3{font-size:1.55rem;line-height:1.1}
+  .phase-list small{font-size:.75rem}.phase-list p{font-size:1rem;line-height:1.55}
+}
+
+/* Mobile diagnostics: keep each problem, consequence, and response together as one swipeable card. */
+@media(max-width:720px){
+  .problem-list{display:flex;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:8px 16px 20px 0;margin:0 -16px 0 -4px;border:0;-webkit-overflow-scrolling:touch}
+  .problem-list::-webkit-scrollbar{height:6px}.problem-list::-webkit-scrollbar-thumb{background:#b9c3d2;border-radius:999px}
+  .problem-row{position:relative;display:grid;grid-template-columns:1fr;gap:20px;flex:0 0 min(76vw,315px);min-height:410px;padding:28px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:0 18px 48px -36px rgba(10,21,41,.45);scroll-snap-align:start}
+  .problem-row__num{position:absolute;top:28px;right:28px;font-size:.875rem}.problem-row>div:first-of-type{padding-right:32px}
+  .problem-row__cost,.problem-row__response{grid-column:auto;border-left:0;padding-left:0}.problem-row__response{padding-top:18px;border-top:2px solid var(--ocean-twilight)}
+}
+
+/* Mobile customer journey: a compact swipe sequence, not a tall diagram. */
+@media(max-width:720px){
+  #why-it-matters .svc-two-col{gap:20px}
+  .journey-flow{display:flex;gap:16px;min-height:0;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:8px 16px 20px 0;margin:0 -16px 0 -4px;border:0;border-radius:0;background:transparent;box-shadow:none;-webkit-overflow-scrolling:touch}
+  .journey-flow::-webkit-scrollbar{height:6px}.journey-flow::-webkit-scrollbar-thumb{background:#b9c3d2;border-radius:999px}
+  .journey-flow>svg{display:none}
+  .journey-flow div{display:grid;grid-template-columns:38px 1fr;column-gap:14px;align-content:center;flex:0 0 min(76vw,300px);height:142px;min-height:142px;padding:20px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:0 18px 48px -36px rgba(10,21,41,.45);scroll-snap-align:start}
+  .journey-flow div>svg{grid-row:1/4;grid-column:1;width:27px;margin:0}.journey-flow div span,.journey-flow div strong,.journey-flow div small{grid-column:2}.journey-flow div span{font-size:.8125rem}.journey-flow div strong{margin:4px 0 6px;font-size:1.2rem}.journey-flow div small{font-size:.9375rem;line-height:1.45}
+}
+
+/* Mobile blueprint: use document flow so the deliverables cannot overlap the explanation. */
+@media(max-width:720px){
+  .blueprint__canvas{display:flex;flex-direction:column;min-height:0;padding:24px}
+  .blueprint__signal{top:20px;right:20px}.blueprint__signal span{width:5px;height:5px}
+  .blueprint__icon{width:44px;height:44px;padding:11px;border-radius:11px}
+  .blueprint__canvas>p{margin:24px 0 8px;font-size:.75rem}
+  .blueprint__canvas>h3{margin:0 0 12px;font-size:clamp(1.8rem,8vw,2.35rem);line-height:1.05}
+  #blueprintDescription{font-size:.9375rem;line-height:1.5}
+  .blueprint__output{position:static;display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}
+  .blueprint__output>div{padding:14px}.blueprint__output small{margin-bottom:4px;font-size:.75rem}.blueprint__output strong{font-size:.875rem;line-height:1.4}
+}
+
+/* Keep every mobile workstream selector compact while preserving a 44px touch target. */
+@media(max-width:720px){
+  .blueprint__tabs button{grid-template-columns:22px 22px 1fr 14px;gap:10px;min-height:48px;padding:0 8px}
+  .blueprint__tabs button>span{font-size:.75rem}.blueprint__tabs button strong{font-size:.9375rem}.blueprint__tabs button svg{width:16px}
+}
+
+/* Keep the first workstream close to the section introduction on small screens. */
+@media(max-width:720px){#included{padding-top:38px}#included .svc-section-head{margin-bottom:32px}}

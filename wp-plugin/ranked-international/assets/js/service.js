@@ -2,6 +2,7 @@
 (() => {
   const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const compactViewport = window.matchMedia('(max-width: 720px)').matches;
   if (window.lucide) window.lucide.createIcons();
 
   const chapters = $$('.chapter-rail__links a');
@@ -56,11 +57,12 @@
     gsap.registerPlugin(ScrollTrigger);
     gsap.from('.search-console', { opacity: 0, x: 35, duration: .9, ease: 'power3.out', delay: .15 });
     gsap.from('.problem-row', { scrollTrigger: { trigger: '.problem-list', start: 'top 78%' }, opacity: 0, y: 24, stagger: .08, duration: .55, ease: 'power3.out' });
-    const systemPaths = $$('.system-map path');
-    systemPaths.forEach(path => { const length = path.getTotalLength(); gsap.set(path, { strokeDasharray: length, strokeDashoffset: length }); });
-    gsap.timeline({ scrollTrigger: { trigger: '.system-map', start: 'top 72%' } })
-      .to(systemPaths, { strokeDashoffset: 0, duration: .9, stagger: .08, ease: 'power2.out' })
-      .from('.system-node', { opacity: 0, scale: .85, duration: .45, stagger: .06, ease: 'back.out(1.5)' }, '-=.65');
-    gsap.from('.proof-bars i', { scrollTrigger: { trigger: '.proof-bars', start: 'top 85%' }, height: 0, duration: .8, stagger: .06, ease: 'power3.out' });
+    if (!compactViewport) {
+      const systemPaths = $$('.system-map path');
+      systemPaths.forEach(path => { const length = path.getTotalLength(); gsap.set(path, { strokeDasharray: length, strokeDashoffset: length }); });
+      gsap.timeline({ scrollTrigger: { trigger: '.system-map', start: 'top 72%' } })
+        .to(systemPaths, { strokeDashoffset: 0, duration: .9, stagger: .08, ease: 'power2.out' })
+        .from('.system-node', { opacity: 0, scale: .85, duration: .45, stagger: .06, ease: 'back.out(1.5)' }, '-=.65');
+    }
   }
 })();

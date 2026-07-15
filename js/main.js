@@ -24,10 +24,23 @@ if (navBurger && navMobile) {
     const open = navBurger.getAttribute('aria-expanded') === 'true';
     navBurger.setAttribute('aria-expanded', String(!open));
     navMobile.classList.toggle('is-open', !open);
+    document.body.classList.toggle('mobile-menu-open', !open);
   });
+  $$('.nav__mobile-toggle', navMobile).forEach(toggle => toggle.addEventListener('click', () => {
+    const submenu = document.getElementById(toggle.getAttribute('aria-controls'));
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    $$('.nav__mobile-toggle', navMobile).forEach(otherToggle => {
+      const otherSubmenu = document.getElementById(otherToggle.getAttribute('aria-controls'));
+      otherToggle.setAttribute('aria-expanded', 'false');
+      if (otherSubmenu) otherSubmenu.hidden = true;
+    });
+    toggle.setAttribute('aria-expanded', String(!open));
+    if (submenu) submenu.hidden = open;
+  }));
   $$('a', navMobile).forEach(a => a.addEventListener('click', () => {
     navBurger.setAttribute('aria-expanded', 'false');
     navMobile.classList.remove('is-open');
+    document.body.classList.remove('mobile-menu-open');
   }));
 }
 
@@ -585,6 +598,24 @@ function form() {
   });
 }
 
+/* ---------- GOOGLE REVIEWS ---------- */
+function googleReviews() {
+  const viewport = $('[data-review-viewport]');
+  const prevBtn = $('[data-review-prev]');
+  const nextBtn = $('[data-review-next]');
+  if (!viewport || !prevBtn || !nextBtn) return;
+
+  const scrollByCard = (direction) => {
+    const card = $('.g-review', viewport);
+    const gap = parseFloat(getComputedStyle($('[data-review-grid]')).gap) || 14;
+    const distance = card ? card.getBoundingClientRect().width + gap : viewport.clientWidth * .82;
+    viewport.scrollBy({ left: direction * distance, behavior: reduce ? 'auto' : 'smooth' });
+  };
+
+  prevBtn.addEventListener('click', () => scrollByCard(-1));
+  nextBtn.addEventListener('click', () => scrollByCard(1));
+}
+
 /* ---------- FAQ ---------- */
 function faq() {
   const items = $$('.faq__item');
@@ -609,6 +640,6 @@ function faq() {
 /* ---------- init ---------- */
 window.addEventListener('DOMContentLoaded', () => {
   hero(); editBay(); practiceAccordion(); promise(); constellation(); servicesRoof(); results();
-  why(); marquee(); titles(); faq(); form();
+  googleReviews(); why(); marquee(); titles(); faq(); form();
   ScrollTrigger.refresh();
 });

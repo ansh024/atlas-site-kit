@@ -8,16 +8,32 @@
 name: Publish WordPress plugin
 
 on:
-  push:
-    branches: [main]
-    paths: ['wp-plugin/ranked-international/**']
+  # Production publishing is deliberately manual. A push to main must never
+  # update the client's site automatically; run the local/CI test suite first,
+  # then explicitly dispatch this workflow when the release is approved.
   workflow_dispatch: {}
 
 permissions:
   contents: write
 
 jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run wp:start
+      - run: npm run wp:test
+      - if: always()
+        run: npm run wp:stop || true
+
   publish:
+    needs: verify
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

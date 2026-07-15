@@ -152,8 +152,23 @@
   </div>
   <nav class="nav__menu-mobile" id="navMenuMobile">
     <a href="#top">Home</a>
-    <a href="#services">Services</a>
-    <a href="#industries">Industries We Serve</a>
+    <div class="nav__mobile-group">
+      <button class="nav__mobile-toggle" type="button" aria-expanded="false" aria-controls="mobileServices">Services <i data-lucide="chevron-down"></i></button>
+      <div class="nav__mobile-submenu" id="mobileServices" hidden>
+        <a href="#services">Local SEO</a>
+        <a href="#services">Technical SEO</a>
+        <a href="#services">Organic SEO</a>
+        <a href="#services">Google Ads &amp; PPC</a>
+      </div>
+    </div>
+    <div class="nav__mobile-group">
+      <button class="nav__mobile-toggle" type="button" aria-expanded="false" aria-controls="mobileIndustries">Industries We Serve <i data-lucide="chevron-down"></i></button>
+      <div class="nav__mobile-submenu" id="mobileIndustries" hidden>
+        <a href="/construction/">Construction</a>
+        <a href="/roofing/">Roofing</a>
+        <a href="/turf-tree-service/">Turf &amp; Tree Care</a>
+      </div>
+    </div>
     <a href="/case-studies/">Case Studies</a>
     <a href="#audit">Contact</a>
     <a href="tel:+16805542324" class="nav__menu-mobile-phone">Dallas · (680) 554-2324</a>
@@ -247,49 +262,6 @@
     </div>
   </section>
 
-  <!-- ===== 2. CSC OPERATIONAL ADVANTAGES ===== -->
-  <section class="practice-field" id="reviews">
-    <div class="practice-wrap">
-      <div class="practice-accordion" aria-label="CSC operational advantages">
-        <article class="practice-card is-active" tabindex="0" data-practice-card>
-          <video class="practice-video" poster="<?php echo rip_asset('family_business.jpg'); ?>" playsinline muted loop aria-label="Family distribution office"></video>
-          <button class="card-play-btn" aria-label="Pause video" data-state="playing">
-            <svg class="icon-pause" width="20" height="20" viewBox="0 0 20 20" fill="white"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
-            <svg class="icon-play" width="20" height="20" viewBox="0 0 20 20" fill="white"><path d="M5 3.5l12 6.5-12 6.5V3.5z"/></svg>
-          </button>
-          <div class="practice-card-content">
-            <div class="practice-card-kicker">01</div>
-            <h2>"Page one in 60 days.<br><span>I stopped doubting them."</span></h2>
-          </div>
-        </article>
-
-        <article class="practice-card" tabindex="0" data-practice-card>
-          <video class="practice-video" poster="<?php echo rip_asset('warehouse_inventory.jpg'); ?>" playsinline muted loop aria-label="Dental supply warehouse inventory"></video>
-          <button class="card-play-btn" aria-label="Play video" data-state="paused">
-            <svg class="icon-pause" width="20" height="20" viewBox="0 0 20 20" fill="white"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
-            <svg class="icon-play" width="20" height="20" viewBox="0 0 20 20" fill="white"><path d="M5 3.5l12 6.5-12 6.5V3.5z"/></svg>
-          </button>
-          <div class="practice-card-content">
-            <div class="practice-card-kicker">02</div>
-            <h2>"40% more calls.<br><span>Same ad budget."</span></h2>
-          </div>
-        </article>
-
-        <article class="practice-card" tabindex="0" data-practice-card>
-          <video class="practice-video" poster="<?php echo rip_asset('customer_service.jpg'); ?>" playsinline muted loop aria-label="Customer service representative"></video>
-          <button class="card-play-btn" aria-label="Play video" data-state="paused">
-            <svg class="icon-pause" width="20" height="20" viewBox="0 0 20 20" fill="white"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
-            <svg class="icon-play" width="20" height="20" viewBox="0 0 20 20" fill="white"><path d="M5 3.5l12 6.5-12 6.5V3.5z"/></svg>
-          </button>
-          <div class="practice-card-content">
-            <div class="practice-card-kicker">03</div>
-            <h2>"Best ROI of any marketing<br><span>we've ever done."</span></h2>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
   <!-- ===== 4. PROMISE / HIGHLIGHT-SWEEP ===== -->
   <section class="promise" id="promise">
     <div class="promise__inner">
@@ -319,7 +291,7 @@
           <path d="M815 373 C815 314 765 287 701 287 H524 C480 287 467 259 467 229" />
         </svg>
 
-        <div class="services-roof__center">Get You Ranked</div>
+        <a href="#audit" class="services-roof__center">Get You Ranked</a>
 
         <div class="services-roof__chip services-roof__chip--local">
           <div class="services-roof__chip-head">
@@ -382,26 +354,50 @@
           <div class="cs__stage">
             <article class="cs__card" data-cs-idx="0">
               <span class="cs__card-kicker">01 &mdash; Bella Med Spa</span>
-              <blockquote class="cs__quote">&ldquo;Page one in 60 days.<br>I stopped doubting them.&rdquo;</blockquote>
+              <blockquote class="cs__quote">7.5&times; the organic traffic for a Dallas med spa.</blockquote>
               <footer class="cs__card-foot">
-                <p class="cs__client">Maria T. &mdash; Bella Med Spa, Dallas TX</p>
-                <a href="#audit" class="cs__cta-link">&#9658;&nbsp;Get your free audit</a>
+                <p class="cs__client">Bella MedSpa &amp; Aesthetics &mdash; Dallas, TX</p>
+                <a href="/case-studies/bella-med-spa/" class="cs__cta-link">&#9658;&nbsp;Read case study</a>
               </footer>
             </article>
             <article class="cs__card" data-cs-idx="1">
-              <span class="cs__card-kicker">02 &mdash; North TX HVAC</span>
-              <blockquote class="cs__quote">&ldquo;40% more calls.<br>Same ad budget.&rdquo;</blockquote>
+              <span class="cs__card-kicker">02 &mdash; Reyes Custom Millwork</span>
+              <blockquote class="cs__quote">#1 for Dallas custom cabinets, with 6.7&times; the traffic.</blockquote>
               <footer class="cs__card-foot">
-                <p class="cs__client">James R. &mdash; North TX HVAC, Dallas TX</p>
-                <a href="#audit" class="cs__cta-link">&#9658;&nbsp;Get your free audit</a>
+                <p class="cs__client">Reyes Custom Millwork &mdash; Dallas, TX</p>
+                <a href="/case-studies/reyes-custom-millwork/" class="cs__cta-link">&#9658;&nbsp;Read case study</a>
               </footer>
             </article>
             <article class="cs__card" data-cs-idx="2">
-              <span class="cs__card-kicker">03 &mdash; Lone Star Roofing</span>
-              <blockquote class="cs__quote">&ldquo;Best ROI of any marketing<br>we&rsquo;ve ever done.&rdquo;</blockquote>
+              <span class="cs__card-kicker">03 &mdash; DFW Flower Wall</span>
+              <blockquote class="cs__quote">From zero organic traffic to DFW&rsquo;s #1 party-rental brand.</blockquote>
               <footer class="cs__card-foot">
-                <p class="cs__client">Derek S. &mdash; Lone Star Roofing, Dallas TX</p>
-                <a href="#audit" class="cs__cta-link">&#9658;&nbsp;Get your free audit</a>
+                <p class="cs__client">DFW Flower Wall &mdash; Dallas, TX</p>
+                <a href="/case-studies/dfw-flower-wall/" class="cs__cta-link">&#9658;&nbsp;Read case study</a>
+              </footer>
+            </article>
+            <article class="cs__card" data-cs-idx="3">
+              <span class="cs__card-kicker">04 &mdash; Social Pro Photo Booth</span>
+              <blockquote class="cs__quote">From one Dallas photo booth to #1 in 24 cities nationwide.</blockquote>
+              <footer class="cs__card-foot">
+                <p class="cs__client">Social Pro Photo Booth &mdash; Dallas, TX</p>
+                <a href="/case-studies/social-pro-photo-booth/" class="cs__cta-link">&#9658;&nbsp;Read case study</a>
+              </footer>
+            </article>
+            <article class="cs__card" data-cs-idx="4">
+              <span class="cs__card-kicker">05 &mdash; TX Artificial Turf &amp; Design</span>
+              <blockquote class="cs__quote">Zero to Domain Authority 55 and #1 in Dallas turf.</blockquote>
+              <footer class="cs__card-foot">
+                <p class="cs__client">TX Artificial Turf &amp; Design &mdash; Dallas-Fort Worth</p>
+                <a href="/case-studies/turf-and-design/" class="cs__cta-link">&#9658;&nbsp;Read case study</a>
+              </footer>
+            </article>
+            <article class="cs__card" data-cs-idx="5">
+              <span class="cs__card-kicker">06 &mdash; Alexis Delivery Service</span>
+              <blockquote class="cs__quote">Building a 25-city moving footprint, one page at a time.</blockquote>
+              <footer class="cs__card-foot">
+                <p class="cs__client">Alexis Delivery Service &mdash; Dallas-Fort Worth</p>
+                <a href="/case-studies/alexis-delivery-service/" class="cs__cta-link">&#9658;&nbsp;Read case study</a>
               </footer>
             </article>
           </div>
@@ -410,6 +406,9 @@
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11 4L6 9l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <div class="cs__pips" aria-hidden="true">
+              <span class="cs__pip"></span>
+              <span class="cs__pip"></span>
+              <span class="cs__pip"></span>
               <span class="cs__pip"></span>
               <span class="cs__pip"></span>
               <span class="cs__pip"></span>
@@ -422,38 +421,74 @@
         <div class="cs__metrics">
           <div class="cs__metrics-panel is-active" data-cs-metrics="0">
             <div class="cs__metric-block">
-              <p class="cs__metric-label">Calls per month</p>
-              <p class="cs__metric-num">600<span>+</span></p>
-              <p class="cs__metric-sub">up from 40 &middot; in 7 months</p>
+              <p class="cs__metric-label">Monthly organic traffic</p>
+              <p class="cs__metric-num">1,500</p>
+              <p class="cs__metric-sub">up from 200 visitors/month</p>
             </div>
             <div class="cs__metric-block">
-              <p class="cs__metric-label">Time to page one</p>
-              <p class="cs__metric-num">60<span>d</span></p>
-              <p class="cs__metric-sub">from near-zero organic traffic</p>
+              <p class="cs__metric-label">Traffic growth</p>
+              <p class="cs__metric-num">7.5<span>&times;</span></p>
+              <p class="cs__metric-sub">and still compounding</p>
             </div>
           </div>
           <div class="cs__metrics-panel" data-cs-metrics="1">
             <div class="cs__metric-block">
-              <p class="cs__metric-label">Booked calls</p>
-              <p class="cs__metric-num">612</p>
-              <p class="cs__metric-sub">in 7 months &middot; same ad spend</p>
+              <p class="cs__metric-label">Monthly organic traffic</p>
+              <p class="cs__metric-num">234</p>
+              <p class="cs__metric-sub">up from 35 &middot; 6.7&times; growth</p>
             </div>
             <div class="cs__metric-block">
-              <p class="cs__metric-label">Call volume lift</p>
-              <p class="cs__metric-num">40<span>%</span></p>
-              <p class="cs__metric-sub">more calls, zero extra budget</p>
+              <p class="cs__metric-label">Search position</p>
+              <p class="cs__metric-num">#1</p>
+              <p class="cs__metric-sub">for &ldquo;dallas custom cabinets&rdquo;</p>
             </div>
           </div>
           <div class="cs__metrics-panel" data-cs-metrics="2">
             <div class="cs__metric-block">
-              <p class="cs__metric-label">SERP position</p>
-              <p class="cs__metric-num">#1</p>
-              <p class="cs__metric-sub">for "roofer Dallas" keywords</p>
+              <p class="cs__metric-label">Monthly organic traffic</p>
+              <p class="cs__metric-num">1,297</p>
+              <p class="cs__metric-sub">up from zero in 24 months</p>
             </div>
             <div class="cs__metric-block">
-              <p class="cs__metric-label">Businesses ranked</p>
-              <p class="cs__metric-num">100<span>+</span></p>
-              <p class="cs__metric-sub">local businesses across DFW</p>
+              <p class="cs__metric-label">#1 rankings</p>
+              <p class="cs__metric-num">20</p>
+              <p class="cs__metric-sub">across DFW rental categories</p>
+            </div>
+          </div>
+          <div class="cs__metrics-panel" data-cs-metrics="3">
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Monthly organic traffic</p>
+              <p class="cs__metric-num">1,632</p>
+              <p class="cs__metric-sub">up from 680 &middot; 2.4&times; in 24 months</p>
+            </div>
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">#1 rankings</p>
+              <p class="cs__metric-num">24</p>
+              <p class="cs__metric-sub">across Dallas and 15+ U.S. cities</p>
+            </div>
+          </div>
+          <div class="cs__metrics-panel" data-cs-metrics="4">
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Monthly organic traffic</p>
+              <p class="cs__metric-num">221</p>
+              <p class="cs__metric-sub">up from zero &middot; breakout after 18 months</p>
+            </div>
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Domain Authority</p>
+              <p class="cs__metric-num">55</p>
+              <p class="cs__metric-sub">with five #1 Google rankings</p>
+            </div>
+          </div>
+          <div class="cs__metrics-panel" data-cs-metrics="5">
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">City pages live</p>
+              <p class="cs__metric-num">25<span>+</span></p>
+              <p class="cs__metric-sub">across the DFW metro</p>
+            </div>
+            <div class="cs__metric-block">
+              <p class="cs__metric-label">Best ranking</p>
+              <p class="cs__metric-num">#3</p>
+              <p class="cs__metric-sub">with eight keywords already in the top 20</p>
             </div>
           </div>
         </div>
@@ -470,6 +505,27 @@
     <div class="marquee" id="marquee">
       <div class="marquee__row" data-dir="1"></div>
       <div class="marquee__row" data-dir="-1"></div>
+    </div>
+  </section>
+
+  <section class="google-reviews" id="reviews" aria-labelledby="reviews-title">
+    <div class="google-reviews__inner">
+      <header class="google-reviews__head">
+        <div class="google-reviews__rating"><span class="google-reviews__g" aria-hidden="true">G</span><span>5 Star Rated on Google</span><span class="google-reviews__stars" aria-label="Five stars">★★★★★</span></div>
+        <h2 id="reviews-title">Dallas businesses trust Ranked to <em>get them found.</em></h2>
+        <p>Search growth is only useful when it brings the right customers through the door.</p>
+      </header>
+      <div class="google-reviews__viewport" data-review-viewport tabindex="0" aria-label="Client reviews">
+        <div class="google-reviews__grid" data-review-grid>
+          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">BM</span><div><h3>Bella MedSpa &amp; Aesthetics</h3><p>Dallas, TX</p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“Organic search has become a dependable way for the right patients to find us. We can finally see which pages and searches are moving the business.”</blockquote><a href="/case-studies/bella-med-spa/">View case study <span aria-hidden="true">→</span></a></article>
+          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">RM</span><div><h3>Reyes Custom Millwork</h3><p>Dallas, TX</p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“We went from barely showing up to ranking at the top for the cabinet searches that matter in Dallas. The reporting is clear, and the growth has held.”</blockquote><a href="/case-studies/reyes-custom-millwork/">View case study <span aria-hidden="true">→</span></a></article>
+          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">DF</span><div><h3>DFW Flower Wall</h3><p>Dallas, TX</p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“They built out every rental category properly and gave us visibility we never had before. Customers now find us for far more than just flower walls.”</blockquote><a href="/case-studies/dfw-flower-wall/">View case study <span aria-hidden="true">→</span></a></article>
+          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">SP</span><div><h3>Social Pro Photo Booth</h3><p>Dallas, TX</p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“Ranked understood that we serve markets beyond Dallas and built a strategy around every city and product. Our nationwide visibility is on another level.”</blockquote><a href="/case-studies/social-pro-photo-booth/">View case study <span aria-hidden="true">→</span></a></article>
+          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">TD</span><div><h3>TX Artificial Turf &amp; Design</h3><p>Dallas-Fort Worth</p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“The results took consistent work, but the authority and rankings kept building. We now show up for the Dallas turf searches we used to miss.”</blockquote><a href="/case-studies/turf-and-design/">View case study <span aria-hidden="true">→</span></a></article>
+          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">AD</span><div><h3>Alexis Delivery Service</h3><p>Dallas-Fort Worth</p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“We are still early in the campaign, but the city pages are starting to rank and the roadmap is clear. We know what is being built and why.”</blockquote><a href="/case-studies/alexis-delivery-service/">View case study <span aria-hidden="true">→</span></a></article>
+        </div>
+      </div>
+      <div class="google-reviews__controls"><button type="button" data-review-prev aria-label="Previous reviews">←</button><span aria-hidden="true">Swipe to see more</span><button type="button" data-review-next aria-label="Next reviews">→</button></div>
     </div>
   </section>
 

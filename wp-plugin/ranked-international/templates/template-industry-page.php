@@ -498,7 +498,7 @@ $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php
           <path d="M467 373 V229" />
           <path d="M815 373 C815 314 765 287 701 287 H524 C480 287 467 259 467 229" />
         </svg>
-        <div class="services-roof__center"><?php echo esc_html( get_field( 'services_center' ) ?: 'Get You Ranked' ); ?></div>
+        <a href="#audit" class="services-roof__center"><?php echo esc_html( get_field( 'services_center' ) ?: 'Get You Ranked' ); ?></a>
         <?php
         $chip_classes = array( 'local', 'technical', 'organic', 'link', 'ads', 'ppc' );
         $i = 0;
