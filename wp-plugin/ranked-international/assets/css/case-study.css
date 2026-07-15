@@ -14,14 +14,10 @@
 .csp-crumb em{font-style:normal;color:rgba(255,255,255,.85);font-family:inherit}
 
 /* ---------- hero ---------- */
-.hero--case-study{height:auto;min-height:0;padding-bottom:64px}
+.hero--case-study{height:auto;min-height:0;padding-bottom:48px}
 .hero--case-study .hero__inner{flex-direction:row;align-items:center;
-  padding:112px 64px 0;gap:48px}
-.hero--case-study .hero__copy{width:708px;max-width:708px;padding-top:0;gap:32px;flex-shrink:0}
-
-.csp-logo-badge{display:flex;align-items:center;justify-content:flex-start;
-  height:32px;padding:0;margin-bottom:0}
-.csp-logo-badge img{height:100%;width:auto;display:block;object-fit:contain}
+  padding:96px 64px 0;gap:48px}
+.hero--case-study .hero__copy{width:708px;max-width:708px;padding-top:0;gap:24px;flex-shrink:0}
 
 .hero--case-study .hero__title{font-family:var(--font-display);font-weight:800;
   font-size:64px;line-height:1.2;letter-spacing:0;color:#fff}
@@ -36,16 +32,16 @@
 .csp-hero-link:hover{color:#fff}
 .csp-hero-link i{width:14px;height:14px}
 
-/* stacked stat rows — Shade-style: label left, big number right, hairline divider */
-.csp-stats{display:flex;flex-direction:column;margin-top:8px;
-  border-top:1px solid rgba(255,255,255,.14)}
-.csp-stat-row{display:flex;align-items:baseline;justify-content:space-between;
-  gap:24px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+/* Compact result cards keep the hero focused while preserving every key outcome. */
+.csp-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:4px}
+.csp-stat-row{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;
+  aspect-ratio:1/1;min-height:132px;gap:12px;padding:18px;border:1px solid rgba(255,255,255,.16);
+  border-radius:14px;background:rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
 .csp-stat-row__label{font-family:var(--font-display);font-size:.86rem;font-weight:500;
-  color:rgba(255,255,255,.6);max-width:22ch;line-height:1.35}
+  color:rgba(255,255,255,.66);max-width:none;line-height:1.3}
 .csp-stat-row__num{font-family:var(--font-display);font-weight:800;
-  font-size:clamp(2rem,3.6vw,2.7rem);letter-spacing:-.03em;line-height:1;color:#fff;
-  white-space:nowrap;flex-shrink:0}
+  font-size:clamp(2rem,3vw,2.55rem);letter-spacing:-.03em;line-height:1;color:#fff;
+  white-space:nowrap}
 .csp-stat-row__num span{color:var(--chartreuse)}
 
 /* right-side chart card */
@@ -227,7 +223,10 @@
   .hero--case-study .hero__sub{color:#fff;font-size:14px;line-height:1.2;max-width:34ch;text-align:left;margin:0}
   .hero--case-study .hero__bottom{flex-direction:column;align-items:flex-start;gap:14px}
   .hero--case-study .hero__bottom .btn--primary{background:var(--chartreuse);color:var(--prussian-blue)}
-  .csp-stat-row__num{font-size:1.7rem}
+  .csp-stats{gap:8px}
+  .csp-stat-row{min-height:104px;padding:12px;border-radius:10px;gap:8px}
+  .csp-stat-row__label{font-size:.7rem}
+  .csp-stat-row__num{font-size:1.5rem}
   .csp-metric-grid{grid-template-columns:1fr}
   .csp-chart-card{padding:22px 18px 18px}
   .csp-table th:nth-child(3),.csp-table td:nth-child(3){display:none}

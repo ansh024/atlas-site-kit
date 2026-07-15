@@ -8,7 +8,6 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 $client_name    = get_field( 'client_name' ) ?: get_the_title();
-$client_logo    = get_field( 'client_logo' );
 $industry_tag   = get_field( 'industry_tag' );
 $live_url       = get_field( 'live_url' );
 $hero_title     = get_field( 'hero_title' );
@@ -168,11 +167,6 @@ $seo_description = get_field( 'seo_description' );
       <p class="csp-crumb">
         <a href="<?php echo esc_url( $hub_url ); ?>">Case Studies</a><span>/</span><em><?php echo esc_html( $client_name ); ?></em>
       </p>
-      <?php if ( $client_logo ) : ?>
-      <div class="csp-logo-badge">
-        <img src="<?php echo esc_url( $client_logo ); ?>" alt="<?php echo esc_attr( $client_name ); ?> logo" width="150" height="14">
-      </div>
-      <?php endif; ?>
       <div class="hero__text-block">
         <?php if ( $industry_tag ) : ?><p class="hero__eyebrow"><?php echo esc_html( $industry_tag ); ?></p><?php endif; ?>
         <h1 class="hero__title"><?php echo wp_kses_post( $hero_title ); ?></h1>
@@ -186,7 +180,7 @@ $seo_description = get_field( 'seo_description' );
       <div class="csp-stats">
         <?php while ( have_rows( 'hero_stats' ) ) : the_row(); ?>
         <div class="csp-stat-row">
-          <span class="csp-stat-row__label"><?php echo esc_html( get_sub_field( 'label' ) ); ?></span>
+          <span class="csp-stat-row__label"><?php echo wp_kses_post( get_sub_field( 'label' ) ); ?></span>
           <span class="csp-stat-row__num"><?php echo wp_kses_post( get_sub_field( 'value' ) ); ?></span>
         </div>
         <?php endwhile; ?>
