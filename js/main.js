@@ -39,7 +39,7 @@ function hero() {
   // text paints sooner instead of waiting on a sequential reveal.
   tl.from('.hero__eyebrow', { y: 20, opacity: 0, duration: .6 })
     .from(['.hero__title', '.hero__sub'], { y: 28, opacity: 0, duration: .8, stagger: 0 }, '-=.2')
-    .from('.hero__bottom .btn',        { y: 18, opacity: 0, duration: .5 }, '-=.3')
+    .from('.hero__bottom .btn',        { y: 0, opacity: 0, duration: .5 }, '-=.3')
     .from('.hero__stat',   { y: 18, opacity: 0, duration: .5, stagger: .1 }, '-=.3');
 
   tl.from('.hero__visual', { x: 40, opacity: 0, duration: 1, ease: 'power3.out' }, '-=1.0');

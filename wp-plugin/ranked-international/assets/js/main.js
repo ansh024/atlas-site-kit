@@ -39,7 +39,7 @@ function hero() {
   // text paints sooner instead of waiting on a sequential reveal.
   tl.from('.hero__eyebrow', { y: 20, opacity: 0, duration: .6 })
     .from(['.hero__title', '.hero__sub'], { y: 28, opacity: 0, duration: .8, stagger: 0 }, '-=.2')
-    .from('.hero__bottom .btn',        { y: 18, opacity: 0, duration: .5 }, '-=.3')
+    .from('.hero__bottom .btn',        { y: 0, opacity: 0, duration: .5 }, '-=.3')
     .from('.hero__stat',   { y: 18, opacity: 0, duration: .5, stagger: .1 }, '-=.3');
 
   tl.from('.hero__visual', { x: 40, opacity: 0, duration: 1, ease: 'power3.out' }, '-=1.0');
@@ -106,8 +106,7 @@ function editBay() {
   $$('.vcard__play').forEach((btn, i) => btn.addEventListener('click', e => {
     e.stopPropagation();
     const screen = btn.closest('.vcard__screen');
-    const assetBase = (window.RankdWP && window.RankdWP.assetsUrl) || 'assets/';
-    const src = `${assetBase}video/review${i + 1}.mp4`;
+    const src = `assets/video/review${i + 1}.mp4`;
     const v = document.createElement('video');
     v.src = src; v.controls = true; v.autoplay = true; v.playsInline = true;
     v.style.cssText = 'width:100%;height:100%;object-fit:cover';
@@ -484,6 +483,8 @@ function results() {
 
 /* ---------- WHY list reveal ---------- */
 function why() {
+  const list = $('.why__list');
+  if (!list) return;
   gsap.from('.why__list li', {
     scrollTrigger: { trigger: '.why__list', start: 'top 75%' },
     y: 30, opacity: 0, duration: .6, stagger: .12, ease: 'power3.out',
@@ -567,7 +568,7 @@ function form() {
   $$('a[href="#audit"]').forEach(link => link.addEventListener('click', openAudit));
   $$('[data-audit-close]', modal).forEach(el => el.addEventListener('click', closeAudit));
   $('[data-audit-next]', f)?.addEventListener('click', () => {
-    const fields = [f.elements.name, f.elements.email];
+    const fields = $$('[data-audit-step="1"] [required]', f);
     if (fields.every(field => field.reportValidity())) {
       showStep('two');
       setTimeout(() => f.elements.website?.focus(), 40);
@@ -580,21 +581,8 @@ function form() {
 
   f.addEventListener('submit', e => {
     e.preventDefault();
-    const fields = [f.elements.website, f.elements.service];
-    if (!fields.every(field => field.reportValidity())) return;
-
-    if (window.RankdWP && window.RankdWP.ajaxUrl) {
-      const body = new FormData();
-      body.append('action', 'rankd_audit_lead');
-      body.append('nonce', window.RankdWP.nonce);
-      body.append('name', f.elements.name?.value || '');
-      body.append('email', f.elements.email?.value || '');
-      body.append('website', f.elements.website?.value || '');
-      body.append('service', f.elements.service?.value || '');
-      body.append('page_url', window.location.href);
-      fetch(window.RankdWP.ajaxUrl, { method: 'POST', body })
-        .finally(() => showStep('done'));
-    } else {
+    const fields = $$('[data-audit-step="2"] [required]', f);
+    if (fields.every(field => field.reportValidity())) {
       showStep('done');
     }
   });
