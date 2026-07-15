@@ -36,13 +36,13 @@ function rip_seed_content() {
  * or get_field()/have_rows() will silently return nothing on the front end.
  * Build the name=>key map from the same acf-json files ACF itself loads.
  */
-function rip_field_key_map( $group_file ) {
+function rip_field_defs( $group_file ) {
 	static $maps = array();
 	if ( ! isset( $maps[ $group_file ] ) ) {
 		$json = json_decode( file_get_contents( RIP_DIR . 'acf-json/' . $group_file ), true );
 		$map  = array();
 		foreach ( ( $json['fields'] ?? array() ) as $f ) {
-			$map[ $f['name'] ] = $f['key'];
+			$map[ $f['name'] ] = $f;
 		}
 		$maps[ $group_file ] = $map;
 	}
@@ -50,9 +50,29 @@ function rip_field_key_map( $group_file ) {
 }
 
 function rip_update_fields( $post_id, $fields, $group_file ) {
-	$keys = rip_field_key_map( $group_file );
+	$defs = rip_field_defs( $group_file );
 	foreach ( $fields as $name => $value ) {
-		update_field( $keys[ $name ] ?? $name, $value, $post_id );
+		$def = $defs[ $name ] ?? null;
+
+		// Repeater rows must ALSO be keyed by sub-field KEY on first write —
+		// name-keyed rows store the row count but silently drop every value.
+		if ( $def && ! empty( $def['sub_fields'] ) && is_array( $value ) ) {
+			$sub_keys = array();
+			foreach ( $def['sub_fields'] as $sf ) {
+				$sub_keys[ $sf['name'] ] = $sf['key'];
+			}
+			$keyed_rows = array();
+			foreach ( $value as $row ) {
+				$keyed_row = array();
+				foreach ( $row as $sub_name => $sub_value ) {
+					$keyed_row[ $sub_keys[ $sub_name ] ?? $sub_name ] = $sub_value;
+				}
+				$keyed_rows[] = $keyed_row;
+			}
+			$value = $keyed_rows;
+		}
+
+		update_field( $def['key'] ?? $name, $value, $post_id );
 	}
 }
 
