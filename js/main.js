@@ -455,20 +455,17 @@ function results() {
     ...st,
     onEnter() {
       gsap.from('.cs__stage', { y: 36, opacity: 0, duration: .72, ease: 'power3.out', delay: .12 });
-      const c0 = cards[0];
-      gsap.fromTo(c0.querySelector('.cs__card-kicker'),
-        { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .42, ease: 'power3.out', delay: .44 });
-      gsap.fromTo(c0.querySelector('.cs__quote'),
-        { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: .58, ease: 'power3.out', delay: .54 });
-      gsap.fromTo(c0.querySelector('.cs__card-foot'),
-        { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .48, ease: 'power3.out', delay: .66 });
     },
   });
 
-  gsap.from('.cs__metrics-panel.is-active .cs__metric-block', {
-    scrollTrigger: st,
-    y: 28, opacity: 0, duration: .58, stagger: .15, ease: 'power3.out', delay: .22,
-    onComplete: startAuto,
+  ScrollTrigger.create({
+    ...st,
+    onEnter() {
+      gsap.from('.cs__metrics-panel.is-active .cs__metric-block', {
+        y: 28, opacity: 0, duration: .58, stagger: .15, ease: 'power3.out', delay: .22,
+        onComplete: startAuto,
+      });
+    },
   });
 
   gsap.from('.cs__arrow', {

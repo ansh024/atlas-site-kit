@@ -139,6 +139,10 @@
   /* ---- Compact framing for the reused services-roof hub-and-spoke ---- */
   .services-roof--compact { min-height: 620px; }
   .services-roof--compact .services-roof__inner { padding: 60px 0 60px; }
+
+  /* Keep the first result visible even if scroll-trigger animation initialization is delayed. */
+  .case-studies .cs__card.is-active,
+  .case-studies .cs__metrics-panel.is-active { opacity: 1; }
 </style>
 </head>
 <body>

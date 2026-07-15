@@ -136,6 +136,8 @@ $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php
   }
   .services-roof--compact { min-height: 620px; }
   .services-roof--compact .services-roof__inner { padding: 60px 0; }
+  .case-studies .cs__card.is-active,
+  .case-studies .cs__metrics-panel.is-active { opacity: 1; }
 </style>
 <?php wp_head(); ?>
 </head>
@@ -443,7 +445,7 @@ $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php
         <div class="cs__center">
           <div class="cs__stage">
             <?php foreach ( $spotlights as $idx => $slide ) : ?>
-            <article class="cs__card<?php echo $idx === 0 ? '' : ''; ?>" data-cs-idx="<?php echo esc_attr( $idx ); ?>">
+            <article class="cs__card<?php echo $idx === 0 ? ' is-active' : ''; ?>" data-cs-idx="<?php echo esc_attr( $idx ); ?>">
               <span class="cs__card-kicker"><?php echo esc_html( $slide['kicker'] ); ?></span>
               <blockquote class="cs__quote"><?php echo wp_kses_post( $slide['quote'] ); ?></blockquote>
               <footer class="cs__card-foot">
