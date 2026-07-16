@@ -13,3 +13,21 @@
 #content > .uicore-page-title {
   display: none;
 }
+
+/* The active WordPress theme keeps its navigation fixed above plugin pages.
+   Reserve room within each hero so the background stays seamless while the
+   breadcrumb and opening content never sit underneath that navigation. */
+#content > main#top > .hero--case-study .hero__inner { padding-top: 112px; }
+#content > .csp-hub-hero { padding-top: 128px; }
+
+@media (max-width: 640px) {
+  /* The mobile theme bar is 89px tall. Keep the existing 18px case-study
+     inner spacing, and add clearance on the hero itself instead. */
+  #content > main#top > .hero--case-study { padding-top: 90px; }
+  #content > .csp-hub-hero { padding-top: 108px; }
+
+  /* Home and industry pages use the shared hero component. */
+  #content > main#top > .hero:not(.hero--case-study) .hero__inner {
+    padding-top: 108px;
+  }
+}
