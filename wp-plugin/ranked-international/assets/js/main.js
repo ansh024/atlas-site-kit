@@ -540,139 +540,31 @@ function titles() {
   });
 }
 
-/* ---------- form ---------- */
+/* ---------- audit modal (WPForms owns validation and submission) ---------- */
 function form() {
   const modal = $('#auditModal');
-  const f = $('#auditForm');
-  if (!modal || !f) return;
+  if (!modal) return;
 
-  const steps = {
-    one: $('[data-audit-step="1"]', f),
-    two: $('[data-audit-step="2"]', f),
-    done: $('[data-audit-step="done"]', f),
-  };
-  const newRequestId = () => window.crypto?.randomUUID?.() || 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, char => {
-    const random = Math.floor(Math.random() * 16);
-    return (char === 'x' ? random : (random & 3) | 8).toString(16);
-  });
   let lastFocus = null;
-  let requestId = newRequestId();
-
-  function normalizeWebsite() {
-    const field = f.elements.website;
-    if (!field) return;
-    const value = field.value.trim();
-    if (value && !/^[a-z][a-z\d+.-]*:\/\//i.test(value)) field.value = `https://${value}`;
-  }
-
-  if (!f.elements.company_fax) {
-    const honeypot = document.createElement('label');
-    honeypot.className = 'rip-honeypot';
-    honeypot.setAttribute('aria-hidden', 'true');
-    honeypot.style.cssText = 'position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden';
-    honeypot.innerHTML = 'Company fax<input type="text" name="company_fax" tabindex="-1" autocomplete="off">';
-    f.prepend(honeypot);
-  }
-
-  function showStep(step) {
-    Object.values(steps).forEach(el => el?.classList.remove('is-active'));
-    steps[step]?.classList.add('is-active');
-  }
-
-  function openAudit(e) {
-    e?.preventDefault();
+  const openAudit = event => {
+    event?.preventDefault();
     lastFocus = document.activeElement;
-    modal.classList.add('is-open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('audit-modal-open');
-    showStep('one');
-    setTimeout(() => f.elements.name?.focus(), 40);
-  }
-
-  function closeAudit() {
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('audit-modal-open');
-    f.reset();
-    requestId = newRequestId();
-    showStep('one');
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("audit-modal-open");
+    setTimeout(() => $('input:not([type=hidden]), select, textarea', modal)?.focus(), 40);
+  };
+  const closeAudit = () => {
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("audit-modal-open");
     lastFocus?.focus?.();
-  }
+  };
 
   $$('a[href="#audit"]').forEach(link => link.addEventListener('click', openAudit));
-  $$('[data-audit-close]', modal).forEach(el => el.addEventListener('click', closeAudit));
-  $('[data-audit-next]', f)?.addEventListener('click', () => {
-    const fields = $$('[data-audit-step="1"] [required]', f);
-    if (fields.every(field => field.reportValidity())) {
-      showStep('two');
-      setTimeout(() => f.elements.website?.focus(), 40);
-    }
-  });
-  $('[data-audit-back]', f)?.addEventListener('click', () => showStep('one'));
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeAudit();
-  });
-
-  f.addEventListener('submit', async e => {
-    e.preventDefault();
-    normalizeWebsite();
-    const fields = $$('[data-audit-step="2"] [required]', f);
-    if (!fields.every(field => field.reportValidity())) return;
-
-    const submit = $('[type="submit"]', f);
-    let status = $('[data-audit-status]', f);
-    if (!status) {
-      status = document.createElement('p');
-      status.dataset.auditStatus = '';
-      status.setAttribute('role', 'status');
-      status.setAttribute('aria-live', 'polite');
-      $('.audit-modal__actions', f)?.after(status);
-    }
-
-    if (!window.RankdWP?.ajaxUrl || !window.RankdWP?.nonce) {
-      status.textContent = 'This form is available on the live WordPress site.';
-      return;
-    }
-
-    const data = new FormData(f);
-    data.append('action', 'rankd_audit_lead');
-    data.append('nonce', window.RankdWP.nonce);
-    data.append('page_url', window.location.href);
-    data.append('request_id', requestId);
-
-    submit.disabled = true;
-    submit.setAttribute('aria-busy', 'true');
-    status.textContent = 'Sending your request…';
-
-    try {
-      if (window.RankdWP.recaptchaEnabled) {
-        let recaptchaToken = '';
-        if (window.RankdWP.recaptchaTestBypass) {
-          recaptchaToken = 'local-test';
-        } else {
-          if (!window.RankdWP.recaptchaSiteKey || !window.grecaptcha) throw new Error('Verification unavailable');
-          await new Promise(resolve => window.grecaptcha.ready(resolve));
-          recaptchaToken = await window.grecaptcha.execute(window.RankdWP.recaptchaSiteKey, { action: window.RankdWP.recaptchaAction });
-        }
-        data.append('recaptcha_token', recaptchaToken);
-      }
-      const response = await fetch(window.RankdWP.ajaxUrl, {
-        method: 'POST',
-        body: data,
-        credentials: 'same-origin',
-      });
-      const result = await response.json();
-      if (!response.ok || !result.success) throw new Error(result.data?.message || 'Request rejected');
-      const doneCopy = $('.audit-modal__done .audit-modal__copy', f);
-      if (doneCopy && result.data?.message) doneCopy.textContent = result.data.message;
-      status.textContent = '';
-      showStep('done');
-    } catch (error) {
-      status.textContent = error.message && error.message !== 'Request rejected' ? error.message : 'We could not send your request. Please try again or call us.';
-    } finally {
-      submit.disabled = false;
-      submit.removeAttribute('aria-busy');
-    }
+  $$('[data-audit-close]', modal).forEach(element => element.addEventListener('click', closeAudit));
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && modal.classList.contains("is-open")) closeAudit();
   });
 }
 

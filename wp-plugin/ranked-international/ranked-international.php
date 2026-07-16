@@ -20,6 +20,43 @@ require_once RIP_DIR . 'includes/seed.php';
 require_once RIP_DIR . 'includes/seo.php';
 require_once RIP_DIR . 'includes/leads.php';
 
+const RIP_AUDIT_WPFORMS_ID = 2845;
+
+function rip_wpforms_audit_available() {
+	return shortcode_exists( 'wpforms' )
+		&& get_post_type( RIP_AUDIT_WPFORMS_ID ) === 'wpforms'
+		&& get_post_status( RIP_AUDIT_WPFORMS_ID ) !== 'trash';
+}
+
+function rip_wpforms_audit_html() {
+	static $html = null;
+	if ( $html !== null ) return $html;
+	if ( ! rip_wpforms_audit_available() ) {
+		$html = '<p class="audit-modal__unavailable">The audit form is temporarily unavailable. Please use the Contact page or call us.</p>';
+		return $html;
+	}
+	$html = do_shortcode( '[wpforms id="2845" title="false"]' );
+	return $html;
+}
+
+function rip_render_audit_modal() {
+	?>
+	<div class="audit-modal" id="auditModal" aria-hidden="true">
+		<div class="audit-modal__backdrop" data-audit-close></div>
+		<div class="audit-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="auditTitle">
+			<button class="audit-modal__close" type="button" data-audit-close aria-label="Close audit form"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+			<h2 class="screen-reader-text" id="auditTitle">Request a free audit</h2>
+			<div class="audit-modal__wpforms"><?php echo rip_wpforms_audit_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+		</div>
+	</div>
+	<?php
+}
+
+add_action( 'admin_notices', function () {
+	if ( ! current_user_can( 'manage_options' ) || rip_wpforms_audit_available() ) return;
+	echo '<div class="notice notice-error"><p><strong>Ranked audit modal:</strong> WPForms form 2845 is unavailable. Activate WPForms and publish form 2845.</p></div>';
+} );
+
 /**
  * Map of template file => label shown in the Page Attributes dropdown.
  * Only the two hand-built pages live here — Industry Pages and Case Studies
@@ -104,20 +141,6 @@ function rip_enqueue_assets() {
 	wp_enqueue_script( 'lucide', 'https://unpkg.com/lucide@1.23.0/dist/umd/lucide.min.js', array(), '1.23.0', true );
 
 	wp_enqueue_script( 'rip-main', RIP_URL . 'assets/js/main.js', array( 'gsap', 'gsap-scrolltrigger', 'lucide' ), RIP_VERSION, true );
-	$recaptcha_enabled = defined( 'RIP_RECAPTCHA_ENABLED' ) && RIP_RECAPTCHA_ENABLED;
-	wp_localize_script( 'rip-main', 'RankdWP', array(
-		'assetsUrl' => RIP_URL . 'assets/images/',
-		'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
-		'nonce'     => wp_create_nonce( 'rip_audit_lead' ),
-		'recaptchaEnabled' => $recaptcha_enabled,
-		'recaptchaSiteKey' => defined( 'RIP_RECAPTCHA_SITE_KEY' ) ? RIP_RECAPTCHA_SITE_KEY : '',
-		'recaptchaAction'  => 'audit_lead',
-		'recaptchaTestBypass' => wp_get_environment_type() === 'local' && defined( 'RIP_RECAPTCHA_TEST_BYPASS' ) && RIP_RECAPTCHA_TEST_BYPASS,
-	) );
-
-	if ( $recaptcha_enabled && defined( 'RIP_RECAPTCHA_SITE_KEY' ) && RIP_RECAPTCHA_SITE_KEY ) {
-		wp_enqueue_script( 'google-recaptcha-v3', 'https://www.google.com/recaptcha/api.js?render=' . rawurlencode( RIP_RECAPTCHA_SITE_KEY ), array(), null, true );
-	}
 
 	if ( $is_case_study ) {
 		wp_enqueue_script( 'rip-case-study', RIP_URL . 'assets/js/case-study.js', array( 'gsap', 'gsap-scrolltrigger' ), RIP_VERSION, true );
@@ -125,6 +148,9 @@ function rip_enqueue_assets() {
 	if ( $is_service ) {
 		wp_enqueue_script( 'rip-service', RIP_URL . 'assets/js/service.js', array( 'gsap', 'gsap-scrolltrigger', 'rip-main' ), RIP_VERSION, true );
 	}
+
+	// Render once before styles/scripts print so WPForms can enqueue its assets.
+	rip_wpforms_audit_html();
 }
 
 /**
