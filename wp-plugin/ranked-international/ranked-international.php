@@ -142,6 +142,14 @@ function rip_enqueue_assets() {
 
 	wp_enqueue_script( 'rip-main', RIP_URL . 'assets/js/main.js', array( 'gsap', 'gsap-scrolltrigger', 'lucide' ), RIP_VERSION, true );
 
+	/* Keep the durable audit endpoint testable after the visible form moved to
+	 * WPForms. This exposes only the public AJAX URL and a normal WP nonce; it
+	 * does not restore or bind the retired custom form UI. */
+	wp_localize_script( 'rip-main', 'RankdWP', array(
+		'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+		'nonce'   => wp_create_nonce( 'rip_audit_lead' ),
+	) );
+
 	if ( $is_case_study ) {
 		wp_enqueue_script( 'rip-case-study', RIP_URL . 'assets/js/case-study.js', array( 'gsap', 'gsap-scrolltrigger' ), RIP_VERSION, true );
 	}
