@@ -181,6 +181,17 @@ function rip_enqueue_assets() {
 }
 
 /**
+ * UiCore enables a site-wide blue cursor follower from its generated global
+ * assets. Keep the native system cursor and hide only that decorative layer.
+ * This lives outside the generated theme CSS so theme rebuilds cannot undo it.
+ */
+add_action( 'wp_head', 'rip_disable_uicore_custom_cursor', 100 );
+function rip_disable_uicore_custom_cursor() {
+	if ( is_admin() ) return;
+	echo '<style id="rip-disable-uicore-cursor">.ui-cursor{display:none!important}</style>';
+}
+
+/**
  * Resolve the front-end URL for one of our templates, if a Page has it assigned.
  * Falls back to a hardcoded path so links still work before the client sets pages up.
  */
