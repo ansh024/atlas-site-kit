@@ -54,19 +54,12 @@ test('workstream tabs and FAQ are keyboard operable', async ({ page }) => {
   await expect(secondFaq).toHaveAttribute('aria-expanded', 'true');
 });
 
-test('audit form submits through the real local WordPress AJAX endpoint', async ({ page }) => {
+test('audit CTA opens the WPForms-owned modal', async ({ page }) => {
   await page.locator('.svc-hero__actions a[href="#audit"]').click();
-  await page.getByLabel('Name').fill('Local QA');
-  await page.getByLabel('Work email').fill('qa@example.test');
-  await page.getByLabel('Phone').fill('469-555-0100');
-  await page.getByRole('button', { name: 'Continue' }).click();
-  await page.getByLabel('Website').fill('https://example.test');
-  await page.getByLabel('Primary market').fill('Dallas, TX');
-  const responsePromise = page.waitForResponse(response => response.url().includes('admin-ajax.php'));
-  await page.getByRole('button', { name: 'Submit audit' }).click();
-  const response = await responsePromise;
-  expect(response.ok()).toBeTruthy();
-  await expect(page.getByRole('heading', { name: 'Audit request received' })).toBeVisible();
+  await expect(page.locator('#auditModal')).toHaveClass(/is-open/);
+  await expect(page.locator('#auditModal')).toHaveAttribute('aria-hidden', 'false');
+  await expect(page.locator('#auditForm')).toHaveCount(0);
+  await expect(page.locator('.audit-modal__wpforms')).toBeVisible();
 });
 
 test('mobile layout has no horizontal document overflow', async ({ page }, testInfo) => {
