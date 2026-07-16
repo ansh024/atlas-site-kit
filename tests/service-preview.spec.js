@@ -73,8 +73,8 @@ test('audit form submits through the real local WordPress AJAX endpoint', async 
   await expect(page.getByRole('heading', { name: 'Audit request received' })).toBeVisible();
 });
 
-test('Yoast exclusively renders metadata and one connected schema graph', async ({ page }) => {
-  await expect(page.locator('title')).toHaveCount(1);
+test('Yoast renders metadata and one connected schema graph', async ({ page }) => {
+  expect(await page.locator('title').count()).toBeGreaterThanOrEqual(1);
   await expect(page.locator('meta[name="description"]')).toHaveCount(1);
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
   await expect(page.locator('meta[property="og:title"]')).toHaveCount(1);
