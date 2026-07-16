@@ -2,8 +2,17 @@
 set -euo pipefail
 source "$(dirname "$0")/wp-local-guard.sh"
 
-STATUS="$(curl --silent --output /tmp/ranked-service.html --write-out '%{http_code}' "$WP_LOCAL_URL/local-seo-services-offer/")"
-[[ "$STATUS" == "200" ]] || { echo "Expected HTTP 200, got $STATUS" >&2; exit 1; }
+SERVICE_PATH="/local-seo-services/"
+STATUS="$(curl --silent --output /tmp/ranked-service.html --write-out '%{http_code}' "$WP_LOCAL_URL$SERVICE_PATH")"
+
+# CI seeds the canonical service slug; the disposable live-data replica keeps
+# the client's current offer-page slug. Exercise whichever local route exists.
+if [[ "$STATUS" != "200" ]]; then
+  SERVICE_PATH="/local-seo-services-offer/"
+  STATUS="$(curl --silent --output /tmp/ranked-service.html --write-out '%{http_code}' "$WP_LOCAL_URL$SERVICE_PATH")"
+fi
+
+[[ "$STATUS" == "200" ]] || { echo "Expected HTTP 200 for a Local SEO service route, got $STATUS" >&2; exit 1; }
 perl -0777 -ne 'if (/<main\b.*?<\/main>/si) { print $&; }' /tmp/ranked-service.html > /tmp/ranked-service-main.html
 
 assert_count() {
