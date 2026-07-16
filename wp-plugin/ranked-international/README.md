@@ -58,7 +58,7 @@ Common commands:
 ```bash
 npm run wp:test        # smoke + desktop/mobile/reduced-motion browser tests
 npm run wp:test:smoke  # routing, schema, SEO tags, plugin state, legacy-copy guard
-npm run wp:test:e2e    # browser interactions and real local AJAX submission
+npm run wp:test:e2e    # browser interactions, including the WPForms audit modal
 npm run wp:stop        # stop containers, retain the local database
 npm run wp:reset       # erase and rebuild only the disposable local database
 npm run wp:destroy     # destroy only this repository's wp-env containers/volumes

@@ -9,7 +9,7 @@
     "wp:destroy": "bash scripts/wp-local-destroy.sh",
     "wp:status": "wp-env status",
     "wp:cli": "wp-env run cli wp",
-    "wp:test": "bash scripts/wp-local-smoke.sh && wp-env run cli wp eval-file /var/www/html/wp-content/plugins/ranked-international/tests/lead-pipeline.php && playwright test",
+    "wp:test": "bash scripts/wp-local-smoke.sh && playwright test",
     "wp:test:smoke": "bash scripts/wp-local-smoke.sh",
     "wp:test:e2e": "playwright test",
     "wp:preview": "playwright test tests/service-preview.spec.js --project=desktop --headed"
