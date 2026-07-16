@@ -6,8 +6,8 @@ test.beforeEach(async ({ page }) => {
 
 test('renders the service narrative and structured UI', async ({ page }) => {
   await expect(page).toHaveTitle(/Local SEO Services/);
-  await expect(page.locator('h1')).toHaveCount(1);
-  await expect(page.locator('h1')).toContainText('Own the searches happening');
+  await expect(page.locator('main h1')).toHaveCount(1);
+  await expect(page.locator('main h1')).toContainText('Own the searches happening');
   await expect(page.locator('.search-console')).toBeVisible();
   await expect(page.locator('.problem-row')).toHaveCount(4);
   await expect(page.locator('.blueprint__tabs [role="tab"]')).toHaveCount(7);

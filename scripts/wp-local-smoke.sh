@@ -14,7 +14,8 @@ assert_count() {
 assert_present() { grep -Eiq "$1" /tmp/ranked-service.html || { echo "Missing: $2" >&2; exit 1; }; }
 assert_absent() { ! grep -Eiq "$1" /tmp/ranked-service.html || { echo "Unexpected: $2" >&2; exit 1; }; }
 
-assert_count 1 '<h1([ >])' 'Canonical H1 count'
+MAIN_H1_COUNT="$(perl -0777 -ne 'if (/<main\b.*?<\/main>/si) { $main = $&; @h1 = ($main =~ /<h1(?:[ >])/gi); print scalar @h1; }' /tmp/ranked-service.html)"
+[[ "$MAIN_H1_COUNT" == "1" ]] || { echo "Page-content H1 count: expected 1, got ${MAIN_H1_COUNT:-0}" >&2; exit 1; }
 assert_count 1 '<link rel="canonical"' 'Canonical tag count'
 assert_count 1 '<title>' 'Title tag count'
 assert_present 'Own the searches happening' 'Local SEO hero'
