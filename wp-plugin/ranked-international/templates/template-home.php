@@ -137,7 +137,7 @@
       </div>
 
       <a href="/case-studies/">Case Studies</a>
-      <a href="#audit">Contact</a>
+      <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Contact</a>
     </nav>
     <div class="nav__actions">
       <a href="tel:+16805542324" class="nav__phone">Dallas · (680) 554-2324</a>
@@ -167,7 +167,7 @@
       </div>
     </div>
     <a href="/case-studies/">Case Studies</a>
-    <a href="#audit">Contact</a>
+    <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Contact</a>
     <a href="tel:+16805542324" class="nav__menu-mobile-phone">Dallas · (680) 554-2324</a>
     <a href="#audit" class="btn btn--primary btn--block">Get my free audit</a>
   </nav>
@@ -714,7 +714,7 @@
       <div><h3>SEO</h3><a href="#">Local SEO</a><a href="#">Organic SEO</a><a href="#">Technical SEO</a><a href="#">Enterprise SEO</a><a href="#">Link Building</a></div>
       <div><h3>Paid</h3><a href="#">Google Ads</a><a href="#">PPC</a><a href="#">Enterprise PPC</a></div>
       <div><h3>Consulting</h3><a href="#">SEO Consulting</a><a href="#">CRO Audit</a></div>
-      <div><h3>Company</h3><a href="/case-studies/">Results</a><a href="#process">About</a><a href="/construction/">Construction SEO</a><a href="#audit">Contact</a></div>
+      <div><h3>Company</h3><a href="/case-studies/">Results</a><a href="#process">About</a><a href="/construction/">Construction SEO</a><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Contact</a></div>
     </div>
   </div>
   <div class="footer__base"><span>© 2026 Ranked International</span><span>Dallas, Texas</span></div>

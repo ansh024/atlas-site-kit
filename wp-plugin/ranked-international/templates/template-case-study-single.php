@@ -118,7 +118,7 @@ if ( have_rows( 'chart_points' ) ) {
         </div>
       </div>
       <a href="<?php echo esc_url( $hub_url ); ?>">Case Studies</a>
-      <a href="#audit">Contact</a>
+      <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Contact</a>
     </nav>
     <div class="nav__actions">
       <a href="tel:+16805542324" class="nav__phone">Dallas · (680) 554-2324</a>
@@ -133,7 +133,7 @@ if ( have_rows( 'chart_points' ) ) {
     <a href="/#services">Services</a>
     <a href="/#industries">Industries We Serve</a>
     <a href="<?php echo esc_url( $hub_url ); ?>">Case Studies</a>
-    <a href="#audit">Contact</a>
+    <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Contact</a>
     <a href="tel:+16805542324" class="nav__menu-mobile-phone">Dallas · (680) 554-2324</a>
     <a href="#audit" class="btn btn--primary btn--block">Get my free audit</a>
   </nav>
@@ -371,7 +371,7 @@ if ( have_rows( 'chart_points' ) ) {
       <div><h3>SEO</h3><a href="/#services">Local SEO</a><a href="/#services">Organic SEO</a><a href="/#services">Technical SEO</a><a href="/#services">Enterprise SEO</a><a href="/#services">Link Building</a></div>
       <div><h3>Paid</h3><a href="/#services">Google Ads</a><a href="/#services">PPC</a><a href="/#services">Enterprise PPC</a></div>
       <div><h3>Consulting</h3><a href="/#services">SEO Consulting</a><a href="/#services">CRO Audit</a></div>
-      <div><h3>Company</h3><a href="<?php echo esc_url( $hub_url ); ?>">Results</a><a href="/#process">About</a><a href="/construction/">Construction SEO</a><a href="#audit">Contact</a></div>
+      <div><h3>Company</h3><a href="<?php echo esc_url( $hub_url ); ?>">Results</a><a href="/#process">About</a><a href="/construction/">Construction SEO</a><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Contact</a></div>
     </div>
   </div>
   <div class="footer__base"><span>&copy; 2026 Ranked International</span><span>Dallas, Texas</span></div>
