@@ -9,8 +9,6 @@ function rip_service_rows( $name, $fallback = array() ) {
 
 $service       = get_field( 'service_name' ) ?: get_the_title();
 $family        = get_field( 'service_family' ) ?: 'SEO';
-$seo_title     = get_field( 'seo_title' ) ?: "$service | Ranked International";
-$seo_desc      = get_field( 'seo_description' ) ?: get_field( 'hero_summary' );
 $evidence_type = get_field( 'evidence_type' ) ?: 'map';
 $hub_url       = rip_url_for_template( 'templates/template-case-studies-hub.php', '/case-studies/' );
 $cta_label     = get_field( 'hero_cta_label' ) ?: 'Get my free audit';
@@ -64,53 +62,15 @@ $proof = array(
 	'url' => $proof_post ? get_permalink( $proof_post ) : home_url( '/case-studies/bella-med-spa/' ),
 );
 
-$schema = array(
-	'@context' => 'https://schema.org', '@type' => 'Service',
-	'name' => $service, 'description' => wp_strip_all_tags( $seo_desc ),
-	'provider' => array( '@type' => 'ProfessionalService', 'name' => 'Ranked International', 'url' => home_url( '/' ) ),
-	'areaServed' => get_field( 'primary_market' ) ?: 'Dallas-Fort Worth, Texas',
-	'url' => get_permalink(),
-);
-$breadcrumb_schema = array(
-	'@context' => 'https://schema.org', '@type' => 'BreadcrumbList',
-	'itemListElement' => array(
-		array( '@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => home_url( '/' ) ),
-		array( '@type' => 'ListItem', 'position' => 2, 'name' => 'Services', 'item' => home_url( '/#services' ) ),
-		array( '@type' => 'ListItem', 'position' => 3, 'name' => $service, 'item' => get_permalink() ),
-	),
-);
-
-// This template prints its own canonical SEO tags. Guarantee core cannot add
-// a second title/canonical even when this CPT was resolved by the safe
-// top-level fallback late in the main query.
-remove_action( 'wp_head', '_wp_render_title_tag', 1 );
-remove_action( 'wp_head', 'rel_canonical' );
-remove_theme_support( 'title-tag' );
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title><?php echo esc_html( $seo_title ); ?></title>
-<?php if ( $seo_desc ) : ?><meta name="description" content="<?php echo esc_attr( wp_strip_all_tags( $seo_desc ) ); ?>"><?php endif; ?>
-<link rel="canonical" href="<?php echo esc_url( get_permalink() ); ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
-<script type="application/ld+json"><?php echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES ); ?></script>
-<script type="application/ld+json"><?php echo wp_json_encode( $breadcrumb_schema, JSON_UNESCAPED_SLASHES ); ?></script>
-<?php if ( $faqs ) : ?><script type="application/ld+json"><?php echo wp_json_encode( array( '@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => array_map( function( $f ) { return array( '@type' => 'Question', 'name' => wp_strip_all_tags( $f['question'] ), 'acceptedAnswer' => array( '@type' => 'Answer', 'text' => wp_strip_all_tags( $f['answer'] ) ) ); }, $faqs ) ), JSON_UNESCAPED_SLASHES ); ?></script><?php endif; ?>
-<?php
-ob_start();
-wp_head();
-$service_wp_head = ob_get_clean();
-// Last-line defense against themes or SEO integrations that register their
-// title/canonical callbacks after template_redirect. Our canonical tags above
-// remain untouched because only the captured wp_head() fragment is filtered.
-$service_wp_head = preg_replace( '#<title\b[^>]*>.*?</title>\s*#is', '', $service_wp_head );
-$service_wp_head = preg_replace( '#<link\b[^>]*rel=["\']canonical["\'][^>]*>\s*#is', '', $service_wp_head );
-echo $service_wp_head; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-?>
+<?php wp_head(); ?>
 </head>
 <body class="rip-service-page evidence-<?php echo esc_attr( $evidence_type ); ?>">
 <?php wp_body_open(); ?>

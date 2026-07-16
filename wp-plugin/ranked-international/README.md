@@ -244,19 +244,27 @@ theme's own header/nav/footer markup, fonts, or CSS.
 
 ## Lead form (the "free SEO audit" modal)
 
-Every page has the same multi-step modal form (`#auditForm`). In the original
-static build it just showed a fake "thanks" step with no backend. Here:
+Every page has the same multi-step modal form (`#auditForm`). Submissions are
+validated server-side, protected by a honeypot, privacy-safe rate limits and
+reCAPTCHA v3, then stored as private Audit Lead records before email is tried.
+The owner notification is attempted immediately through `wp_mail()` using the
+site's configured mail transport; failures are retried after 5 minutes, 30 minutes, 2 hours, 12 hours
+and 24 hours. Administrators can review delivery state and manually retry from
+the Audit Leads screen. Records are deleted after 180 days by default.
 
-- `assets/js/main.js` feature-detects a `window.RankdWP` global (injected via
-  `wp_localize_script`, see `rip_enqueue_assets()` in the main plugin file).
-  If present, it POSTs the lead to `admin-ajax.php`; the confirmation step
-  still shows either way, so nothing changes visually.
-- `ranked-international.php` → `rip_handle_audit_lead()` handles
-  `action=rankd_audit_lead`: sanitizes input, emails the lead via `wp_mail()`
-  to the site's admin email (filterable via `rip_audit_lead_recipient`), and
-  fires `do_action( 'rip_audit_lead_captured', $lead )` so a real CRM webhook
-  can be wired up later in a small mu-plugin or theme snippet — no need to
-  edit this plugin.
+Production configuration belongs in server environment variables or
+`wp-config.php`, never this repository:
+
+```php
+define( 'RIP_RECAPTCHA_SITE_KEY', getenv( 'RIP_RECAPTCHA_SITE_KEY' ) );
+define( 'RIP_RECAPTCHA_SECRET_KEY', getenv( 'RIP_RECAPTCHA_SECRET_KEY' ) );
+define( 'RIP_RECAPTCHA_SCORE_THRESHOLD', 0.5 );
+define( 'RIP_AUDIT_LEAD_RECIPIENT', 'owner@example.com' );
+```
+
+The existing `rip_audit_lead_captured` action fires once after durable storage.
+`rip_audit_lead_delivery_status` reports delivery transitions for a future CRM.
+See [`docs/06-production-lead-delivery.md`](../../docs/06-production-lead-delivery.md).
 
 ## Deploying onto the EXISTING rankedinternational.com WordPress site
 
@@ -271,11 +279,12 @@ managed by Yoast SEO. The plugin is designed so activating it changes
   seeded Construction post does NOT take over `/construction/` until you
   deliberately trash (or re-slug) the old Page — that's the cutover switch,
   page by page, reversible by restoring the old Page from trash.
-- **No duplicate meta tags.** Our templates print their own `<title>`,
-  meta description, and canonical. On our templates only, the plugin
-  suppresses WP core's and Yoast's/RankMath's versions of those tags
-  (`rip_dedupe_head_tags()`), so there's exactly one of each. All other
-  pages keep their Yoast meta untouched.
+- **Yoast is the sole SEO renderer.** Ranked templates call `wp_head()` and do
+  not print or suppress title, description, canonical, robots, social metadata
+  or a second primary schema graph. Explicit Yoast values take priority; the
+  legacy ACF SEO fields are fallback inputs only when the corresponding Yoast
+  per-post field is empty. Service and visible FAQ data are appended to Yoast's
+  connected graph instead of emitted as standalone JSON-LD.
 
 ### Verifying nothing broke (../meta-audit.py)
 

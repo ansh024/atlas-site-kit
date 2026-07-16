@@ -54,10 +54,10 @@ test('workstream tabs and FAQ are keyboard operable', async ({ page }) => {
   await expect(secondFaq).toHaveAttribute('aria-expanded', 'true');
 });
 
-test('audit form submits through the real local WordPress AJAX endpoint', async ({ page }) => {
+test('audit form submits through the real local WordPress AJAX endpoint', async ({ page }, testInfo) => {
   await page.locator('.svc-hero__actions a[href="#audit"]').click();
   await page.getByLabel('Name').fill('Local QA');
-  await page.getByLabel('Work email').fill('qa@example.test');
+  await page.getByLabel('Work email').fill(`qa-${testInfo.project.name}-${Date.now()}@example.test`);
   await page.getByLabel('Phone').fill('469-555-0100');
   await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByLabel('Website').fill('https://example.test');
@@ -66,7 +66,24 @@ test('audit form submits through the real local WordPress AJAX endpoint', async 
   await page.getByRole('button', { name: 'Submit audit' }).click();
   const response = await responsePromise;
   expect(response.ok()).toBeTruthy();
+  const payload = await response.json();
+  expect(payload.success).toBe(true);
+  expect(['delivered', 'delivery_pending']).toContain(payload.data.status);
+  expect(payload.data.reference).toMatch(/^[0-9a-f-]{36}$/);
   await expect(page.getByRole('heading', { name: 'Audit request received' })).toBeVisible();
+});
+
+test('Yoast exclusively renders metadata and one connected schema graph', async ({ page }) => {
+  await expect(page.locator('title')).toHaveCount(1);
+  await expect(page.locator('meta[name="description"]')).toHaveCount(1);
+  await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
+  await expect(page.locator('meta[property="og:title"]')).toHaveCount(1);
+  await expect(page.locator('script.yoast-schema-graph')).toHaveCount(1);
+  await expect(page.locator('script[type="application/ld+json"]:not(.yoast-schema-graph)')).toHaveCount(0);
+  const graph = await page.locator('script.yoast-schema-graph').textContent();
+  for (const type of ['WebPage', 'BreadcrumbList', 'Service', 'FAQPage']) {
+    expect((graph.match(new RegExp(`"@type"\\s*:\\s*"${type}"`, 'g')) || []).length).toBe(1);
+  }
 });
 
 test('mobile layout has no horizontal document overflow', async ({ page }, testInfo) => {

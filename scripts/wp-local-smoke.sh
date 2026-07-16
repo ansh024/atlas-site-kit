@@ -18,12 +18,16 @@ assert_count 1 '<h1([ >])' 'Canonical H1 count'
 assert_count 1 '<link rel="canonical"' 'Canonical tag count'
 assert_count 1 '<title>' 'Title tag count'
 assert_present 'Own the searches happening' 'Local SEO hero'
-assert_present '"@type":"Service"' 'Service schema'
-assert_present '"@type":"BreadcrumbList"' 'Breadcrumb schema'
-assert_present '"@type":"FAQPage"' 'FAQ schema'
+assert_present '"@type"[[:space:]]*:[[:space:]]*"Service"' 'Service schema'
+assert_present '"@type"[[:space:]]*:[[:space:]]*"BreadcrumbList"' 'Breadcrumb schema'
+assert_present '"@type"[[:space:]]*:[[:space:]]*"FAQPage"' 'FAQ schema'
 assert_absent 'Benchling|Outgrid|Biopharmaceutical|Industrial Biotech' 'legacy template content'
 
 "$WP_ENV_BIN" run cli wp plugin is-active ranked-international
+YOAST_SLUG="$("$WP_ENV_BIN" run cli wp plugin list --status=active --field=name | grep '^wordpress-seo' | head -1 | tr -d '\r')"
+[[ -n "$YOAST_SLUG" ]] || { echo "Yoast SEO is not active." >&2; exit 1; }
+SMTP_SLUG="$("$WP_ENV_BIN" run cli wp plugin list --status=active --field=name | grep '^wp-mail-smtp' | head -1 | tr -d '\r')"
+[[ -n "$SMTP_SLUG" ]] || { echo "WP Mail SMTP is not active." >&2; exit 1; }
 ACF_SLUG="$("$WP_ENV_BIN" run cli wp plugin list --status=active --field=name | grep '^advanced-custom-fields' | head -1 | tr -d '\r')"
 [[ -n "$ACF_SLUG" ]] || { echo "Advanced Custom Fields is not active." >&2; exit 1; }
 "$WP_ENV_BIN" run cli wp eval 'if (get_post_type_object("rip_service") === null) { exit(1); }'

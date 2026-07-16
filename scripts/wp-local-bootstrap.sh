@@ -14,7 +14,11 @@ fi
 
 ACF_SLUG="$("$WP_ENV_BIN" run cli wp plugin list --field=name | grep '^advanced-custom-fields' | head -1 | tr -d '\r')"
 [[ -n "$ACF_SLUG" ]] || { echo "Advanced Custom Fields was not mounted by wp-env." >&2; exit 1; }
-"$WP_ENV_BIN" run cli wp plugin activate "$ACF_SLUG" ranked-international >/dev/null
+YOAST_SLUG="$("$WP_ENV_BIN" run cli wp plugin list --field=name | grep '^wordpress-seo' | head -1 | tr -d '\r')"
+[[ -n "$YOAST_SLUG" ]] || { echo "Yoast SEO was not mounted by wp-env." >&2; exit 1; }
+SMTP_SLUG="$("$WP_ENV_BIN" run cli wp plugin list --field=name | grep '^wp-mail-smtp' | head -1 | tr -d '\r')"
+[[ -n "$SMTP_SLUG" ]] || { echo "WP Mail SMTP was not mounted by wp-env." >&2; exit 1; }
+"$WP_ENV_BIN" run cli wp plugin activate "$ACF_SLUG" "$YOAST_SLUG" "$SMTP_SLUG" ranked-international >/dev/null
 "$WP_ENV_BIN" run cli wp option update blogname "Ranked International Local QA" >/dev/null
 "$WP_ENV_BIN" run cli wp option update permalink_structure '/%postname%/' >/dev/null
 "$WP_ENV_BIN" run cli wp rewrite flush --hard >/dev/null

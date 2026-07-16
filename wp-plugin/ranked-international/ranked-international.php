@@ -17,6 +17,8 @@ define( 'RIP_URL', plugin_dir_url( __FILE__ ) );
 
 require_once RIP_DIR . 'includes/cpt.php';
 require_once RIP_DIR . 'includes/seed.php';
+require_once RIP_DIR . 'includes/seo.php';
+require_once RIP_DIR . 'includes/leads.php';
 
 /**
  * Map of template file => label shown in the Page Attributes dropdown.
@@ -104,7 +106,14 @@ function rip_enqueue_assets() {
 		'assetsUrl' => RIP_URL . 'assets/images/',
 		'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
 		'nonce'     => wp_create_nonce( 'rip_audit_lead' ),
+		'recaptchaSiteKey' => defined( 'RIP_RECAPTCHA_SITE_KEY' ) ? RIP_RECAPTCHA_SITE_KEY : '',
+		'recaptchaAction'  => 'audit_lead',
+		'recaptchaTestBypass' => wp_get_environment_type() === 'local' && defined( 'RIP_RECAPTCHA_TEST_BYPASS' ) && RIP_RECAPTCHA_TEST_BYPASS,
 	) );
+
+	if ( defined( 'RIP_RECAPTCHA_SITE_KEY' ) && RIP_RECAPTCHA_SITE_KEY ) {
+		wp_enqueue_script( 'google-recaptcha-v3', 'https://www.google.com/recaptcha/api.js?render=' . rawurlencode( RIP_RECAPTCHA_SITE_KEY ), array(), null, true );
+	}
 
 	if ( $is_case_study ) {
 		wp_enqueue_script( 'rip-case-study', RIP_URL . 'assets/js/case-study.js', array( 'gsap', 'gsap-scrolltrigger' ), RIP_VERSION, true );
@@ -112,44 +121,6 @@ function rip_enqueue_assets() {
 	if ( $is_service ) {
 		wp_enqueue_script( 'rip-service', RIP_URL . 'assets/js/service.js', array( 'gsap', 'gsap-scrolltrigger', 'rip-main' ), RIP_VERSION, true );
 	}
-}
-
-/**
- * Our templates print their own <title> and canonical in the template file.
- * WordPress core (via the theme's title-tag support) and SEO plugins (Yoast,
- * RankMath, AIOSEO) would otherwise inject a second <title>/canonical through
- * wp_head(), giving Google duplicate/conflicting tags. On our templates only,
- * suppress those duplicates; everywhere else the site behaves as before.
- */
-add_action( 'template_redirect', 'rip_dedupe_head_tags' );
-function rip_dedupe_head_tags() {
-	if ( ! rip_is_our_template() ) return;
-
-	// WP core title tag (printed when the theme declares title-tag support)
-	remove_action( 'wp_head', '_wp_render_title_tag', 1 );
-	// WP core canonical on singular views
-	remove_action( 'wp_head', 'rel_canonical' );
-
-	// Yoast SEO (14+): remove the presenters for the tags our templates
-	// print themselves. Removing the presenter is the reliable way — filters
-	// like wpseo_title returning false can still emit an EMPTY <title>.
-	// Yoast's other output (robots meta, schema, og:*) is left intact.
-	add_filter( 'wpseo_frontend_presenters', 'rip_strip_yoast_presenters' );
-	add_filter( 'wpseo_canonical', '__return_false' );
-
-	// RankMath: same idea, via its documented disable filters
-	add_filter( 'rank_math/frontend/canonical', '__return_false' );
-	add_filter( 'rank_math/frontend/title', '__return_false' );
-	add_filter( 'rank_math/frontend/description', '__return_false' );
-}
-
-function rip_strip_yoast_presenters( $presenters ) {
-	return array_filter( $presenters, function ( $presenter ) {
-		return ! preg_match(
-			'/\\\\(Title|Meta_Description|Canonical)_Presenter$/',
-			get_class( $presenter )
-		);
-	} );
 }
 
 /**
@@ -215,39 +186,4 @@ function rip_render_sparkline( $values ) {
 </svg>
 	<?php
 	return ob_get_clean();
-}
-
-/**
- * Audit form lead handler (admin-ajax.php?action=rankd_audit_lead).
- * Emails the lead to the configured address and fires a do_action() hook
- * so a real CRM webhook can be wired up later without touching this file.
- */
-add_action( 'wp_ajax_rankd_audit_lead', 'rip_handle_audit_lead' );
-add_action( 'wp_ajax_nopriv_rankd_audit_lead', 'rip_handle_audit_lead' );
-function rip_handle_audit_lead() {
-	check_ajax_referer( 'rip_audit_lead', 'nonce' );
-
-	$lead = array(
-		'name'     => sanitize_text_field( wp_unslash( $_POST['name'] ?? '' ) ),
-		'email'    => sanitize_email( wp_unslash( $_POST['email'] ?? '' ) ),
-		'website'  => sanitize_text_field( wp_unslash( $_POST['website'] ?? '' ) ),
-		'service'  => sanitize_text_field( wp_unslash( $_POST['service'] ?? '' ) ),
-		'phone'    => sanitize_text_field( wp_unslash( $_POST['phone'] ?? '' ) ),
-		'market'   => sanitize_text_field( wp_unslash( $_POST['market'] ?? '' ) ),
-		'notes'    => sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) ),
-		'page_url' => esc_url_raw( wp_unslash( $_POST['page_url'] ?? '' ) ),
-	);
-
-	$to      = apply_filters( 'rip_audit_lead_recipient', get_option( 'admin_email' ) );
-	$subject = 'New free SEO audit request — ' . $lead['name'];
-	$body    = "Name: {$lead['name']}\nEmail: {$lead['email']}\nPhone: {$lead['phone']}\nWebsite: {$lead['website']}\nService: {$lead['service']}\nPrimary market: {$lead['market']}\nNotes: {$lead['notes']}\nSubmitted from: {$lead['page_url']}";
-	wp_mail( $to, $subject, $body );
-
-	/**
-	 * Fires after a lead is captured — hook a CRM webhook here without editing this plugin.
-	 * do_action( 'rip_audit_lead_captured', array $lead )
-	 */
-	do_action( 'rip_audit_lead_captured', $lead );
-
-	wp_send_json_success();
 }

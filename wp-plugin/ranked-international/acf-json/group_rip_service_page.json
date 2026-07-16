@@ -73,8 +73,8 @@
     {"key":"field_rip_svc_final_label","label":"Final CTA button","name":"final_cta_label","type":"text"},
 
     {"key":"field_rip_svc_tab_seo","label":"SEO metadata","type":"tab"},
-    {"key":"field_rip_svc_seo_title","label":"SEO title","name":"seo_title","type":"text"},
-    {"key":"field_rip_svc_seo_description","label":"Meta description","name":"seo_description","type":"textarea","rows":2}
+    {"key":"field_rip_svc_seo_title","label":"Fallback SEO title (Yoast takes priority)","name":"seo_title","type":"text"},
+    {"key":"field_rip_svc_seo_description","label":"Fallback meta description (Yoast takes priority)","name":"seo_description","type":"textarea","rows":2}
   ],
   "location": [[{"param":"post_type","operator":"==","value":"rip_service"}]],
   "menu_order": 0,

@@ -541,13 +541,13 @@
     },
     {
       "key": "field_rip_ind_seo_title",
-      "label": "SEO title tag",
+      "label": "Fallback SEO title (Yoast takes priority)",
       "name": "seo_title",
       "type": "text"
     },
     {
       "key": "field_rip_ind_seo_description",
-      "label": "SEO meta description",
+      "label": "Fallback meta description (Yoast takes priority)",
       "name": "seo_description",
       "type": "textarea",
       "rows": 2

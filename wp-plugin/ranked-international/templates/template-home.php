@@ -3,9 +3,6 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ranked International — Dallas SEO Company</title>
-<meta name="description" content="We get Dallas roofers, HVAC crews, and clinics onto page one for the searches that bring paying customers — then turn those clicks into booked jobs." />
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="<?php echo rip_asset('hero-bg.jpg'); ?>" fetchpriority="high">
@@ -648,6 +645,7 @@
     </button>
 
     <form class="audit-modal__form" id="auditForm">
+      <label class="rip-honeypot" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden">Company fax<input type="text" name="company_fax" tabindex="-1" autocomplete="off"></label>
       <div class="audit-modal__step is-active" data-audit-step="1">
         <p class="audit-modal__eyebrow">Step 1 of 2</p>
         <h2 id="auditTitle">Start your free audit</h2>

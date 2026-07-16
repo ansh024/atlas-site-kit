@@ -3,26 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Case Studies — Real Dallas SEO Results | Ranked International</title>
-<meta name="description" content="Real traffic and ranking numbers from Dallas businesses we've worked with — photo booths, event rentals, med spas, cabinetry, turf, and moving companies." />
-<link rel="canonical" href="<?php echo esc_url( get_permalink() ); ?>" />
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"></noscript>
 
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {"@type":"ListItem","position":1,"name":"Home","item":"<?php echo esc_url( home_url( "/" ) ); ?>"},
-    {"@type":"ListItem","position":2,"name":"Case Studies","item":"<?php echo esc_url( get_permalink() ); ?>"}
-  ]
-}
-</script>
 <?php wp_head(); ?>
 </head>
 <body>
@@ -254,6 +240,7 @@
     </button>
 
     <form class="audit-modal__form" id="auditForm">
+      <label class="rip-honeypot" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden">Company fax<input type="text" name="company_fax" tabindex="-1" autocomplete="off"></label>
       <div class="audit-modal__step is-active" data-audit-step="1">
         <p class="audit-modal__eyebrow">Step 1 of 2</p>
         <h2 id="auditTitle">Start your free audit</h2>

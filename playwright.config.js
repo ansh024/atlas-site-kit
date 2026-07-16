@@ -10,6 +10,7 @@ module.exports = defineConfig({
   timeout: 30_000,
   expect: { timeout: 5_000 },
   retries: 0,
+  workers: 1,
   use: {
     baseURL,
     trace: 'retain-on-failure',

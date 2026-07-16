@@ -9,8 +9,6 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 $industry_name = get_field( 'industry_name' ) ?: get_the_title();
-$seo_title      = get_field( 'seo_title' ) ?: ( $industry_name . ' SEO Services — Ranked International' );
-$seo_description = get_field( 'seo_description' );
 $hero_video_poster = get_field( 'hero_video_poster' );
 $hero_video     = get_field( 'hero_video' );
 $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php', '/case-studies/' );
@@ -20,9 +18,6 @@ $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title><?php echo esc_html( $seo_title ); ?></title>
-<?php if ( $seo_description ) : ?><meta name="description" content="<?php echo esc_attr( $seo_description ); ?>" /><?php endif; ?>
-<link rel="canonical" href="<?php echo esc_url( get_permalink() ); ?>" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -590,6 +585,7 @@ $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
     <form class="audit-modal__form" id="auditForm">
+      <label class="rip-honeypot" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden">Company fax<input type="text" name="company_fax" tabindex="-1" autocomplete="off"></label>
       <div class="audit-modal__step is-active" data-audit-step="1">
         <p class="audit-modal__eyebrow">Step 1 of 2</p>
         <h2 id="auditTitle">Start your free audit</h2>

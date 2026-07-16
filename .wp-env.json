@@ -6,7 +6,9 @@
   "testsEnvironment": false,
   "plugins": [
     "./wp-plugin/ranked-international",
-    "https://downloads.wordpress.org/plugin/advanced-custom-fields.latest-stable.zip"
+    "https://downloads.wordpress.org/plugin/advanced-custom-fields.latest-stable.zip",
+    "https://downloads.wordpress.org/plugin/wordpress-seo.latest-stable.zip",
+    "https://downloads.wordpress.org/plugin/wp-mail-smtp.latest-stable.zip"
   ],
   "config": {
     "WP_DEBUG": true,
@@ -15,6 +17,7 @@
     "SCRIPT_DEBUG": true,
     "DISALLOW_FILE_EDIT": true,
     "AUTOMATIC_UPDATER_DISABLED": true,
-    "WP_ENVIRONMENT_TYPE": "local"
+    "WP_ENVIRONMENT_TYPE": "local",
+    "RIP_RECAPTCHA_TEST_BYPASS": true
   }
 }
