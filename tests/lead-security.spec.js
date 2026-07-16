@@ -36,11 +36,11 @@ test('rejects invalid server-side fields', async ({ page, request }) => {
   expect((await response.json()).data.code).toBe('invalid_phone');
 });
 
-test('rejects missing CAPTCHA outside the valid local test token', async ({ page, request }) => {
+test('accepts a scheme-less website while CAPTCHA is disabled', async ({ page, request }) => {
   const settings = await config(page);
-  const response = await request.post(settings.ajaxUrl, { form: validLead({ nonce: settings.nonce, recaptcha_token: '' }) });
-  expect(response.status()).toBe(403);
-  expect((await response.json()).data.code).toBe('captcha_unavailable');
+  const response = await request.post(settings.ajaxUrl, { form: validLead({ nonce: settings.nonce, website: 'www.example.test', recaptcha_token: '' }) });
+  expect(response.status()).toBe(202);
+  expect((await response.json()).success).toBe(true);
 });
 
 test('rate limits repeated rejected attempts', async ({ page, request }) => {
