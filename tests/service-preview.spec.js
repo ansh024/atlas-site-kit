@@ -6,8 +6,8 @@ test.beforeEach(async ({ page }) => {
 
 test('renders the service narrative and structured UI', async ({ page }) => {
   await expect(page).toHaveTitle(/Local SEO Services/);
-  await expect(page.locator('main h1')).toHaveCount(1);
-  await expect(page.locator('main h1')).toContainText('Own the searches happening');
+  await expect(page.locator('h1')).toHaveCount(1);
+  await expect(page.locator('h1')).toContainText('Own the searches happening');
   await expect(page.locator('.search-console')).toBeVisible();
   await expect(page.locator('.problem-row')).toHaveCount(4);
   await expect(page.locator('.blueprint__tabs [role="tab"]')).toHaveCount(7);
@@ -54,25 +54,19 @@ test('workstream tabs and FAQ are keyboard operable', async ({ page }) => {
   await expect(secondFaq).toHaveAttribute('aria-expanded', 'true');
 });
 
-test('audit CTA opens the WPForms-owned modal', async ({ page }) => {
+test('audit form submits through the real local WordPress AJAX endpoint', async ({ page }) => {
   await page.locator('.svc-hero__actions a[href="#audit"]').click();
-  await expect(page.locator('#auditModal')).toHaveClass(/is-open/);
-  await expect(page.locator('#auditModal')).toHaveAttribute('aria-hidden', 'false');
-  await expect(page.locator('#auditForm')).toHaveCount(0);
-  await expect(page.locator('.audit-modal__wpforms')).toBeVisible();
-});
-
-test('Yoast renders metadata and one connected schema graph', async ({ page }) => {
-  expect(await page.locator('title').count()).toBeGreaterThanOrEqual(1);
-  await expect(page.locator('meta[name="description"]')).toHaveCount(1);
-  await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
-  await expect(page.locator('meta[property="og:title"]')).toHaveCount(1);
-  await expect(page.locator('script.yoast-schema-graph')).toHaveCount(1);
-  await expect(page.locator('script[type="application/ld+json"]:not(.yoast-schema-graph)')).toHaveCount(0);
-  const graph = await page.locator('script.yoast-schema-graph').textContent();
-  for (const type of ['WebPage', 'BreadcrumbList', 'Service', 'FAQPage']) {
-    expect((graph.match(new RegExp(`"@type"\\s*:\\s*"${type}"`, 'g')) || []).length).toBe(1);
-  }
+  await page.getByLabel('Name').fill('Local QA');
+  await page.getByLabel('Work email').fill('qa@example.test');
+  await page.getByLabel('Phone').fill('469-555-0100');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByLabel('Website').fill('https://example.test');
+  await page.getByLabel('Primary market').fill('Dallas, TX');
+  const responsePromise = page.waitForResponse(response => response.url().includes('admin-ajax.php'));
+  await page.getByRole('button', { name: 'Submit audit' }).click();
+  const response = await responsePromise;
+  expect(response.ok()).toBeTruthy();
+  await expect(page.getByRole('heading', { name: 'Audit request received' })).toBeVisible();
 });
 
 test('mobile layout has no horizontal document overflow', async ({ page }, testInfo) => {

@@ -9,6 +9,8 @@ function rip_service_rows( $name, $fallback = array() ) {
 
 $service       = get_field( 'service_name' ) ?: get_the_title();
 $family        = get_field( 'service_family' ) ?: 'SEO';
+$seo_title     = get_field( 'seo_title' ) ?: "$service | Ranked International";
+$seo_desc      = get_field( 'seo_description' ) ?: get_field( 'hero_summary' );
 $evidence_type = get_field( 'evidence_type' ) ?: 'map';
 $hub_url       = rip_url_for_template( 'templates/template-case-studies-hub.php', '/case-studies/' );
 $cta_label     = get_field( 'hero_cta_label' ) ?: 'Get my free audit';
@@ -62,8 +64,66 @@ $proof = array(
 	'url' => $proof_post ? get_permalink( $proof_post ) : home_url( '/case-studies/bella-med-spa/' ),
 );
 
+$schema = array(
+	'@context' => 'https://schema.org', '@type' => 'Service',
+	'name' => $service, 'description' => wp_strip_all_tags( $seo_desc ),
+	'provider' => array( '@type' => 'ProfessionalService', 'name' => 'Ranked International', 'url' => home_url( '/' ) ),
+	'areaServed' => get_field( 'primary_market' ) ?: 'Dallas-Fort Worth, Texas',
+	'url' => get_permalink(),
+);
+$breadcrumb_schema = array(
+	'@context' => 'https://schema.org', '@type' => 'BreadcrumbList',
+	'itemListElement' => array(
+		array( '@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => home_url( '/' ) ),
+		array( '@type' => 'ListItem', 'position' => 2, 'name' => 'Services', 'item' => home_url( '/#services' ) ),
+		array( '@type' => 'ListItem', 'position' => 3, 'name' => $service, 'item' => get_permalink() ),
+	),
+);
+
+// This template prints its own canonical SEO tags. Guarantee core cannot add
+// a second title/canonical even when this CPT was resolved by the safe
+// top-level fallback late in the main query.
+remove_action( 'wp_head', '_wp_render_title_tag', 1 );
+remove_action( 'wp_head', 'rel_canonical' );
+remove_theme_support( 'title-tag' );
 ?>
-<?php get_header(); ?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+<meta charset="<?php bloginfo( 'charset' ); ?>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?php echo esc_html( $seo_title ); ?></title>
+<?php if ( $seo_desc ) : ?><meta name="description" content="<?php echo esc_attr( wp_strip_all_tags( $seo_desc ) ); ?>"><?php endif; ?>
+<link rel="canonical" href="<?php echo esc_url( get_permalink() ); ?>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<script type="application/ld+json"><?php echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES ); ?></script>
+<script type="application/ld+json"><?php echo wp_json_encode( $breadcrumb_schema, JSON_UNESCAPED_SLASHES ); ?></script>
+<?php if ( $faqs ) : ?><script type="application/ld+json"><?php echo wp_json_encode( array( '@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => array_map( function( $f ) { return array( '@type' => 'Question', 'name' => wp_strip_all_tags( $f['question'] ), 'acceptedAnswer' => array( '@type' => 'Answer', 'text' => wp_strip_all_tags( $f['answer'] ) ) ); }, $faqs ) ), JSON_UNESCAPED_SLASHES ); ?></script><?php endif; ?>
+<?php
+ob_start();
+wp_head();
+$service_wp_head = ob_get_clean();
+// Last-line defense against themes or SEO integrations that register their
+// title/canonical callbacks after template_redirect. Our canonical tags above
+// remain untouched because only the captured wp_head() fragment is filtered.
+$service_wp_head = preg_replace( '#<title\b[^>]*>.*?</title>\s*#is', '', $service_wp_head );
+$service_wp_head = preg_replace( '#<link\b[^>]*rel=["\']canonical["\'][^>]*>\s*#is', '', $service_wp_head );
+echo $service_wp_head; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+?>
+</head>
+<body class="rip-service-page evidence-<?php echo esc_attr( $evidence_type ); ?>">
+<?php wp_body_open(); ?>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="Ranked International home"><img src="<?php echo rip_asset( 'rankd-international-logo.png' ); ?>" alt="Ranked International" class="nav__logo-img" width="96" height="32"></a>
+    <nav class="nav__menu" aria-label="Primary"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a><a href="<?php echo esc_url( home_url( '/#services' ) ); ?>">Services</a><a href="<?php echo esc_url( home_url( '/#industries' ) ); ?>">Industries We Serve</a><a href="<?php echo esc_url( $hub_url ); ?>">Case Studies</a><a href="#audit">Contact</a></nav>
+    <div class="nav__actions"><a href="tel:+16805542324" class="nav__phone">Dallas · (680) 554-2324</a><a href="#audit" class="btn btn--primary btn--sm">Get my free audit</a></div>
+    <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navMenuMobile"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="nav__menu-mobile" id="navMenuMobile"><a href="/">Home</a><a href="/#services">Services</a><a href="/#industries">Industries</a><a href="<?php echo esc_url( $hub_url ); ?>">Case Studies</a><a href="#audit" class="btn btn--primary btn--block">Get my free audit</a></nav>
+</header>
 
 <main id="top">
   <section class="svc-hero" id="overview">
@@ -121,5 +181,8 @@ $proof = array(
   <section class="svc-final"><div class="svc-wrap"><div><p>Free service audit · No commitment</p><h2><?php echo wp_kses_post( get_field( 'final_cta_title' ) ?: 'Find out why you’re missing from the <em>Map Pack</em>.' ); ?></h2><span><?php echo esc_html( get_field( 'final_cta_summary' ) ?: 'We’ll show you the three local-search gaps costing you calls.' ); ?></span></div><a href="#audit" class="btn btn--dark btn--lg"><?php echo esc_html( get_field( 'final_cta_label' ) ?: $cta_label ); ?></a></div></section>
 </main>
 
-<?php rip_render_audit_modal(); ?>
-<?php get_footer(); ?>
+<div class="audit-modal" id="auditModal" aria-hidden="true"><div class="audit-modal__backdrop" data-audit-close></div><div class="audit-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="auditTitle"><button class="audit-modal__close" type="button" data-audit-close aria-label="Close audit form"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button><form class="audit-modal__form" id="auditForm"><div class="audit-modal__step is-active" data-audit-step="1"><p class="audit-modal__eyebrow">Step 1 of 2</p><h2 id="auditTitle">Start your free <?php echo esc_html( strtolower( $service ) ); ?> audit</h2><p class="audit-modal__copy">Tell us where to send the findings.</p><label class="audit-field"><span>Name</span><input type="text" name="name" autocomplete="name" required></label><label class="audit-field"><span>Work email</span><input type="email" name="email" autocomplete="email" required></label><label class="audit-field"><span>Phone</span><input type="tel" name="phone" autocomplete="tel" required></label><button type="button" class="btn btn--dark btn--block" data-audit-next>Continue</button></div><div class="audit-modal__step" data-audit-step="2"><p class="audit-modal__eyebrow">Step 2 of 2</p><h2>What should we inspect?</h2><label class="audit-field"><span>Website</span><input type="url" name="website" autocomplete="url" required placeholder="https://example.com"></label><label class="audit-field"><span>Primary market</span><input type="text" name="market" placeholder="Dallas, TX" required></label><input type="hidden" name="service" value="<?php echo esc_attr( $service ); ?>"><label class="audit-field"><span>Anything we should know?</span><textarea name="notes" rows="3" placeholder="Competitors, current issue, priority service…"></textarea></label><div class="audit-modal__actions"><button type="button" class="btn btn--outline" data-audit-back>Back</button><button type="submit" class="btn btn--dark">Submit audit</button></div></div><div class="audit-modal__step audit-modal__done" data-audit-step="done"><div class="audit-modal__icon"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div><h2>Audit request received</h2><p class="audit-modal__copy">We’ll review the site and follow up with the first findings.</p><button type="button" class="btn btn--primary btn--block" data-audit-close>Done</button></div></form></div></div>
+
+<footer class="footer"><div class="footer__inner"><div class="footer__brand"><a class="nav__logo" href="/"><img src="<?php echo rip_asset( 'rankd-international-logo.png' ); ?>" alt="Ranked International" class="nav__logo-img" width="96" height="32" loading="lazy"></a><p>Dallas SEO that gets the phone ringing. One client per industry.</p><p class="footer__addr">Dallas, TX · (680) 554-2324</p></div><div class="footer__cols"><div><h3>SEO</h3><a href="/local-seo-services/">Local SEO</a><a href="/#services">Organic SEO</a><a href="/#services">Technical SEO</a><a href="/#services">Link Building</a></div><div><h3>Paid</h3><a href="/#services">Google Ads</a><a href="/#services">PPC Management</a></div><div><h3>Consulting</h3><a href="/#services">SEO Consulting</a><a href="/#services">CRO Audit</a></div><div><h3>Company</h3><a href="<?php echo esc_url( $hub_url ); ?>">Results</a><a href="/#process">About</a><a href="#audit">Contact</a></div></div></div><div class="footer__base"><span>&copy; <?php echo esc_html( date( 'Y' ) ); ?> Ranked International</span><span>Dallas, Texas</span></div></footer>
+<?php wp_footer(); ?>
+</body></html>
