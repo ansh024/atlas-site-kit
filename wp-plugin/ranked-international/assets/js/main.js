@@ -10,11 +10,13 @@ const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
 /* ---------- NAV: solidify on scroll ---------- */
 const nav = $('#nav');
-ScrollTrigger.create({
-  start: 'top -80',
-  onUpdate: self => nav.classList.toggle('is-stuck', self.scroll() > 80),
-  onRefresh: self => nav.classList.toggle('is-stuck', self.scroll() > 80),
-});
+if (nav) {
+  ScrollTrigger.create({
+    start: 'top -80',
+    onUpdate: self => nav.classList.toggle('is-stuck', self.scroll() > 80),
+    onRefresh: self => nav.classList.toggle('is-stuck', self.scroll() > 80),
+  });
+}
 
 /* ---------- NAV: mobile hamburger ---------- */
 const navBurger = $('#navBurger');
