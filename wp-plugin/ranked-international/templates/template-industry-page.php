@@ -600,7 +600,7 @@ $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php
         <p class="audit-modal__eyebrow">Step 2 of 2</p>
         <h2>What should we inspect?</h2>
         <p class="audit-modal__copy">A website and one priority is enough to start.</p>
-        <label class="audit-field"><span>Website</span><input type="url" name="website" autocomplete="url" placeholder="https://example.com" required></label>
+        <label class="audit-field"><span>Website</span><input type="text" name="website" inputmode="url" autocomplete="url" placeholder="www.example.com" required></label>
         <label class="audit-field audit-field--select"><span>Primary goal</span>
           <select name="service" required>
             <option value="" disabled selected>Select one</option>

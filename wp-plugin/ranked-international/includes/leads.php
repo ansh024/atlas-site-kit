@@ -93,6 +93,9 @@ function rip_clean_lead_request() {
 		$lead[ $key ] = function_exists( 'mb_substr' ) ? mb_substr( $value, 0, $limit ) : substr( $value, 0, $limit );
 	}
 	$lead['email'] = sanitize_email( $lead['email'] );
+	if ( $lead['website'] && ! preg_match( '#^[a-z][a-z0-9+.-]*://#i', $lead['website'] ) ) {
+		$lead['website'] = 'https://' . $lead['website'];
+	}
 	$lead['website'] = esc_url_raw( $lead['website'], array( 'http', 'https' ) );
 	$lead['page_url'] = esc_url_raw( $lead['page_url'], array( 'http', 'https' ) );
 	return $lead;
@@ -215,8 +218,11 @@ function rip_handle_audit_lead() {
 	if ( ! empty( $_POST['company_fax'] ) ) rip_json_error( 'submission_rejected', 'We could not accept this request.', 400 );
 	$validation = rip_validate_lead( $lead );
 	if ( $validation ) rip_json_error( $validation, 'Please check the highlighted information and try again.', 422 );
-	$captcha = rip_verify_recaptcha( sanitize_text_field( wp_unslash( $_POST['recaptcha_token'] ?? '' ) ) );
-	if ( empty( $captcha['valid'] ) ) rip_json_error( $captcha['code'], 'Verification failed. Please try again.', 403 );
+	$captcha = array( 'valid' => true, 'score' => 0 );
+	if ( rip_lead_config( 'recaptcha_enabled', false ) ) {
+		$captcha = rip_verify_recaptcha( sanitize_text_field( wp_unslash( $_POST['recaptcha_token'] ?? '' ) ) );
+		if ( empty( $captcha['valid'] ) ) rip_json_error( $captcha['code'], 'Verification failed. Please try again.', 403 );
+	}
 	$post_id = rip_store_lead( $lead, $captcha['score'] ?? 0, $request_id );
 	if ( is_wp_error( $post_id ) ) rip_json_error( 'storage_failed', 'We could not safely save your request. Please call us.', 500 );
 	do_action( 'rip_audit_lead_captured', $lead, $post_id );
@@ -281,7 +287,7 @@ add_action( 'rip_cleanup_audit_leads', function () {
 
 add_action( 'admin_notices', function () {
 	if ( ! current_user_can( 'manage_options' ) ) return;
-	if ( ! rip_lead_config( 'recaptcha_site_key' ) || ! rip_lead_config( 'recaptcha_secret_key' ) ) echo '<div class="notice notice-error"><p><strong>Ranked audit forms:</strong> reCAPTCHA v3 is not configured; production submissions fail closed.</p></div>';
+	if ( rip_lead_config( 'recaptcha_enabled', false ) && ( ! rip_lead_config( 'recaptcha_site_key' ) || ! rip_lead_config( 'recaptcha_secret_key' ) ) ) echo '<div class="notice notice-error"><p><strong>Ranked audit forms:</strong> reCAPTCHA v3 is enabled but not configured; submissions fail closed.</p></div>';
 	$failed_ids = get_posts( array( 'post_type' => 'rip_audit_lead', 'post_status' => 'private', 'meta_key' => '_rip_lead_status', 'meta_value' => 'failed', 'fields' => 'ids', 'posts_per_page' => 1 ) );
 	if ( $failed_ids ) echo '<div class="notice notice-error"><p><strong>Ranked audit forms:</strong> an owner notification exhausted all retries. Review Audit Leads.</p></div>';
 } );

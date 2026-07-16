@@ -549,8 +549,19 @@ function form() {
     two: $('[data-audit-step="2"]', f),
     done: $('[data-audit-step="done"]', f),
   };
+  const newRequestId = () => window.crypto?.randomUUID?.() || 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, char => {
+    const random = Math.floor(Math.random() * 16);
+    return (char === 'x' ? random : (random & 3) | 8).toString(16);
+  });
   let lastFocus = null;
-  let requestId = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  let requestId = newRequestId();
+
+  function normalizeWebsite() {
+    const field = f.elements.website;
+    if (!field) return;
+    const value = field.value.trim();
+    if (value && !/^[a-z][a-z\d+.-]*:\/\//i.test(value)) field.value = `https://${value}`;
+  }
 
   if (!f.elements.company_fax) {
     const honeypot = document.createElement('label');
@@ -581,7 +592,7 @@ function form() {
     modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('audit-modal-open');
     f.reset();
-    requestId = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    requestId = newRequestId();
     showStep('one');
     lastFocus?.focus?.();
   }
@@ -602,6 +613,7 @@ function form() {
 
   f.addEventListener('submit', async e => {
     e.preventDefault();
+    normalizeWebsite();
     const fields = $$('[data-audit-step="2"] [required]', f);
     if (!fields.every(field => field.reportValidity())) return;
 
@@ -631,15 +643,17 @@ function form() {
     status.textContent = 'Sending your request…';
 
     try {
-      let recaptchaToken = '';
-      if (window.RankdWP.recaptchaTestBypass) {
-        recaptchaToken = 'local-test';
-      } else {
-        if (!window.RankdWP.recaptchaSiteKey || !window.grecaptcha) throw new Error('Verification unavailable');
-        await new Promise(resolve => window.grecaptcha.ready(resolve));
-        recaptchaToken = await window.grecaptcha.execute(window.RankdWP.recaptchaSiteKey, { action: window.RankdWP.recaptchaAction });
+      if (window.RankdWP.recaptchaEnabled) {
+        let recaptchaToken = '';
+        if (window.RankdWP.recaptchaTestBypass) {
+          recaptchaToken = 'local-test';
+        } else {
+          if (!window.RankdWP.recaptchaSiteKey || !window.grecaptcha) throw new Error('Verification unavailable');
+          await new Promise(resolve => window.grecaptcha.ready(resolve));
+          recaptchaToken = await window.grecaptcha.execute(window.RankdWP.recaptchaSiteKey, { action: window.RankdWP.recaptchaAction });
+        }
+        data.append('recaptcha_token', recaptchaToken);
       }
-      data.append('recaptcha_token', recaptchaToken);
       const response = await fetch(window.RankdWP.ajaxUrl, {
         method: 'POST',
         body: data,

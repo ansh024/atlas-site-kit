@@ -102,16 +102,18 @@ function rip_enqueue_assets() {
 	wp_enqueue_script( 'lucide', 'https://unpkg.com/lucide@1.23.0/dist/umd/lucide.min.js', array(), '1.23.0', true );
 
 	wp_enqueue_script( 'rip-main', RIP_URL . 'assets/js/main.js', array( 'gsap', 'gsap-scrolltrigger', 'lucide' ), RIP_VERSION, true );
+	$recaptcha_enabled = defined( 'RIP_RECAPTCHA_ENABLED' ) && RIP_RECAPTCHA_ENABLED;
 	wp_localize_script( 'rip-main', 'RankdWP', array(
 		'assetsUrl' => RIP_URL . 'assets/images/',
 		'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
 		'nonce'     => wp_create_nonce( 'rip_audit_lead' ),
+		'recaptchaEnabled' => $recaptcha_enabled,
 		'recaptchaSiteKey' => defined( 'RIP_RECAPTCHA_SITE_KEY' ) ? RIP_RECAPTCHA_SITE_KEY : '',
 		'recaptchaAction'  => 'audit_lead',
 		'recaptchaTestBypass' => wp_get_environment_type() === 'local' && defined( 'RIP_RECAPTCHA_TEST_BYPASS' ) && RIP_RECAPTCHA_TEST_BYPASS,
 	) );
 
-	if ( defined( 'RIP_RECAPTCHA_SITE_KEY' ) && RIP_RECAPTCHA_SITE_KEY ) {
+	if ( $recaptcha_enabled && defined( 'RIP_RECAPTCHA_SITE_KEY' ) && RIP_RECAPTCHA_SITE_KEY ) {
 		wp_enqueue_script( 'google-recaptcha-v3', 'https://www.google.com/recaptcha/api.js?render=' . rawurlencode( RIP_RECAPTCHA_SITE_KEY ), array(), null, true );
 	}
 

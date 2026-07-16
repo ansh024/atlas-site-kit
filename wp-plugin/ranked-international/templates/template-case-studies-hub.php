@@ -265,7 +265,7 @@
         <h2>A bit about your business</h2>
         <label class="audit-field">
           <span>Website</span>
-          <input type="url" name="website" autocomplete="url" placeholder="https://example.com" required>
+          <input type="text" name="website" inputmode="url" autocomplete="url" placeholder="www.example.com" required>
         </label>
         <label class="audit-field audit-field--select">
           <span>Primary goal</span>
