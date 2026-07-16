@@ -26,13 +26,32 @@
     description: document.querySelector('#blueprintDescription'), deliverable: document.querySelector('#blueprintDeliverable'),
     outcome: document.querySelector('#blueprintOutcome'), icon: panel?.querySelector('.blueprint__icon')
   };
+  function setBlueprintIcon(name) {
+    if (!fields.icon) return;
+
+    // Lucide's UMD build renders the initial icons but does not always retain
+    // a public global on theme-managed pages. Reuse an already-rendered icon
+    // from the tab list first, then use the public API when it is available.
+    const source = document.querySelector(`.blueprint__tabs svg[data-lucide="${name}"]`);
+    if (source) {
+      const replacement = source.cloneNode(true);
+      replacement.classList.add('blueprint__icon');
+      fields.icon.replaceWith(replacement);
+      fields.icon = replacement;
+      return;
+    }
+    if (window.lucide) {
+      fields.icon.setAttribute('data-lucide', name || 'check');
+      window.lucide.createIcons({ nodes: [fields.icon] });
+    }
+  }
   function selectWorkstream(index, focus = false) {
     const item = workstreams[index];
     if (!item) return;
     tabs.forEach((tab, tabIndex) => { tab.setAttribute('aria-selected', String(tabIndex === index)); tab.tabIndex = tabIndex === index ? 0 : -1; });
     if (fields.number) fields.number.textContent = String(index + 1).padStart(2, '0');
     ['title', 'description', 'deliverable', 'outcome'].forEach(key => { if (fields[key]) fields[key].textContent = item[key] || ''; });
-    if (fields.icon && window.lucide) { fields.icon.setAttribute('data-lucide', item.icon || 'check'); window.lucide.createIcons({ nodes: [fields.icon] }); }
+    setBlueprintIcon(item.icon || 'check');
     if (!reduceMotion && panel && window.gsap) gsap.fromTo(panel, { opacity: .65, y: 8 }, { opacity: 1, y: 0, duration: .35, ease: 'power2.out' });
     if (focus) tabs[index].focus();
   }

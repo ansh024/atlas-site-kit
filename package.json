@@ -7,6 +7,7 @@
     "wp:stop": "wp-env stop",
     "wp:reset": "bash scripts/wp-local-reset.sh",
     "wp:destroy": "bash scripts/wp-local-destroy.sh",
+    "wp:restore-live": "bash scripts/wp-local-restore-live-backup.sh",
     "wp:status": "wp-env status",
     "wp:cli": "wp-env run cli wp",
     "wp:test": "bash scripts/wp-local-smoke.sh && playwright test",

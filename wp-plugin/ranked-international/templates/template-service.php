@@ -4,7 +4,63 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 function rip_service_rows( $name, $fallback = array() ) {
 	$value = get_field( $name );
-	return is_array( $value ) && $value ? $value : $fallback;
+	if ( ! is_array( $value ) || ! $value ) {
+		return $fallback;
+	}
+
+	/*
+	 * ACF normally returns repeater values by their field names. Older field
+	 * group records, including the live backup, can return the internal field
+	 * keys instead. Normalise those rows so the template remains portable
+	 * between the clean local fixture and the live site's existing content.
+	 */
+	return array_map(
+		static function ( $row ) {
+			if ( ! is_array( $row ) ) {
+				return $row;
+			}
+
+			$legacy_names = array(
+				'field_rip_svc_outcome_label'   => 'label',
+				'field_rip_svc_outcome_detail'  => 'detail',
+				'field_rip_svc_problem_title'   => 'title',
+				'field_rip_svc_problem_symptom' => 'symptom',
+				'field_rip_svc_problem_consequence' => 'consequence',
+				'field_rip_svc_problem_response' => 'response',
+				'field_rip_svc_problem_status'  => 'status',
+				'field_rip_svc_ws_title'        => 'title',
+				'field_rip_svc_ws_icon'         => 'icon',
+				'field_rip_svc_ws_description'  => 'description',
+				'field_rip_svc_ws_deliverable'  => 'deliverable',
+				'field_rip_svc_ws_outcome'      => 'outcome',
+				'field_rip_svc_phase_time'      => 'timeframe',
+				'field_rip_svc_phase_title'     => 'title',
+				'field_rip_svc_phase_actions'   => 'actions',
+				'field_rip_svc_phase_input'     => 'client_input',
+				'field_rip_svc_phase_output'    => 'output',
+				'field_rip_svc_phase_signal'    => 'signal',
+				'field_rip_svc_fit_text'        => 'text',
+				'field_rip_svc_not_fit_text'    => 'text',
+				'field_rip_svc_faq_q'           => 'question',
+				'field_rip_svc_faq_a'           => 'answer',
+			);
+			$normalised = $row;
+			foreach ( $row as $key => $item ) {
+				if ( isset( $legacy_names[ $key ] ) ) {
+					$normalised[ $legacy_names[ $key ] ] = $item;
+					continue;
+				}
+
+				$field = function_exists( 'acf_get_field' ) && 0 === strpos( $key, 'field_' ) ? acf_get_field( $key ) : null;
+				if ( is_array( $field ) && ! empty( $field['name'] ) ) {
+					$normalised[ $field['name'] ] = $item;
+				}
+			}
+
+			return $normalised;
+		},
+		$value
+	);
 }
 
 $service       = get_field( 'service_name' ) ?: get_the_title();

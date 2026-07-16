@@ -8,10 +8,56 @@
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+/**
+ * Keep critical industry-page icons independent of a third-party browser
+ * runtime. The live theme can defer or omit Lucide, which left entire
+ * interface components blank on this template.
+ */
+if ( ! function_exists( 'rip_industry_icon' ) ) {
+	function rip_industry_icon( $name, $class = '' ) {
+		$icons = array(
+			'hard-hat' => '<path d="M4 15v-2a8 8 0 0 1 16 0v2"/><path d="M2 15h20v3a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-3Z"/><path d="M12 5v4"/>',
+			'home' => '<path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9Z"/><path d="M9 21v-6h6v6"/>',
+			'building-2' => '<rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01"/>',
+			'wrench' => '<path d="M14.7 6.3a1 1 0 0 0-1.4-1.4L3 15.2a2 2 0 0 0 2.8 2.8L16.1 7.7a5 5 0 0 1-1.4-1.4Z"/><path d="M16 4a4 4 0 0 0 4 4"/>',
+			'map-pin' => '<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
+			'settings-2' => '<path d="M4 7h16M4 17h16M8 3v8M16 13v8"/>',
+			'file-text' => '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M8 13h8M8 17h8"/>',
+			'link-2' => '<path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"/>',
+			'mouse-pointer-click' => '<path d="m4 4 7.5 17 2.5-7 7-2.5L4 4Z"/><path d="m13 13 4 4"/>',
+			'search' => '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>',
+			'calendar-check' => '<rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/>',
+			'trending-up' => '<path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/>',
+			'bar-chart-2' => '<line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/>',
+			'arrow-right' => '<path d="M5 12h14M13 6l6 6-6 6"/>',
+		);
+		$paths = isset( $icons[ $name ] ) ? $icons[ $name ] : $icons['search'];
+		return '<svg class="rip-inline-icon ' . esc_attr( $class ) . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' . $paths . '</svg>';
+	}
+}
+
 $industry_name = get_field( 'industry_name' ) ?: get_the_title();
 $hero_video_poster = get_field( 'hero_video_poster' );
 $hero_video     = get_field( 'hero_video' );
 $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php', '/case-studies/' );
+$raw_spotlights = get_field( 'spotlights' );
+$spotlight_keys = array(
+	'kicker'        => 'field_rip_ind_spot_kicker',
+	'quote'         => 'field_rip_ind_spot_quote',
+	'client'        => 'field_rip_ind_spot_client',
+	'metric1_label' => 'field_rip_ind_spot_m1_label',
+	'metric1_value' => 'field_rip_ind_spot_m1_value',
+	'metric1_sub'   => 'field_rip_ind_spot_m1_sub',
+	'metric2_label' => 'field_rip_ind_spot_m2_label',
+	'metric2_value' => 'field_rip_ind_spot_m2_value',
+	'metric2_sub'   => 'field_rip_ind_spot_m2_sub',
+);
+$spotlights = is_array( $raw_spotlights ) ? array_map( function( $row ) use ( $spotlight_keys ) {
+	foreach ( $spotlight_keys as $key => $legacy_key ) {
+		if ( ! isset( $row[ $key ] ) && isset( $row[ $legacy_key ] ) ) $row[ $key ] = $row[ $legacy_key ];
+	}
+	return $row;
+}, $raw_spotlights ) : array();
 ?>
 <?php get_header(); ?>
 
@@ -75,7 +121,7 @@ $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php
           <?php endif; ?>
           <?php if ( $cardname = get_field( 'hero_card_name' ) ) : ?>
           <div class="hv__card">
-            <div class="hv__card-icon"><i data-lucide="hard-hat"></i></div>
+            <div class="hv__card-icon"><?php echo rip_industry_icon( 'hard-hat' ); ?></div>
             <div class="hv__card-info">
               <p class="hv__card-name"><?php echo esc_html( $cardname ); ?></p>
               <p class="hv__card-rating"><?php echo esc_html( get_field( 'hero_card_rating' ) ); ?></p>
@@ -148,7 +194,7 @@ $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php
       <div class="segments__grid">
         <?php while ( have_rows( 'segments' ) ) : the_row(); ?>
         <div class="segment-card">
-          <div class="segment-card__icon"><i data-lucide="<?php echo esc_attr( get_sub_field( 'icon' ) ?: 'hard-hat' ); ?>"></i></div>
+          <div class="segment-card__icon"><?php echo rip_industry_icon( get_sub_field( 'icon' ) ?: 'hard-hat' ); ?></div>
           <h3><?php echo esc_html( get_sub_field( 'title' ) ); ?></h3>
           <p><?php echo esc_html( get_sub_field( 'text' ) ); ?></p>
           <?php if ( $kw = get_sub_field( 'keywords' ) ) : ?><p class="segment-card__kw">Ranks for: <span><?php echo esc_html( $kw ); ?></span></p><?php endif; ?>
@@ -204,12 +250,11 @@ $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php
           <?php endwhile; ?>
         </div>
       </div>
-      <?php if ( $fn = get_field( 'compare_footnote' ) ) : ?><p class="cmp-table__footnote"><?php echo esc_html( $fn ); ?></p><?php endif; ?>
     </div>
   </section>
   <?php endif; ?>
 
-  <?php $spotlights = get_field( 'spotlights' ); if ( $spotlights ) : // plain get_field — an un-iterated have_rows() would leave a dangling ACF loop ?>
+  <?php if ( $spotlights ) : ?>
   <!-- ===== CLIENT SPOTLIGHT CAROUSEL ===== -->
   <section class="case-studies" id="results">
     <div class="cs__inner">
@@ -287,7 +332,7 @@ $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php
         ?>
         <div class="services-roof__chip services-roof__chip--<?php echo esc_attr( $cls ); ?>">
           <div class="services-roof__chip-head">
-            <?php if ( $icon ) : ?><i data-lucide="<?php echo esc_attr( $icon ); ?>"></i><?php endif; ?>
+            <?php if ( $icon ) : ?><?php echo rip_industry_icon( $icon ); ?><?php endif; ?>
             <span><?php echo esc_html( get_sub_field( 'title' ) ); ?></span>
           </div>
           <p><?php echo esc_html( get_sub_field( 'text' ) ); ?></p>
@@ -310,18 +355,18 @@ $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php
         <div class="process__step-inner">
           <div class="process__icon-wrap">
             <span class="process__dot"></span>
-            <span class="process__icon"><i data-lucide="<?php echo esc_attr( get_sub_field( 'icon' ) ?: 'search' ); ?>"></i></span>
+            <span class="process__icon"><?php echo rip_industry_icon( get_sub_field( 'icon' ) ?: 'search' ); ?></span>
           </div>
           <h3 class="process__title"><?php echo esc_html( get_sub_field( 'title' ) ); ?></h3>
           <div class="process__right">
             <p class="process__desc"><?php echo esc_html( get_sub_field( 'desc' ) ); ?></p>
-            <a href="#audit" class="process__btn">Get free audit <i data-lucide="arrow-right"></i></a>
+            <a href="#audit" class="process__btn">Get free audit <?php echo rip_industry_icon( 'arrow-right' ); ?></a>
           </div>
         </div>
       </li>
       <?php endwhile; ?>
     </ol>
-    <a href="#audit" class="process__btn-mobile">Get free audit <i data-lucide="arrow-right"></i></a>
+    <a href="#audit" class="process__btn-mobile">Get free audit <?php echo rip_industry_icon( 'arrow-right' ); ?></a>
   </section>
   <?php endif; ?>
 
@@ -330,7 +375,6 @@ $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php
   <section class="faq" id="faq">
     <div class="faq__head">
       <?php if ( $ft = get_field( 'faq_title' ) ) : ?><h2><?php echo esc_html( $ft ); ?></h2><?php endif; ?>
-      <?php if ( $fs = get_field( 'faq_sub' ) ) : ?><p><?php echo esc_html( $fs ); ?></p><?php endif; ?>
     </div>
     <div class="faq__list">
       <?php $i = 0; while ( have_rows( 'faqs' ) ) : the_row(); $i++; ?>

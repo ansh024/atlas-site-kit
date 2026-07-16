@@ -37,6 +37,125 @@
   }
 }
 
+/* Home process icons are inline SVGs so they remain visible even if the
+   active theme does not expose the Lucide runtime. */
+.process__icon svg {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
+/* The industry template sits inside Outgrid. Restore the authored sentence
+   case and render its self-contained SVG icons consistently. */
+body.single-rip_industry main#top h1,
+body.single-rip_industry main#top h2,
+body.single-rip_industry main#top h3,
+body.single-rip_industry main#top p,
+body.single-rip_industry main#top a,
+body.single-rip_industry main#top button {
+  text-transform: none;
+}
+
+body.single-rip_industry .rip-inline-icon {
+  display: block;
+  width: 1.25em;
+  height: 1.25em;
+  flex: 0 0 auto;
+}
+
+body.single-rip_industry .hv__card-icon .rip-inline-icon,
+body.single-rip_industry .segment-card__icon .rip-inline-icon,
+body.single-rip_industry .services-roof__chip-head .rip-inline-icon {
+  width: 20px;
+  height: 20px;
+}
+
+body.single-rip_industry .process__icon .rip-inline-icon,
+body.single-rip_industry .process__btn .rip-inline-icon,
+body.single-rip_industry .process__btn-mobile .rip-inline-icon {
+  width: 26px;
+  height: 26px;
+}
+
+/* Construction industry page: compact, readable touch layouts. */
+body.single-rip_industry .cmp-table__row--head {
+  padding-bottom: 0;
+}
+
+@media (max-width: 640px) {
+  body.single-rip_industry .proof {
+    padding-right: 0;
+  }
+
+  body.single-rip_industry .proof__inner {
+    overflow: hidden;
+  }
+
+  body.single-rip_industry .proof__grid {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+    padding: 0 24px 12px 0;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body.single-rip_industry .proof__grid::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  body.single-rip_industry .proof__card,
+  body.single-rip_industry .proof__card:first-child {
+    flex: 0 0 82vw;
+    min-height: 228px;
+    box-sizing: border-box;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--white);
+    scroll-snap-align: start;
+  }
+
+  body.single-rip_industry .services-roof__map {
+    box-sizing: border-box;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  body.single-rip_industry .hv__stat {
+    top: -10px;
+    right: -6px;
+    padding: 9px 12px;
+    border-radius: 15px;
+  }
+
+  body.single-rip_industry .hv__stat-num {
+    margin-top: 3px;
+    font-size: 1.38rem;
+  }
+
+  body.single-rip_industry .hv__stat-sub {
+    margin-top: 2px;
+    line-height: 1.2;
+  }
+
+  /* The desktop carousel entrance animation can remain half-finished after
+     a mobile swipe or a restored scroll position. Keep the active content
+     visible and preserve the carousel controls. */
+  body.single-rip_industry .case-studies .cs__stage,
+  body.single-rip_industry .case-studies .cs__card.is-active,
+  body.single-rip_industry .case-studies .cs__card.is-active .cs__card-kicker,
+  body.single-rip_industry .case-studies .cs__card.is-active .cs__quote,
+  body.single-rip_industry .case-studies .cs__card.is-active .cs__card-foot,
+  body.single-rip_industry .case-studies .cs__metrics-panel.is-active,
+  body.single-rip_industry .case-studies .cs__metrics-panel.is-active .cs__metric-block {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 /* Industry-page layout recovered after templates moved to the active theme shell.
    Keep this aligned with the original construction/index.html reference. */
 .hero--industry { height: 660px; }

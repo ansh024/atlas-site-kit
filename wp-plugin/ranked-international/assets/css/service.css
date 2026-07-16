@@ -91,6 +91,16 @@ body.rip-service-page main.rip-service-content :where(button,input,textarea,sele
 .problem-row__response{border-left-color:var(--ocean-twilight)}
 .problem-row__response small,.problem-row__response p{color:var(--ocean-twilight)}
 
+/* Outgrid applies a global dark h1 with higher specificity. The service hero
+   has its own dark surface, so keep its editorial hierarchy explicitly light. */
+body.rip-service-page main.rip-service-content .svc-hero .svc-hero__copy h1{color:#fff!important}
+body.rip-service-page main.rip-service-content .svc-hero .svc-hero__copy h1 em{color:#caff00!important}
+body.rip-service-page main.rip-service-content .svc-hero .svc-hero__copy :is(.svc-hero__summary,.svc-hero__proof){color:rgba(255,255,255,.9)!important}
+body.rip-service-page main.rip-service-content .blueprint__canvas #blueprintTitle{color:#fff!important}
+body.rip-service-page main.rip-service-content .phase-list small{color:#0a1529!important}
+body.rip-service-page main.rip-service-content .problem-row h3{margin-top:8px!important}
+body.rip-service-page main.rip-service-content svg.lucide{display:block!important;visibility:visible!important;opacity:1!important}
+
 /* Mobile process: each phase is a deliberate, swipeable card instead of a long stacked grid. */
 @media(max-width:720px){
   .phase-list{display:flex;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:8px 16px 20px 0;margin:0 -16px 0 -4px;-webkit-overflow-scrolling:touch}

@@ -363,7 +363,7 @@
         <div class="process__step-inner">
           <div class="process__icon-wrap">
             <span class="process__dot"></span>
-            <span class="process__icon"><i data-lucide="search"></i></span>
+            <span class="process__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg></span>
           </div>
           <h3 class="process__title">Free audit</h3>
           <div class="process__right">
@@ -376,7 +376,7 @@
         <div class="process__step-inner">
           <div class="process__icon-wrap">
             <span class="process__dot"></span>
-            <span class="process__icon"><i data-lucide="calendar-check"></i></span>
+            <span class="process__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"></path></svg></span>
           </div>
           <h3 class="process__title">90-day plan</h3>
           <div class="process__right">
@@ -389,7 +389,7 @@
         <div class="process__step-inner">
           <div class="process__icon-wrap">
             <span class="process__dot"></span>
-            <span class="process__icon"><i data-lucide="trending-up"></i></span>
+            <span class="process__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg></span>
           </div>
           <h3 class="process__title">Build &amp; rank</h3>
           <div class="process__right">
@@ -402,7 +402,7 @@
         <div class="process__step-inner">
           <div class="process__icon-wrap">
             <span class="process__dot"></span>
-            <span class="process__icon"><i data-lucide="bar-chart-2"></i></span>
+            <span class="process__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="18" y1="20" y2="10"></line><line x1="12" x2="12" y1="20" y2="4"></line><line x1="6" x2="6" y1="20" y2="14"></line></svg></span>
           </div>
           <h3 class="process__title">Report leads booked</h3>
           <div class="process__right">

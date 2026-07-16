@@ -2,8 +2,9 @@
 set -euo pipefail
 source "$(dirname "$0")/wp-local-guard.sh"
 
-STATUS="$(curl --silent --output /tmp/ranked-service.html --write-out '%{http_code}' "$WP_LOCAL_URL/local-seo-services/")"
+STATUS="$(curl --silent --output /tmp/ranked-service.html --write-out '%{http_code}' "$WP_LOCAL_URL/local-seo-services-offer/")"
 [[ "$STATUS" == "200" ]] || { echo "Expected HTTP 200, got $STATUS" >&2; exit 1; }
+perl -0777 -ne 'if (/<main\b.*?<\/main>/si) { print $&; }' /tmp/ranked-service.html > /tmp/ranked-service-main.html
 
 assert_count() {
   local expected="$1" pattern="$2" label="$3"
@@ -12,7 +13,7 @@ assert_count() {
   [[ "$actual" == "$expected" ]] || { echo "$label: expected $expected, got $actual" >&2; exit 1; }
 }
 assert_present() { grep -Eiq "$1" /tmp/ranked-service.html || { echo "Missing: $2" >&2; exit 1; }; }
-assert_absent() { ! grep -Eiq "$1" /tmp/ranked-service.html || { echo "Unexpected: $2" >&2; exit 1; }; }
+assert_absent() { ! grep -Eiq "$1" /tmp/ranked-service-main.html || { echo "Unexpected: $2" >&2; exit 1; }; }
 
 MAIN_H1_COUNT="$(perl -0777 -ne 'if (/<main\b.*?<\/main>/si) { $main = $&; @h1 = ($main =~ /<h1(?:[ >])/gi); print scalar @h1; }' /tmp/ranked-service.html)"
 [[ "$MAIN_H1_COUNT" == "1" ]] || { echo "Page-content H1 count: expected 1, got ${MAIN_H1_COUNT:-0}" >&2; exit 1; }
@@ -22,7 +23,7 @@ assert_present 'Own the searches happening' 'Local SEO hero'
 assert_present '"@type"[[:space:]]*:[[:space:]]*"Service"' 'Service schema'
 assert_present '"@type"[[:space:]]*:[[:space:]]*"BreadcrumbList"' 'Breadcrumb schema'
 assert_present '"@type"[[:space:]]*:[[:space:]]*"FAQPage"' 'FAQ schema'
-assert_absent 'Benchling|Outgrid|Biopharmaceutical|Industrial Biotech' 'legacy template content'
+assert_absent 'Benchling|Outgrid|Biopharmaceutical|Industrial Biotech' 'legacy template content in the service page'
 
 "$WP_ENV_BIN" run cli wp plugin is-active ranked-international
 YOAST_SLUG="$("$WP_ENV_BIN" run cli wp plugin list --status=active --field=name | grep '^wordpress-seo' | head -1 | tr -d '\r')"

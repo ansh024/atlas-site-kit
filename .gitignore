@@ -7,3 +7,5 @@ wp-plugin/dist/
 test-results/
 playwright-report/
 .preview/
+wp-data/*
+!wp-data/.gitkeep

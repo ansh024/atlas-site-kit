@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Ranked International Pages
  * Description: Adds the Ranked International marketing pages (home, industry landers, case studies) as selectable Page Templates that work on top of any active theme.
- * Version: 1.0.0
+ * Version: 1.0.8
  * Author: Ranked International
  * Text Domain: ranked-international
  * GitHub Plugin URI: ansh024/atlas-site-kit
@@ -11,7 +11,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'RIP_VERSION', '1.0.0' );
+define( 'RIP_VERSION', '1.0.8' );
 define( 'RIP_DIR', plugin_dir_path( __FILE__ ) );
 define( 'RIP_URL', plugin_dir_url( __FILE__ ) );
 
@@ -133,7 +133,12 @@ function rip_service_body_classes( $classes ) {
  * Only load our CSS/JS on pages actually using one of our templates —
  * keeps the rest of the site (and the active theme) untouched.
  */
-add_action( 'wp_enqueue_scripts', 'rip_enqueue_assets' );
+/*
+ * The active Outgrid theme has broad heading and layout selectors. Load the
+ * plugin's isolated page layer after the theme so service-page rules retain
+ * ownership of the service content without touching theme chrome.
+ */
+add_action( 'wp_enqueue_scripts', 'rip_enqueue_assets', 100 );
 function rip_enqueue_assets() {
 	if ( ! rip_is_our_template() ) return;
 
