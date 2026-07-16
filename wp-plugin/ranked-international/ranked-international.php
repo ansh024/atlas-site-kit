@@ -67,6 +67,7 @@ function rip_templates() {
 	return array(
 		'templates/template-home.php'            => 'Ranked Intl: Home',
 		'templates/template-case-studies-hub.php' => 'Ranked Intl: Case Studies (Hub)',
+		'templates/template-turf-tree-service.php' => 'Ranked Intl: Turf & Tree Service',
 	);
 }
 
@@ -148,11 +149,15 @@ function rip_enqueue_assets() {
 
 	$is_case_study = is_singular( 'rip_case_study' ) || get_page_template_slug() === 'templates/template-case-studies-hub.php';
 	$is_service = is_singular( 'rip_service' );
+	$is_turf_tree = get_page_template_slug() === 'templates/template-turf-tree-service.php';
 	if ( $is_case_study ) {
 		wp_enqueue_style( 'rip-case-study', RIP_URL . 'assets/css/case-study.css', array( 'rip-styles' ), RIP_VERSION );
 	}
 	if ( $is_service ) {
 		wp_enqueue_style( 'rip-service', RIP_URL . 'assets/css/service.css', array( 'rip-styles' ), RIP_VERSION );
+	}
+	if ( $is_turf_tree ) {
+		wp_enqueue_style( 'rip-turf-tree', RIP_URL . 'assets/css/trade-landing.css', array( 'rip-styles', 'rip-page-fixes' ), RIP_VERSION );
 	}
 
 	wp_enqueue_script( 'gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js', array(), '3.12.5', true );
@@ -166,6 +171,9 @@ function rip_enqueue_assets() {
 	}
 	if ( $is_service ) {
 		wp_enqueue_script( 'rip-service', RIP_URL . 'assets/js/service.js', array( 'gsap', 'gsap-scrolltrigger', 'rip-main' ), RIP_VERSION, true );
+	}
+	if ( $is_turf_tree ) {
+		wp_enqueue_script( 'rip-turf-tree', RIP_URL . 'assets/js/trade-landing.js', array( 'gsap', 'gsap-scrolltrigger', 'rip-main' ), RIP_VERSION, true );
 	}
 
 	// Render once before styles/scripts print so WPForms can enqueue its assets.
