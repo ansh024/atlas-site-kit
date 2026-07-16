@@ -78,11 +78,11 @@ $proof = array(
 <header class="nav" id="nav">
   <div class="nav__inner">
     <a class="nav__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="Ranked International home"><img src="<?php echo rip_asset( 'rankd-international-logo.png' ); ?>" alt="Ranked International" class="nav__logo-img" width="96" height="32"></a>
-    <nav class="nav__menu" aria-label="Primary"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a><a href="<?php echo esc_url( home_url( '/#services' ) ); ?>">Services</a><a href="<?php echo esc_url( home_url( '/#industries' ) ); ?>">Industries We Serve</a><a href="<?php echo esc_url( $hub_url ); ?>">Case Studies</a><a href="<?php echo esc_url( home_url( '/blogs/' ) ); ?>">Blogs</a><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Contact</a></nav>
+    <nav class="nav__menu" aria-label="Primary"><?php rip_primary_menu(); ?></nav>
     <div class="nav__actions"><a href="tel:+16805542324" class="nav__phone">Dallas · (680) 554-2324</a><a href="#audit" class="btn btn--primary btn--sm">Get my free audit</a></div>
     <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navMenuMobile"><span></span><span></span><span></span></button>
   </div>
-  <nav class="nav__menu-mobile" id="navMenuMobile"><a href="/">Home</a><a href="/#services">Services</a><a href="/#industries">Industries</a><a href="<?php echo esc_url( $hub_url ); ?>">Case Studies</a><a href="<?php echo esc_url( home_url( '/blogs/' ) ); ?>">Blogs</a><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Contact</a><a href="#audit" class="btn btn--primary btn--block">Get my free audit</a></nav>
+  <nav class="nav__menu-mobile" id="navMenuMobile"><?php rip_primary_menu(); ?><a href="#audit" class="btn btn--primary btn--block">Get my free audit</a></nav>
 </header>
 
 <main id="top">

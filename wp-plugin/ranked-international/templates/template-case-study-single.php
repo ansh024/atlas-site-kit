@@ -120,6 +120,7 @@ if ( have_rows( 'chart_points' ) ) {
       <a href="<?php echo esc_url( $hub_url ); ?>">Case Studies</a>
       <a href="<?php echo esc_url( home_url( '/blogs/' ) ); ?>">Blogs</a>
       <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Contact</a>
+      <?php rip_primary_menu(); ?>
     </nav>
     <div class="nav__actions">
       <a href="tel:+16805542324" class="nav__phone">Dallas · (680) 554-2324</a>
@@ -136,6 +137,7 @@ if ( have_rows( 'chart_points' ) ) {
     <a href="<?php echo esc_url( $hub_url ); ?>">Case Studies</a>
     <a href="<?php echo esc_url( home_url( '/blogs/' ) ); ?>">Blogs</a>
     <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Contact</a>
+    <?php rip_primary_menu(); ?>
     <a href="tel:+16805542324" class="nav__menu-mobile-phone">Dallas · (680) 554-2324</a>
     <a href="#audit" class="btn btn--primary btn--block">Get my free audit</a>
   </nav>
