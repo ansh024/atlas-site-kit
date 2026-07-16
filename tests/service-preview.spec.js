@@ -6,8 +6,9 @@ test.beforeEach(async ({ page }) => {
 
 test('renders the service narrative and structured UI', async ({ page }) => {
   await expect(page).toHaveTitle(/Local SEO Services/);
-  await expect(page.locator('h1')).toHaveCount(1);
-  await expect(page.locator('h1')).toContainText('Own the searches happening');
+  await expect(page.locator('body')).toHaveClass(/rip-service-page/);
+  await expect(page.locator('main#top.rip-service-content h1')).toHaveCount(1);
+  await expect(page.locator('main#top.rip-service-content h1')).toContainText('Own the searches happening');
   await expect(page.locator('.search-console')).toBeVisible();
   await expect(page.locator('.problem-row')).toHaveCount(4);
   await expect(page.locator('.blueprint__tabs [role="tab"]')).toHaveCount(7);
@@ -17,6 +18,12 @@ test('renders the service narrative and structured UI', async ({ page }) => {
   await expect(page.locator('.chapter-rail')).toHaveCount(0);
   await expect(page.locator('#problems h2')).toContainText('What is costing you leads?');
   await expect(page.locator('body')).not.toContainText(/Benchling|Outgrid|Biopharmaceutical/);
+});
+
+test('service hero reserves room for the fixed theme header', async ({ page }, testInfo) => {
+  const padding = await page.locator('.svc-hero').evaluate(element => Number.parseFloat(getComputedStyle(element).paddingTop));
+  const expected = testInfo.project.name === 'mobile' ? 90 : 112;
+  expect(padding).toBe(expected);
 });
 
 test('section headings use a vertical eyebrow-heading-copy stack', async ({ page }) => {

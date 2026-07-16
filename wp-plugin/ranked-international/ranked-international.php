@@ -116,6 +116,20 @@ function rip_is_our_template() {
 }
 
 /**
+ * Keep WordPress in charge of the document, header and footer while giving
+ * service-page CSS a stable namespace inside the active theme shell.
+ */
+add_filter( 'body_class', 'rip_service_body_classes' );
+function rip_service_body_classes( $classes ) {
+	if ( ! is_singular( 'rip_service' ) ) return $classes;
+
+	$classes[] = 'rip-service-page';
+	$classes[] = 'rip-service-template';
+	$classes[] = 'evidence-' . sanitize_html_class( get_field( 'evidence_type' ) ?: 'map' );
+	return array_unique( $classes );
+}
+
+/**
  * Only load our CSS/JS on pages actually using one of our templates —
  * keeps the rest of the site (and the active theme) untouched.
  */

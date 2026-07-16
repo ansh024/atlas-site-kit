@@ -9,8 +9,6 @@ function rip_service_rows( $name, $fallback = array() ) {
 
 $service       = get_field( 'service_name' ) ?: get_the_title();
 $family        = get_field( 'service_family' ) ?: 'SEO';
-$seo_title     = get_field( 'seo_title' ) ?: "$service | Ranked International";
-$seo_desc      = get_field( 'seo_description' ) ?: get_field( 'hero_summary' );
 $evidence_type = get_field( 'evidence_type' ) ?: 'map';
 $hub_url       = rip_url_for_template( 'templates/template-case-studies-hub.php', '/case-studies/' );
 $cta_label     = get_field( 'hero_cta_label' ) ?: 'Get my free audit';
@@ -64,68 +62,10 @@ $proof = array(
 	'url' => $proof_post ? get_permalink( $proof_post ) : home_url( '/case-studies/bella-med-spa/' ),
 );
 
-$schema = array(
-	'@context' => 'https://schema.org', '@type' => 'Service',
-	'name' => $service, 'description' => wp_strip_all_tags( $seo_desc ),
-	'provider' => array( '@type' => 'ProfessionalService', 'name' => 'Ranked International', 'url' => home_url( '/' ) ),
-	'areaServed' => get_field( 'primary_market' ) ?: 'Dallas-Fort Worth, Texas',
-	'url' => get_permalink(),
-);
-$breadcrumb_schema = array(
-	'@context' => 'https://schema.org', '@type' => 'BreadcrumbList',
-	'itemListElement' => array(
-		array( '@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => home_url( '/' ) ),
-		array( '@type' => 'ListItem', 'position' => 2, 'name' => 'Services', 'item' => home_url( '/#services' ) ),
-		array( '@type' => 'ListItem', 'position' => 3, 'name' => $service, 'item' => get_permalink() ),
-	),
-);
-
-// This template prints its own canonical SEO tags. Guarantee core cannot add
-// a second title/canonical even when this CPT was resolved by the safe
-// top-level fallback late in the main query.
-remove_action( 'wp_head', '_wp_render_title_tag', 1 );
-remove_action( 'wp_head', 'rel_canonical' );
-remove_theme_support( 'title-tag' );
 ?>
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-<meta charset="<?php bloginfo( 'charset' ); ?>">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title><?php echo esc_html( $seo_title ); ?></title>
-<?php if ( $seo_desc ) : ?><meta name="description" content="<?php echo esc_attr( wp_strip_all_tags( $seo_desc ) ); ?>"><?php endif; ?>
-<link rel="canonical" href="<?php echo esc_url( get_permalink() ); ?>">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
-<script type="application/ld+json"><?php echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES ); ?></script>
-<script type="application/ld+json"><?php echo wp_json_encode( $breadcrumb_schema, JSON_UNESCAPED_SLASHES ); ?></script>
-<?php if ( $faqs ) : ?><script type="application/ld+json"><?php echo wp_json_encode( array( '@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => array_map( function( $f ) { return array( '@type' => 'Question', 'name' => wp_strip_all_tags( $f['question'] ), 'acceptedAnswer' => array( '@type' => 'Answer', 'text' => wp_strip_all_tags( $f['answer'] ) ) ); }, $faqs ) ), JSON_UNESCAPED_SLASHES ); ?></script><?php endif; ?>
-<?php
-ob_start();
-wp_head();
-$service_wp_head = ob_get_clean();
-// Last-line defense against themes or SEO integrations that register their
-// title/canonical callbacks after template_redirect. Our canonical tags above
-// remain untouched because only the captured wp_head() fragment is filtered.
-$service_wp_head = preg_replace( '#<title\b[^>]*>.*?</title>\s*#is', '', $service_wp_head );
-$service_wp_head = preg_replace( '#<link\b[^>]*rel=["\']canonical["\'][^>]*>\s*#is', '', $service_wp_head );
-echo $service_wp_head; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-?>
-</head>
-<body class="rip-service-page evidence-<?php echo esc_attr( $evidence_type ); ?>">
-<?php wp_body_open(); ?>
+<?php get_header(); ?>
 
-<header class="nav" id="nav">
-  <div class="nav__inner">
-    <a class="nav__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="Ranked International home"><img src="<?php echo rip_asset( 'rankd-international-logo.png' ); ?>" alt="Ranked International" class="nav__logo-img" width="96" height="32"></a>
-    <nav class="nav__menu" aria-label="Primary"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a><a href="<?php echo esc_url( home_url( '/#services' ) ); ?>">Services</a><a href="<?php echo esc_url( home_url( '/#industries' ) ); ?>">Industries We Serve</a><a href="<?php echo esc_url( $hub_url ); ?>">Case Studies</a><a href="#audit">Contact</a></nav>
-    <div class="nav__actions"><a href="tel:+16805542324" class="nav__phone">Dallas · (680) 554-2324</a><a href="#audit" class="btn btn--primary btn--sm">Get my free audit</a></div>
-    <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navMenuMobile"><span></span><span></span><span></span></button>
-  </div>
-  <nav class="nav__menu-mobile" id="navMenuMobile"><a href="/">Home</a><a href="/#services">Services</a><a href="/#industries">Industries</a><a href="<?php echo esc_url( $hub_url ); ?>">Case Studies</a><a href="#audit" class="btn btn--primary btn--block">Get my free audit</a></nav>
-</header>
-
-<main id="top">
+<main id="top" class="rip-service-content">
   <section class="svc-hero" id="overview">
     <div class="svc-hero__grain" aria-hidden="true"></div>
     <div class="svc-wrap svc-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/#services">Services</a><span>/</span><span><?php echo esc_html( $service ); ?></span></div>
@@ -182,7 +122,4 @@ echo $service_wp_head; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNot
 </main>
 
 <?php rip_render_audit_modal(); ?>
-
-<footer class="footer"><div class="footer__inner"><div class="footer__brand"><a class="nav__logo" href="/"><img src="<?php echo rip_asset( 'rankd-international-logo.png' ); ?>" alt="Ranked International" class="nav__logo-img" width="96" height="32" loading="lazy"></a><p>Dallas SEO that gets the phone ringing. One client per industry.</p><p class="footer__addr">Dallas, TX · (680) 554-2324</p></div><div class="footer__cols"><div><h3>SEO</h3><a href="/local-seo-services/">Local SEO</a><a href="/#services">Organic SEO</a><a href="/#services">Technical SEO</a><a href="/#services">Link Building</a></div><div><h3>Paid</h3><a href="/#services">Google Ads</a><a href="/#services">PPC Management</a></div><div><h3>Consulting</h3><a href="/#services">SEO Consulting</a><a href="/#services">CRO Audit</a></div><div><h3>Company</h3><a href="<?php echo esc_url( $hub_url ); ?>">Results</a><a href="/#process">About</a><a href="#audit">Contact</a></div></div></div><div class="footer__base"><span>&copy; <?php echo esc_html( date( 'Y' ) ); ?> Ranked International</span><span>Dallas, Texas</span></div></footer>
-<?php wp_footer(); ?>
-</body></html>
+<?php get_footer(); ?>
