@@ -6,3 +6,10 @@
 .services-roof {
   background-image: url('../images/bg.jpg');
 }
+
+/* The active theme adds a generic page-title banner before plugin templates.
+   Our templates already own the page title in their hero, so suppress only
+   that duplicate banner while retaining the theme header and footer. */
+#content > .uicore-page-title {
+  display: none;
+}
