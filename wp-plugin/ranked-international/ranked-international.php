@@ -20,37 +20,6 @@ require_once RIP_DIR . 'includes/seed.php';
 require_once RIP_DIR . 'includes/seo.php';
 require_once RIP_DIR . 'includes/leads.php';
 
-add_action( 'after_setup_theme', function () {
-	register_nav_menu( 'rip-primary', 'Ranked International Primary Menu' );
-} );
-
-/** Render the WordPress-managed primary menu with a dependable fallback. */
-function rip_primary_menu() {
-	wp_nav_menu( array(
-		'theme_location' => 'rip-primary',
-		'container'      => false,
-		'menu_class'     => 'rip-wp-menu',
-		'depth'          => 2,
-		'fallback_cb'    => 'rip_primary_menu_fallback',
-	) );
-}
-
-function rip_primary_menu_fallback() {
-	$items = array(
-		'Home'         => home_url( '/' ),
-		'Services'     => home_url( '/#services' ),
-		'Industries'   => home_url( '/#industries' ),
-		'Case Studies' => home_url( '/case-studies/' ),
-		'Blogs'        => home_url( '/blogs/' ),
-		'Contact'      => home_url( '/contact/' ),
-	);
-	echo '<ul class="rip-wp-menu">';
-	foreach ( $items as $label => $url ) {
-		echo '<li class="menu-item"><a href="' . esc_url( $url ) . '">' . esc_html( $label ) . '</a></li>';
-	}
-	echo '</ul>';
-}
-
 /**
  * Map of template file => label shown in the Page Attributes dropdown.
  * Only the two hand-built pages live here — Industry Pages and Case Studies
@@ -118,7 +87,8 @@ function rip_enqueue_assets() {
 	if ( ! rip_is_our_template() ) return;
 
 	wp_enqueue_style( 'rip-styles', RIP_URL . 'assets/css/styles.min.css', array(), RIP_VERSION );
-	wp_enqueue_style( 'rip-menu-safety', RIP_URL . 'assets/css/menu-safety.css', array( 'rip-styles' ), RIP_VERSION );
+	wp_enqueue_style( 'rip-fonts', 'https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap', array(), null );
+	wp_enqueue_style( 'rip-page-fixes', RIP_URL . 'assets/css/page-fixes.css', array( 'rip-styles' ), RIP_VERSION );
 
 	$is_case_study = is_singular( 'rip_case_study' ) || get_page_template_slug() === 'templates/template-case-studies-hub.php';
 	$is_service = is_singular( 'rip_service' );

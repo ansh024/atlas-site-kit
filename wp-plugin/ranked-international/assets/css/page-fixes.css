@@ -1,0 +1,8 @@
+/* Restore bundled section artwork after the compiled stylesheet path regression. */
+.hero__aurora {
+  background-image: url('../images/hero-bg.jpg');
+}
+
+.services-roof {
+  background-image: url('../images/bg.jpg');
+}
