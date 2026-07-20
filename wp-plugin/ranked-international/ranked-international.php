@@ -59,9 +59,9 @@ add_action( 'admin_notices', function () {
 
 /**
  * Map of template file => label shown in the Page Attributes dropdown.
- * Only the two hand-built pages live here — Industry Pages and Case Studies
- * are their own Custom Post Types (see includes/cpt.php) so the client can
- * duplicate/create them from wp-admin without touching a template picker.
+ * Only one-off pages live here. Reusable City, Industry, Service, and Case
+ * Study pages are Custom Post Types (see includes/cpt.php), so editors can
+ * duplicate or create them without touching a template picker.
  */
 function rip_templates() {
 	return array(
@@ -123,8 +123,7 @@ function rip_load_page_template( $template ) {
 
 /**
  * True when the current request will render one of our templates —
- * a Page using one of our Page Templates, or a singular Industry Page /
- * Case Study post.
+ * a Page using one of our Page Templates, or one of our reusable post types.
  */
 function rip_is_our_template() {
 	if ( is_singular( array( 'rip_city', 'rip_industry', 'rip_case_study', 'rip_service' ) ) ) return true;
