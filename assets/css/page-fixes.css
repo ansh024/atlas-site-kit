@@ -1,0 +1,324 @@
+/* Restore bundled section artwork after the compiled stylesheet path regression. */
+.hero__aurora {
+  background-image: url('../images/hero-bg.jpg');
+}
+
+.services-roof {
+  background-image: url('../images/bg.jpg');
+}
+
+/* The active theme adds a generic page-title banner before plugin templates.
+   Our templates already own the page title in their hero, so suppress only
+   that duplicate banner while retaining the theme header and footer. */
+#content > .uicore-page-title {
+  display: none;
+}
+
+.audit-modal__wpforms {
+  max-height: min(78vh, 760px);
+  overflow-y: auto;
+  padding: 32px;
+}
+
+.audit-modal__wpforms .wpforms-container {
+  margin: 0;
+}
+
+.audit-modal__unavailable {
+  margin: 0;
+  padding: 48px 32px;
+  color: var(--prussian-blue);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .audit-modal__wpforms {
+    padding: 24px 18px;
+  }
+}
+
+/* Home process icons are inline SVGs so they remain visible even if the
+   active theme does not expose the Lucide runtime. */
+.process__icon svg {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
+/* The industry template sits inside Outgrid. Restore the authored sentence
+   case and render its self-contained SVG icons consistently. */
+body.single-rip_industry main#top h1,
+body.single-rip_industry main#top h2,
+body.single-rip_industry main#top h3,
+body.single-rip_industry main#top p,
+body.single-rip_industry main#top a,
+body.single-rip_industry main#top button {
+  text-transform: none;
+}
+
+body.single-rip_industry .rip-inline-icon {
+  display: block;
+  width: 1.25em;
+  height: 1.25em;
+  flex: 0 0 auto;
+}
+
+body.single-rip_industry .hv__card-icon .rip-inline-icon,
+body.single-rip_industry .segment-card__icon .rip-inline-icon,
+body.single-rip_industry .services-roof__chip-head .rip-inline-icon {
+  width: 20px;
+  height: 20px;
+}
+
+body.single-rip_industry .process__icon .rip-inline-icon,
+body.single-rip_industry .process__btn .rip-inline-icon,
+body.single-rip_industry .process__btn-mobile .rip-inline-icon {
+  width: 26px;
+  height: 26px;
+}
+
+/* Construction industry page: compact, readable touch layouts. */
+body.single-rip_industry .cmp-table__row--head {
+  padding-bottom: 0;
+}
+
+@media (max-width: 640px) {
+  body.single-rip_industry .proof {
+    padding-right: 0;
+  }
+
+  body.single-rip_industry .proof__inner {
+    overflow: hidden;
+  }
+
+  body.single-rip_industry .proof__grid {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+    padding: 0 24px 12px 0;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body.single-rip_industry .proof__grid::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  body.single-rip_industry .proof__card,
+  body.single-rip_industry .proof__card:first-child {
+    flex: 0 0 82vw;
+    min-height: 228px;
+    box-sizing: border-box;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--white);
+    scroll-snap-align: start;
+  }
+
+  body.single-rip_industry .services-roof__map {
+    box-sizing: border-box;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  body.single-rip_industry .hv__stat {
+    top: -10px;
+    right: -6px;
+    padding: 9px 12px;
+    border-radius: 15px;
+  }
+
+  body.single-rip_industry .hv__stat-num {
+    margin-top: 3px;
+    font-size: 1.38rem;
+  }
+
+  body.single-rip_industry .hv__stat-sub {
+    margin-top: 2px;
+    line-height: 1.2;
+  }
+
+  /* The desktop carousel entrance animation can remain half-finished after
+     a mobile swipe or a restored scroll position. Keep the active content
+     visible and preserve the carousel controls. */
+  body.single-rip_industry .case-studies .cs__stage,
+  body.single-rip_industry .case-studies .cs__card.is-active,
+  body.single-rip_industry .case-studies .cs__card.is-active .cs__card-kicker,
+  body.single-rip_industry .case-studies .cs__card.is-active .cs__quote,
+  body.single-rip_industry .case-studies .cs__card.is-active .cs__card-foot,
+  body.single-rip_industry .case-studies .cs__metrics-panel.is-active,
+  body.single-rip_industry .case-studies .cs__metrics-panel.is-active .cs__metric-block {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Industry-page layout recovered after templates moved to the active theme shell.
+   Keep this aligned with the original construction/index.html reference. */
+.hero--industry { height: 660px; }
+.hero--industry .hero__inner { padding-right: 110px; }
+.hero--industry .hero__copy { width: auto; max-width: 620px; padding-top: 80px; }
+.hero--industry .hero__title { max-width: 17ch; font-size: clamp(2.6rem, 6vw, 3.5rem); }
+.hero--industry .hero__sub { max-width: 44ch; }
+.hero--industry .hero__visual { width: 420px; justify-content: center; padding-top: 30px; }
+
+@media (max-width: 1180px) and (min-width: 641px) {
+  .hero--industry { height: auto; }
+  .hero--industry .hero__inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+    padding: 110px 40px 60px;
+    text-align: center;
+  }
+  .hero--industry .hero__copy { max-width: 620px; padding-top: 0; }
+  .hero--industry .hero__title,
+  .hero--industry .hero__sub { margin-right: auto; margin-left: auto; }
+  .hero--industry .hero__bottom { justify-content: center; flex-wrap: wrap; gap: 24px; }
+  .hero--industry .hero__visual { width: 100%; max-width: 420px; margin: 0 auto; padding-top: 0; }
+}
+
+@media (max-width: 640px) {
+  .hero--industry { height: auto; }
+  .hero--industry .hero__inner { padding-right: 0; }
+  .hero--industry .hero__visual { width: 100%; margin: 0; }
+  .hero--industry .hero__title { font-size: 26px; }
+}
+
+.proof { padding: clamp(70px, 9vw, 110px) var(--pad); background: var(--white); }
+.proof__inner { max-width: var(--maxw); margin: 0 auto; }
+.proof__grid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 48px; }
+.proof__card { padding: 0 32px; border-left: 1px solid var(--line); }
+.proof__card:first-child { padding-left: 0; border-left: 0; }
+.proof__num {
+  color: var(--prussian-blue);
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.03em;
+}
+.proof__num span { color: var(--ocean-twilight); }
+.proof__label { max-width: 26ch; margin-top: .6em; color: var(--ink-soft); font-size: .98rem; line-height: 1.5; }
+
+@media (max-width: 860px) {
+  .proof__grid { grid-template-columns: 1fr; gap: 32px; }
+  .proof__card { padding-top: 28px; padding-left: 0; border-top: 1px solid var(--line); border-left: 0; }
+  .proof__card:first-child { padding-top: 0; border-top: 0; }
+}
+
+.segments { padding: clamp(70px, 9vw, 110px) var(--pad); background: var(--bright-snow); }
+.segments__inner { max-width: var(--maxw); margin: 0 auto; }
+.segments__banner { overflow: hidden; margin-top: 40px; border-radius: 20px; box-shadow: 0 24px 50px -24px rgba(10, 21, 41, .35); }
+.segments__banner img { display: block; width: 100%; height: clamp(160px, 22vw, 300px); object-fit: cover; object-position: center 30%; }
+.segments__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 32px; }
+.segment-card {
+  padding: 26px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--white);
+  box-shadow: 0 10px 30px -20px rgba(10, 21, 41, .4);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.segment-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -16px rgba(10, 21, 41, .22); }
+.segment-card__icon { display: grid; width: 42px; height: 42px; margin-bottom: 16px; place-items: center; border-radius: 10px; background: var(--prussian-blue); color: var(--chartreuse); }
+.segment-card__icon i { display: flex; width: 20px; height: 20px; }
+.segment-card h3 { margin-bottom: 8px; color: var(--prussian-blue); font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; line-height: 1.2; }
+.segment-card p { margin-bottom: 12px; color: var(--ink-soft); font-size: .9rem; line-height: 1.5; }
+.segment-card__kw { color: var(--ocean-twilight); font-size: .74rem; font-weight: 600; letter-spacing: .02em; }
+.segment-card__kw span { color: var(--ink-soft); font-weight: 400; }
+@media (max-width: 980px) { .segments__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .segments__grid { grid-template-columns: 1fr; } }
+
+.compare { padding: clamp(70px, 9vw, 110px) var(--pad) clamp(110px, 12vw, 150px); background: var(--white); }
+.compare__inner { max-width: 1080px; margin: 0 auto; }
+.compare__head { max-width: 900px; margin: 0 auto; text-align: center; }
+.compare__head .section-title { max-width: 700px; margin: 0 auto; text-align: center; }
+.compare__subhead { margin-top: 10px; color: var(--ocean-twilight); font-family: var(--font-serif); font-size: clamp(1.15rem, 2.4vw, 1.5rem); font-style: italic; font-weight: 400; text-align: center; }
+.cmp-table { position: relative; max-width: 640px; margin: 52px auto 0; padding-bottom: 28px; border: 1.5px solid var(--prussian-blue); border-radius: 26px; background: var(--white); }
+.cmp-table__body { position: relative; padding: 30px 22px 0; }
+.cmp-table__row { position: relative; z-index: 1; display: flex; align-items: stretch; }
+.cmp-table__row:not(:last-child) { border-bottom: 1px solid var(--line); }
+.cmp-table__row--head { padding-bottom: 18px; border-bottom: 0 !important; }
+.cmp-table__cell { display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: center; padding: 16px 6px; text-align: center; }
+.cmp-table__cell--label { flex: none; align-items: flex-start; justify-content: center; width: 168px; padding-right: 10px; padding-left: 4px; color: var(--ink); font-size: .88rem; line-height: 1.35; text-align: left; }
+.cmp-table__cell--label span { display: block; margin-top: 2px; color: var(--ink-soft); font-size: .82rem; }
+.cmp-table__cell--hi { margin: 0 -6px; background: rgba(16, 70, 186, .12); }
+.cmp-table__row--head .cmp-table__cell--hi { border-radius: 16px 16px 0 0; }
+.cmp-table__row--last .cmp-table__cell--hi { border-radius: 0 0 16px 16px; }
+.cmp-table__col-head { color: var(--prussian-blue); font-family: var(--font-display); font-size: 1rem; font-weight: 700; line-height: 1.2; }
+.cmp-table__num { color: var(--prussian-blue); font-family: var(--font-display); font-size: clamp(1.3rem, 3vw, 1.7rem); font-weight: 800; letter-spacing: -.02em; }
+.cmp-icon { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--prussian-blue); color: #fff; }
+.cmp-icon svg { width: 15px; height: 15px; }
+.cmp-table__footnote { max-width: 640px; margin: 20px auto 0; color: var(--ink-soft); font-size: .78rem; line-height: 1.5; text-align: center; }
+@media (max-width: 640px) {
+  .cmp-table__cell--label { width: 128px; padding-right: 4px; font-size: .78rem; }
+  .cmp-table__num { font-size: 1.2rem; }
+  .cmp-icon { width: 26px; height: 26px; }
+}
+
+.hv { position: relative; width: 100%; }
+.hv__img-wrap { position: relative; overflow: hidden; aspect-ratio: 4 / 5; border-radius: 26px; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .55); }
+.hv__img-wrap img,
+.hv__img-wrap video { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; filter: saturate(1.05) contrast(1.02); }
+.hv__img-wrap::after { position: absolute; inset: 0; content: ""; background: linear-gradient(180deg, rgba(5, 15, 35, 0) 55%, rgba(5, 15, 35, .55) 100%); }
+.hv__chips { position: absolute; z-index: 2; top: 22px; left: -18px; display: flex; flex-direction: column; gap: 10px; }
+.hv__chip { display: flex; align-items: center; gap: 8px; padding: 9px 16px 9px 10px; border-radius: 999px; background: rgba(255, 255, 255, .96); color: var(--prussian-blue); box-shadow: 0 14px 30px -12px rgba(10, 21, 41, .45); font-family: var(--font-display); font-size: .8rem; font-weight: 600; white-space: nowrap; backdrop-filter: blur(10px); }
+.hv__chip-check { display: inline-flex; flex: none; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 6px; background: var(--ocean-twilight); color: #fff; }
+.hv__chip-check svg { width: 12px; height: 12px; }
+.hv__chip:nth-child(2) .hv__chip-check { background: var(--prussian-blue); }
+.hv__stat { position: absolute; z-index: 2; top: -18px; right: -10px; padding: 16px 20px; border-radius: 18px; background: rgba(255, 255, 255, .94); box-shadow: 0 20px 44px -16px rgba(10, 21, 41, .5); text-align: right; backdrop-filter: blur(10px); }
+.hv__stat-label { color: var(--ink-soft); font-family: var(--font-display); font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.hv__stat-num { margin-top: 6px; color: var(--prussian-blue); font-family: var(--font-display); font-size: 2.1rem; font-weight: 800; line-height: 1; letter-spacing: -.02em; }
+.hv__stat-num span { color: var(--ocean-twilight); }
+.hv__stat-sub { max-width: 12ch; margin-top: 4px; margin-left: auto; color: var(--ink-soft); font-size: .78rem; }
+.hv__card { position: absolute; z-index: 2; bottom: -26px; left: 50%; display: flex; align-items: center; gap: 12px; width: min(300px, 90%); padding: 12px 14px; transform: translateX(-50%); border-radius: 16px; background: rgba(255, 255, 255, .96); box-shadow: 0 24px 50px -18px rgba(10, 21, 41, .5); backdrop-filter: blur(10px); }
+.hv__card-icon { display: grid; flex: none; width: 38px; height: 38px; place-items: center; border-radius: 10px; background: var(--prussian-blue); color: var(--chartreuse); }
+.hv__card-icon i { display: flex; width: 18px; height: 18px; }
+.hv__card-info { flex: 1; min-width: 0; }
+.hv__card-name { overflow: hidden; color: var(--prussian-blue); font-family: var(--font-display); font-size: .86rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.hv__card-rating { margin-top: 1px; color: var(--ink-soft); font-size: .74rem; }
+.hv__card-badge { flex: none; padding: 5px 9px; border-radius: 999px; background: var(--chartreuse); color: var(--prussian-blue); font-family: var(--font-display); font-size: .62rem; font-weight: 700; letter-spacing: .02em; white-space: nowrap; }
+.hero--industry .hv { width: 420px; margin: 0 auto; }
+@media (max-width: 980px) { .hero--industry .hv { width: 100%; max-width: 420px; } }
+@media (max-width: 640px) {
+  .hero--industry .hero__visual { padding: 0 32px; }
+  .hero--industry .hv { max-width: 300px; }
+  .hv__chips { top: 16px; left: -10px; }
+  .hv__chip { padding: 7px 12px 7px 8px; font-size: .7rem; }
+  .hv__stat { top: -14px; right: -10px; padding: 12px 14px; }
+  .hv__stat-num { font-size: 1.5rem; }
+  .hv__card { bottom: -20px; padding: 10px 12px; }
+  .hv__card-icon { width: 32px; height: 32px; }
+}
+
+.services-roof--compact { min-height: 620px; }
+.services-roof--compact .services-roof__inner { padding: 60px 0; }
+.case-studies .cs__card.is-active,
+.case-studies .cs__metrics-panel.is-active { opacity: 1; }
+
+/* The active WordPress theme keeps its navigation fixed above plugin pages.
+   Reserve room within each hero so the background stays seamless while the
+   breadcrumb and opening content never sit underneath that navigation. */
+#content > main#top > .hero--case-study .hero__inner { padding-top: 112px; }
+#content > .csp-hub-hero { padding-top: 128px; }
+
+/* Service pages use a dedicated hero rather than the shared .hero component. */
+body.rip-service-page main#top.rip-service-content > .svc-hero { padding-top: 112px; }
+
+@media (max-width: 640px) {
+  /* The mobile theme bar is 89px tall. Keep the existing 18px case-study
+     inner spacing, and add clearance on the hero itself instead. */
+  #content > main#top > .hero--case-study { padding-top: 90px; }
+  #content > .csp-hub-hero { padding-top: 108px; }
+
+  body.rip-service-page main#top.rip-service-content > .svc-hero { padding-top: 90px; }
+
+  /* Home and industry pages use the shared hero component. */
+  #content > main#top > .hero:not(.hero--case-study) .hero__inner {
+    padding-top: 108px;
+  }
+}

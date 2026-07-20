@@ -1,0 +1,89 @@
+{
+  "key": "group_rip_service_page",
+  "title": "Service Page Details",
+  "fields": [
+    {"key":"field_rip_svc_tab_identity","label":"Service identity & hero","type":"tab"},
+    {"key":"field_rip_svc_name","label":"Service name","name":"service_name","type":"text","required":1,"instructions":"Short public name, e.g. Local SEO."},
+    {"key":"field_rip_svc_family","label":"Service family","name":"service_family","type":"select","choices":{"seo":"SEO","paid":"Paid media","consulting":"Consulting","cro":"Conversion optimization"},"default_value":"seo"},
+    {"key":"field_rip_svc_market","label":"Primary market","name":"primary_market","type":"text","default_value":"Dallas–Fort Worth, Texas"},
+    {"key":"field_rip_svc_hero_eyebrow","label":"Hero eyebrow","name":"hero_eyebrow","type":"text"},
+    {"key":"field_rip_svc_hero_title","label":"Hero title","name":"hero_title","type":"text","required":1,"instructions":"Use <em> around one accent phrase only."},
+    {"key":"field_rip_svc_hero_summary","label":"Hero summary","name":"hero_summary","type":"textarea","rows":3},
+    {"key":"field_rip_svc_hero_cta","label":"Hero CTA label","name":"hero_cta_label","type":"text","default_value":"Get my free audit"},
+    {"key":"field_rip_svc_hero_proof","label":"Hero proof point","name":"hero_proof","type":"text","instructions":"Verified proof only."},
+    {"key":"field_rip_svc_definition","label":"Short service definition","name":"service_definition","type":"textarea","rows":3},
+    {"key":"field_rip_svc_evidence_type","label":"Evidence object","name":"evidence_type","type":"select","choices":{"map":"Local map workspace","rankings":"Keyword rankings","audit":"Technical audit","backlinks":"Backlink network","campaign":"Paid campaign","funnel":"Conversion funnel","roadmap":"Consulting roadmap"},"default_value":"map","instructions":"Selects the controlled visual treatment for this service family."},
+    {"key":"field_rip_svc_evidence_business","label":"Evidence business label","name":"evidence_business","type":"text","default_value":"Your Business"},
+    {"key":"field_rip_svc_evidence_calls","label":"Evidence metric 1","name":"evidence_calls","type":"text","default_value":"186"},
+    {"key":"field_rip_svc_evidence_directions","label":"Evidence metric 2","name":"evidence_directions","type":"text","default_value":"94"},
+    {"key":"field_rip_svc_evidence_position","label":"Evidence metric 3","name":"evidence_position","type":"text","default_value":"3.2"},
+    {"key":"field_rip_svc_outcomes","label":"Outcome strip","name":"outcomes","type":"repeater","layout":"block","min":3,"max":4,"button_label":"Add outcome","sub_fields":[
+      {"key":"field_rip_svc_outcome_label","label":"Label","name":"label","type":"text","required":1},
+      {"key":"field_rip_svc_outcome_detail","label":"Detail","name":"detail","type":"text"}
+    ]},
+
+    {"key":"field_rip_svc_tab_diagnosis","label":"Diagnosis & deliverables","type":"tab"},
+    {"key":"field_rip_svc_problems","label":"Problems we fix","name":"problems","type":"repeater","layout":"block","min":0,"max":6,"button_label":"Add problem","sub_fields":[
+      {"key":"field_rip_svc_problem_title","label":"Recognizable problem","name":"title","type":"text","required":1},
+      {"key":"field_rip_svc_problem_symptom","label":"Symptom","name":"symptom","type":"textarea","rows":2},
+      {"key":"field_rip_svc_problem_consequence","label":"Business consequence","name":"consequence","type":"textarea","rows":2},
+      {"key":"field_rip_svc_problem_response","label":"What Ranked changes","name":"response","type":"textarea","rows":2},
+      {"key":"field_rip_svc_problem_status","label":"Diagnostic status label","name":"status","type":"text"}
+    ]},
+    {"key":"field_rip_svc_workstream_layout","label":"Workstream display","name":"workstream_layout","type":"select","choices":{"blueprint":"Sticky blueprint","accordion":"Accordion","grid":"Static grid"},"default_value":"blueprint"},
+    {"key":"field_rip_svc_workstreams","label":"Service workstreams","name":"workstreams","type":"repeater","layout":"block","min":1,"max":9,"button_label":"Add workstream","sub_fields":[
+      {"key":"field_rip_svc_ws_title","label":"Title","name":"title","type":"text","required":1},
+      {"key":"field_rip_svc_ws_icon","label":"Lucide icon name","name":"icon","type":"text","default_value":"check"},
+      {"key":"field_rip_svc_ws_description","label":"Activity","name":"description","type":"textarea","rows":2},
+      {"key":"field_rip_svc_ws_deliverable","label":"Client-facing deliverable","name":"deliverable","type":"textarea","rows":2},
+      {"key":"field_rip_svc_ws_outcome","label":"Intended outcome","name":"outcome","type":"textarea","rows":2},
+      {"key":"field_rip_svc_ws_preview","label":"Optional preview asset","name":"preview_asset","type":"image","return_format":"url"}
+    ]},
+
+    {"key":"field_rip_svc_tab_proof","label":"Proof & process","type":"tab"},
+    {"key":"field_rip_svc_proof_mode","label":"Proof mode","name":"proof_mode","type":"select","choices":{"case_study":"Service-specific case study","agency":"Relevant agency-wide proof","hidden":"Hide proof section"},"default_value":"case_study","instructions":"Never publish placeholder or fabricated metrics."},
+    {"key":"field_rip_svc_proof_case","label":"Linked case study","name":"proof_case_study","type":"post_object","post_type":["rip_case_study"],"return_format":"object","multiple":0},
+    {"key":"field_rip_svc_proof_client","label":"Proof client","name":"proof_client","type":"text"},
+    {"key":"field_rip_svc_proof_context","label":"Proof context label","name":"proof_context","type":"text","instructions":"Clearly label agency-wide proof when it is not service-specific."},
+    {"key":"field_rip_svc_proof_problem","label":"Client problem","name":"proof_problem","type":"textarea","rows":3},
+    {"key":"field_rip_svc_proof_change","label":"What changed","name":"proof_change","type":"textarea","rows":3},
+    {"key":"field_rip_svc_proof_metric","label":"Primary metric","name":"proof_metric","type":"text"},
+    {"key":"field_rip_svc_proof_metric_label","label":"Primary metric label","name":"proof_metric_label","type":"text"},
+    {"key":"field_rip_svc_proof_support1","label":"Supporting result 1","name":"proof_support_1","type":"text"},
+    {"key":"field_rip_svc_proof_support2","label":"Supporting result 2","name":"proof_support_2","type":"text"},
+    {"key":"field_rip_svc_phases","label":"Engagement phases","name":"phases","type":"repeater","layout":"block","min":1,"max":6,"button_label":"Add phase","sub_fields":[
+      {"key":"field_rip_svc_phase_time","label":"Timeframe","name":"timeframe","type":"text"},
+      {"key":"field_rip_svc_phase_title","label":"Phase title","name":"title","type":"text","required":1},
+      {"key":"field_rip_svc_phase_actions","label":"What Ranked does","name":"actions","type":"textarea","rows":2},
+      {"key":"field_rip_svc_phase_input","label":"What the client provides","name":"client_input","type":"textarea","rows":2},
+      {"key":"field_rip_svc_phase_output","label":"What the client receives","name":"output","type":"textarea","rows":2},
+      {"key":"field_rip_svc_phase_signal","label":"Earliest sensible success signal","name":"signal","type":"textarea","rows":2}
+    ]},
+
+    {"key":"field_rip_svc_tab_fit","label":"Fit, FAQ & conversion","type":"tab"},
+    {"key":"field_rip_svc_fit","label":"Strong fit criteria","name":"fit_items","type":"repeater","layout":"table","max":6,"button_label":"Add criterion","sub_fields":[{"key":"field_rip_svc_fit_text","label":"Criterion","name":"text","type":"text"}]},
+    {"key":"field_rip_svc_not_fit","label":"Not a fit criteria","name":"not_fit_items","type":"repeater","layout":"table","max":6,"button_label":"Add criterion","sub_fields":[{"key":"field_rip_svc_not_fit_text","label":"Criterion","name":"text","type":"text"}]},
+    {"key":"field_rip_svc_faqs","label":"Purchase-decision FAQs","name":"faqs","type":"repeater","layout":"block","min":0,"max":10,"button_label":"Add FAQ","sub_fields":[
+      {"key":"field_rip_svc_faq_q","label":"Question","name":"question","type":"text","required":1},
+      {"key":"field_rip_svc_faq_a","label":"Answer","name":"answer","type":"textarea","rows":4,"required":1}
+    ]},
+    {"key":"field_rip_svc_guide","label":"Optional long-form service guide","name":"service_guide","type":"wysiwyg","toolbar":"basic","media_upload":0,"instructions":"Appears after the primary sales journey. Leave blank to hide."},
+    {"key":"field_rip_svc_final_title","label":"Final CTA title","name":"final_cta_title","type":"text","instructions":"Use <em> for one accent phrase."},
+    {"key":"field_rip_svc_final_summary","label":"Final CTA summary","name":"final_cta_summary","type":"text"},
+    {"key":"field_rip_svc_final_label","label":"Final CTA button","name":"final_cta_label","type":"text"},
+
+    {"key":"field_rip_svc_tab_seo","label":"SEO metadata","type":"tab"},
+    {"key":"field_rip_svc_seo_title","label":"Fallback SEO title (Yoast takes priority)","name":"seo_title","type":"text"},
+    {"key":"field_rip_svc_seo_description","label":"Fallback meta description (Yoast takes priority)","name":"seo_description","type":"textarea","rows":2}
+  ],
+  "location": [[{"param":"post_type","operator":"==","value":"rip_service"}]],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "description": "Controlled, reusable Search Command Center fields for every Ranked International service page.",
+  "show_in_rest": 0,
+  "modified": 1784188800
+}
