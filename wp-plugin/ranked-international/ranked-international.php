@@ -66,7 +66,6 @@ add_action( 'admin_notices', function () {
 function rip_templates() {
 	return array(
 		'templates/template-home.php'            => 'Ranked Intl: Home',
-		'templates/template-city.php'            => 'Ranked Intl: City Page',
 		'templates/template-case-studies-hub.php' => 'Ranked Intl: Case Studies (Hub)',
 		'templates/template-turf-tree-service.php' => 'Ranked Intl: Turf & Tree Service',
 	);
@@ -78,7 +77,7 @@ function rip_templates() {
  * fallback; City Page requests receive their ACF value when one is present.
  */
 function rip_home_copy( $field, $neutral_fallback ) {
-	$is_city_page = is_page() && get_page_template_slug() === 'templates/template-city.php';
+	$is_city_page = is_singular( 'rip_city' );
 	if ( ! $is_city_page || ! function_exists( 'get_field' ) ) {
 		return $neutral_fallback;
 	}
@@ -99,6 +98,9 @@ function rip_add_page_templates( $templates ) {
  */
 add_filter( 'template_include', 'rip_load_page_template' );
 function rip_load_page_template( $template ) {
+	if ( is_singular( 'rip_city' ) ) {
+		return RIP_DIR . 'templates/template-city.php';
+	}
 	if ( is_singular( 'rip_industry' ) ) {
 		return RIP_DIR . 'templates/template-industry-page.php';
 	}
@@ -125,7 +127,7 @@ function rip_load_page_template( $template ) {
  * Case Study post.
  */
 function rip_is_our_template() {
-	if ( is_singular( array( 'rip_industry', 'rip_case_study', 'rip_service' ) ) ) return true;
+	if ( is_singular( array( 'rip_city', 'rip_industry', 'rip_case_study', 'rip_service' ) ) ) return true;
 	if ( ! is_page() ) return false;
 	$slug = get_page_template_slug();
 	return $slug && array_key_exists( $slug, rip_templates() );

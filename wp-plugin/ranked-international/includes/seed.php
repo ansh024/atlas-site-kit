@@ -103,18 +103,21 @@ function rip_seed_city_content() {
 	if ( get_option( 'rip_city_content_seeded' ) ) return;
 	if ( ! function_exists( 'update_field' ) || ! function_exists( 'acf_get_field' ) || ! acf_get_field( 'field_rip_city_name' ) ) return;
 
-	$existing = get_page_by_path( 'dallas', OBJECT, 'page' );
+	$existing = get_page_by_path( 'dallas', OBJECT, 'rip_city' );
 	// Never repurpose or overwrite a page that the client already owns.
 	if ( $existing ) {
 		update_option( 'rip_city_content_seeded', true );
 		return;
 	}
+	if ( get_page_by_path( 'dallas', OBJECT, 'page' ) ) {
+		update_option( 'rip_city_content_seeded', true );
+		return;
+	}
 	$post_id = wp_insert_post( array(
-		'post_type'   => 'page',
+		'post_type'   => 'rip_city',
 		'post_status' => 'draft',
 		'post_title'  => 'Dallas SEO Agency',
 		'post_name'   => 'dallas',
-		'meta_input'  => array( '_wp_page_template' => 'templates/template-city.php' ),
 	) );
 	if ( is_wp_error( $post_id ) || ! $post_id ) return;
 
