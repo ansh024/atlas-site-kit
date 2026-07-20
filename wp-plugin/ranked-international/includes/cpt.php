@@ -1,8 +1,7 @@
 <?php
 /**
- * Custom Post Types for the two client-replicable page types:
- * Industry Pages (e.g. /construction/, /roofing/) and Case Studies
- * (e.g. /case-studies/alexis-delivery-service/).
+ * Custom Post Types for client-replicable City, Industry, Service, and Case
+ * Study pages.
  *
  * Each is driven by an ACF field group (see acf-json/) so duplicating a page
  * is just: Add New -> fill in the fields -> Publish. No code required.
@@ -84,7 +83,70 @@ function rip_register_post_types() {
 }
 
 /**
- * Give Industry Page posts clean top-level permalinks (/construction/).
+ * Duplicate a City Page and all of its ACF/SEO metadata into a new draft.
+ * This is plugin-owned because generic duplicate-page plugins do not
+ * consistently support custom post types.
+ */
+function rip_duplicate_city_post( $source_id ) {
+	$source = get_post( $source_id );
+	if ( ! $source || $source->post_type !== 'rip_city' ) {
+		return new WP_Error( 'rip_invalid_city', 'The source City Page could not be found.' );
+	}
+
+	$new_id = wp_insert_post( array(
+		'post_type'      => 'rip_city',
+		'post_status'    => 'draft',
+		'post_title'     => $source->post_title . ' Copy',
+		'post_content'   => $source->post_content,
+		'post_excerpt'   => $source->post_excerpt,
+		'post_author'    => get_current_user_id(),
+		'post_parent'    => $source->post_parent,
+		'menu_order'     => $source->menu_order,
+		'comment_status' => $source->comment_status,
+		'ping_status'    => $source->ping_status,
+	), true );
+	if ( is_wp_error( $new_id ) ) return $new_id;
+
+	$skip_meta = array( '_edit_lock', '_edit_last', '_wp_old_slug' );
+	foreach ( get_post_meta( $source_id ) as $key => $values ) {
+		if ( in_array( $key, $skip_meta, true ) ) continue;
+		foreach ( $values as $value ) {
+			add_post_meta( $new_id, $key, maybe_unserialize( $value ) );
+		}
+	}
+
+	return $new_id;
+}
+
+add_filter( 'post_row_actions', 'rip_city_duplicate_row_action', 10, 2 );
+function rip_city_duplicate_row_action( $actions, $post ) {
+	if ( $post->post_type !== 'rip_city' || ! current_user_can( 'edit_post', $post->ID ) ) return $actions;
+	$url = wp_nonce_url(
+		admin_url( 'admin.php?action=rip_duplicate_city&post=' . $post->ID ),
+		'rip_duplicate_city_' . $post->ID
+	);
+	$actions['rip_duplicate_city'] = '<a href="' . esc_url( $url ) . '">Duplicate City Page</a>';
+	return $actions;
+}
+
+add_action( 'admin_action_rip_duplicate_city', 'rip_handle_duplicate_city' );
+function rip_handle_duplicate_city() {
+	$source_id = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : 0;
+	if ( ! $source_id || ! current_user_can( 'edit_post', $source_id ) ) {
+		wp_die( esc_html__( 'You are not allowed to duplicate this City Page.', 'ranked-international' ) );
+	}
+	check_admin_referer( 'rip_duplicate_city_' . $source_id );
+
+	$new_id = rip_duplicate_city_post( $source_id );
+	if ( is_wp_error( $new_id ) ) {
+		wp_die( esc_html( $new_id->get_error_message() ) );
+	}
+	wp_safe_redirect( admin_url( 'post.php?action=edit&post=' . $new_id ) );
+	exit;
+}
+
+/**
+ * Give City, Industry, and Service posts clean top-level permalinks.
  */
 add_filter( 'post_type_link', 'rip_industry_permalink', 10, 2 );
 function rip_industry_permalink( $permalink, $post ) {
@@ -95,9 +157,9 @@ function rip_industry_permalink( $permalink, $post ) {
 }
 
 /**
- * Resolve top-level URLs to Industry Page posts — but only as a FALLBACK.
+ * Resolve top-level URLs to City, Industry, or Service posts as a fallback.
  * WordPress first tries to match a Page; only when no Page (or post) exists
- * at that path do we look for a published rip_industry post with that slug.
+ * at that path do we look for one of our published landing posts.
  * This guarantees activating the plugin can never hijack or 404 any URL the
  * site already serves.
  */
@@ -138,9 +200,8 @@ function rip_industry_url_fallback( $query ) {
 }
 
 /**
- * Point ACF at this plugin's bundled field group JSON so the "Industry Page
- * Details" / "Case Study Details" field groups appear automatically once ACF
- * is installed — no manual field setup needed.
+ * Point ACF at the bundled field-group JSON so all reusable page editors
+ * appear automatically once ACF is installed.
  */
 add_filter( 'acf/settings/load_json', 'rip_acf_json_load_point' );
 function rip_acf_json_load_point( $paths ) {
@@ -184,6 +245,12 @@ function rip_migrate_legacy_city_page() {
 	if ( get_option( 'rip_city_cpt_migrated' ) ) return;
 	$page = get_page_by_path( 'dallas', OBJECT, 'page' );
 	if ( ! $page || get_page_template_slug( $page->ID ) !== 'templates/template-city.php' ) {
+		update_option( 'rip_city_cpt_migrated', true );
+		return;
+	}
+	// A separately created City Page wins. Never create duplicate landing
+	// records with the same public slug during a recovery or partial rollout.
+	if ( get_page_by_path( 'dallas', OBJECT, 'rip_city' ) ) {
 		update_option( 'rip_city_cpt_migrated', true );
 		return;
 	}
@@ -246,5 +313,5 @@ function rip_maybe_reseed() {
 add_action( 'admin_notices', 'rip_maybe_notice_acf_missing' );
 function rip_maybe_notice_acf_missing() {
 	if ( function_exists( 'get_field' ) ) return;
-	echo '<div class="notice notice-warning"><p><strong>Ranked International Pages:</strong> this plugin needs Advanced Custom Fields (free) to show the Industry Page / Case Study field editors. <a href="' . esc_url( admin_url( 'plugin-install.php?s=advanced+custom+fields&tab=search&type=term' ) ) . '">Install it here</a>.</p></div>';
+	echo '<div class="notice notice-warning"><p><strong>Ranked International Pages:</strong> this plugin needs Advanced Custom Fields to show the City, Industry, Service, and Case Study field editors. <a href="' . esc_url( admin_url( 'plugin-install.php?s=advanced+custom+fields&tab=search&type=term' ) ) . '">Install it here</a>.</p></div>';
 }

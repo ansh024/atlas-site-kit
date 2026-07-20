@@ -43,4 +43,29 @@ ACF_SLUG="$("$WP_ENV_BIN" run cli wp plugin list --status=active --field=name | 
 [[ -n "$ACF_SLUG" ]] || { echo "Advanced Custom Fields is not active." >&2; exit 1; }
 "$WP_ENV_BIN" run cli wp eval 'if (get_post_type_object("rip_service") === null) { exit(1); }'
 
-echo "Smoke tests passed: routing, plugin activation, single H1/title/canonical, schema, and legacy-content guard."
+# City Pages must remain a first-class reusable content type with their ACF
+# editor, top-level routing, and Dallas seed. Publish only inside this
+# disposable environment so the public template can be exercised.
+"$WP_ENV_BIN" run cli wp eval '
+$city = get_page_by_path("dallas", OBJECT, "rip_city");
+if (!$city || get_post_meta($city->ID, "hero_eyebrow", true) !== "DALLAS SEO AGENCY") { exit(1); }
+$groups = acf_get_field_groups(array("post_type" => "rip_city"));
+if (!in_array("group_rip_city_page", wp_list_pluck($groups, "key"), true)) { exit(1); }
+wp_update_post(array("ID" => $city->ID, "post_status" => "publish"));
+'
+CITY_STATUS="$(curl --silent --output /tmp/ranked-city.html --write-out '%{http_code}' "$WP_LOCAL_URL/dallas/")"
+[[ "$CITY_STATUS" == "200" ]] || { echo "Expected HTTP 200 for the Dallas City Page, got $CITY_STATUS" >&2; exit 1; }
+grep -Fq 'DALLAS SEO AGENCY' /tmp/ranked-city.html || { echo "Missing: Dallas City Page ACF hero" >&2; exit 1; }
+grep -Fq 'Results Dallas businesses' /tmp/ranked-city.html || { echo "Missing: Dallas City Page localized results heading" >&2; exit 1; }
+"$WP_ENV_BIN" run cli wp eval '
+$source = get_page_by_path("dallas", OBJECT, "rip_city");
+$copy_id = rip_duplicate_city_post($source->ID);
+if (is_wp_error($copy_id)) { exit(1); }
+$copy = get_post($copy_id);
+if ($copy->post_type !== "rip_city" || $copy->post_status !== "draft") { exit(1); }
+if (get_post_meta($copy_id, "hero_eyebrow", true) !== "DALLAS SEO AGENCY") { exit(1); }
+if (get_post_meta($copy_id, "_hero_eyebrow", true) !== "field_rip_city_hero_eyebrow") { exit(1); }
+wp_delete_post($copy_id, true);
+'
+
+echo "Smoke tests passed: routing, plugin activation, reusable City Page/ACF, single H1/title/canonical, schema, and legacy-content guard."
