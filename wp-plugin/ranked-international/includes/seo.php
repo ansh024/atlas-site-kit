@@ -2,6 +2,57 @@
 /** Yoast is the sole SEO renderer; ACF values are fallback inputs only. */
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+function rip_is_neutral_homepage() {
+	return is_page() && get_page_template_slug() === 'templates/template-home.php';
+}
+
+function rip_neutral_home_seo_title( $title = '' ) {
+	return rip_is_neutral_homepage() ? 'SEO Agency for Growing Businesses | Ranked International' : $title;
+}
+
+function rip_neutral_home_seo_description( $description = '' ) {
+	return rip_is_neutral_homepage()
+		? 'SEO, local search, and paid media strategies that help growing businesses reach page one and turn search traffic into booked jobs.'
+		: $description;
+}
+
+add_filter( 'pre_get_document_title', 'rip_neutral_home_seo_title', 100 );
+add_filter( 'wpseo_title', 'rip_neutral_home_seo_title', 100 );
+add_filter( 'wpseo_opengraph_title', 'rip_neutral_home_seo_title', 100 );
+add_filter( 'wpseo_twitter_title', 'rip_neutral_home_seo_title', 100 );
+add_filter( 'wpseo_metadesc', 'rip_neutral_home_seo_description', 100 );
+add_filter( 'wpseo_opengraph_desc', 'rip_neutral_home_seo_description', 100 );
+add_filter( 'wpseo_twitter_description', 'rip_neutral_home_seo_description', 100 );
+
+add_filter( 'wpseo_schema_graph', function ( $graph ) {
+	if ( ! rip_is_neutral_homepage() ) return $graph;
+	foreach ( $graph as &$piece ) {
+		$types = isset( $piece['@type'] ) ? (array) $piece['@type'] : array();
+		if ( in_array( 'WebPage', $types, true ) ) {
+			$piece['name']        = rip_neutral_home_seo_title();
+			$piece['description'] = rip_neutral_home_seo_description();
+		}
+	}
+	unset( $piece );
+	return $graph;
+}, 100 );
+
+add_filter( 'wpseo_schema_graph', function ( $graph ) {
+	if ( ! is_page() || get_page_template_slug() !== 'templates/template-city.php' || ! function_exists( 'get_field' ) ) return $graph;
+	$post_id     = get_queried_object_id();
+	$seo_title   = get_post_meta( $post_id, '_yoast_wpseo_title', true ) === '' ? get_field( 'seo_title', $post_id ) : '';
+	$seo_summary = get_post_meta( $post_id, '_yoast_wpseo_metadesc', true ) === '' ? get_field( 'seo_description', $post_id ) : '';
+	if ( ! $seo_title && ! $seo_summary ) return $graph;
+	foreach ( $graph as &$piece ) {
+		$types = isset( $piece['@type'] ) ? (array) $piece['@type'] : array();
+		if ( ! in_array( 'WebPage', $types, true ) ) continue;
+		if ( $seo_title ) $piece['name'] = wp_strip_all_tags( $seo_title );
+		if ( $seo_summary ) $piece['description'] = wp_strip_all_tags( $seo_summary );
+	}
+	unset( $piece );
+	return $graph;
+}, 90 );
+
 function rip_yoast_fallback_value( $current, $acf_key, $yoast_key ) {
 	if ( ! rip_is_our_template() || ! is_singular() ) return $current;
 	$post_id = get_queried_object_id();

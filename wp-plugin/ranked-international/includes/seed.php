@@ -98,6 +98,67 @@ function rip_seed_service_content() {
 	update_option( 'rip_service_content_seeded', true );
 }
 
+/** Seed a safe draft of the original Dallas homepage as an editable City Page. */
+function rip_seed_city_content() {
+	if ( get_option( 'rip_city_content_seeded' ) ) return;
+	if ( ! function_exists( 'update_field' ) || ! function_exists( 'acf_get_field' ) || ! acf_get_field( 'field_rip_city_name' ) ) return;
+
+	$existing = get_page_by_path( 'dallas', OBJECT, 'page' );
+	// Never repurpose or overwrite a page that the client already owns.
+	if ( $existing ) {
+		update_option( 'rip_city_content_seeded', true );
+		return;
+	}
+	$post_id = wp_insert_post( array(
+		'post_type'   => 'page',
+		'post_status' => 'draft',
+		'post_title'  => 'Dallas SEO Agency',
+		'post_name'   => 'dallas',
+		'meta_input'  => array( '_wp_page_template' => 'templates/template-city.php' ),
+	) );
+	if ( is_wp_error( $post_id ) || ! $post_id ) return;
+
+	$fields = array(
+		'city_name'             => 'Dallas',
+		'hero_eyebrow'          => 'DALLAS SEO AGENCY',
+		'hero_title'            => "Your customers are Googling. You're on page&nbsp;2.",
+		'hero_subtitle'         => 'We move Dallas roofers, HVAC crews, and clinics from buried on page two to the top of Google, then turn those clicks into booked jobs.',
+		'results_heading'       => 'Results Dallas businesses<br>actually talk about.',
+		'industries_heading'    => 'We rank the businesses Dallas searches for.',
+		'reviews_heading'       => 'Dallas businesses trust Ranked to <em>get them found.</em>',
+		'case_study_1_quote'    => '7.5&times; the organic traffic for a Dallas med spa.',
+		'case_study_1_client'   => 'Bella MedSpa & Aesthetics — Dallas, TX',
+		'case_study_2_quote'    => '#1 for Dallas custom cabinets, with 6.7&times; the traffic.',
+		'case_study_2_client'   => 'Reyes Custom Millwork — Dallas, TX',
+		'case_study_3_name'     => 'DFW Flower Wall',
+		'case_study_3_quote'    => 'From zero organic traffic to DFW’s #1 party-rental brand.',
+		'case_study_3_client'   => 'DFW Flower Wall — Dallas, TX',
+		'case_study_4_quote'    => 'From one Dallas photo booth to #1 in 24 cities nationwide.',
+		'case_study_4_client'   => 'Social Pro Photo Booth — Dallas, TX',
+		'case_study_5_quote'    => 'Zero to Domain Authority 55 and #1 in Dallas turf.',
+		'case_study_5_client'   => 'TX Artificial Turf & Design — Dallas-Fort Worth',
+		'case_study_6_client'   => 'Alexis Delivery Service — Dallas-Fort Worth',
+		'metric_2_subtitle'     => 'for “dallas custom cabinets”',
+		'metric_3_subtitle'     => 'across DFW rental categories',
+		'metric_4_subtitle'     => 'across Dallas and 15+ U.S. cities',
+		'metric_6_subtitle'     => 'across the DFW metro',
+		'review_1_context'      => 'Dallas, TX',
+		'review_2_context'      => 'Dallas, TX',
+		'review_2_quote'        => 'We went from barely showing up to ranking at the top for the cabinet searches that matter in Dallas. The reporting is clear, and the growth has held.',
+		'review_3_name'         => 'DFW Flower Wall',
+		'review_3_context'      => 'Dallas, TX',
+		'review_4_context'      => 'Dallas, TX',
+		'review_4_quote'        => 'Ranked understood that we serve markets beyond Dallas and built a strategy around every city and product. Our nationwide visibility is on another level.',
+		'review_5_context'      => 'Dallas-Fort Worth',
+		'review_5_quote'        => 'The results took consistent work, but the authority and rankings kept building. We now show up for the Dallas turf searches we used to miss.',
+		'review_6_context'      => 'Dallas-Fort Worth',
+		'seo_title'             => 'Dallas SEO Agency | Ranked International',
+		'seo_description'       => 'Dallas SEO services for local businesses ready to reach page one, attract qualified customers, and turn search traffic into booked jobs.',
+	);
+	rip_update_fields( $post_id, $fields, 'group_rip_city_page.json' );
+	update_option( 'rip_city_content_seeded', true );
+}
+
 /**
  * ACF's update_field() only works with field NAMES on posts that were
  * previously saved through the ACF UI (the field-key reference must already
