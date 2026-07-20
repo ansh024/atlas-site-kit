@@ -38,7 +38,7 @@ add_filter( 'wpseo_schema_graph', function ( $graph ) {
 }, 100 );
 
 add_filter( 'wpseo_schema_graph', function ( $graph ) {
-	if ( ! is_page() || get_page_template_slug() !== 'templates/template-city.php' || ! function_exists( 'get_field' ) ) return $graph;
+	if ( ! is_singular( 'rip_city' ) || ! function_exists( 'get_field' ) ) return $graph;
 	$post_id     = get_queried_object_id();
 	$seo_title   = get_post_meta( $post_id, '_yoast_wpseo_title', true ) === '' ? get_field( 'seo_title', $post_id ) : '';
 	$seo_summary = get_post_meta( $post_id, '_yoast_wpseo_metadesc', true ) === '' ? get_field( 'seo_description', $post_id ) : '';

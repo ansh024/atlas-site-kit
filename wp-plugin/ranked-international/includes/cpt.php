@@ -12,6 +12,22 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 add_action( 'init', 'rip_register_post_types' );
 function rip_register_post_types() {
+	register_post_type( 'rip_city', array(
+		'label'         => 'City Pages',
+		'labels'        => array(
+			'name'          => 'City Pages',
+			'singular_name' => 'City Page',
+			'add_new_item'  => 'Add New City Page',
+			'edit_item'     => 'Edit City Page',
+		),
+		'public'        => true,
+		'show_in_rest'  => true,
+		'has_archive'   => false,
+		'menu_icon'     => 'dashicons-location-alt',
+		'supports'      => array( 'title' ),
+		'rewrite'       => false,
+	) );
+
 	// Industry Pages live at top-level URLs (/construction/, /hvac/, ...) but
 	// deliberately do NOT register a rewrite rule: a top-level CPT rule would
 	// intercept EVERY top-level URL and 404 the site's existing Pages
@@ -72,7 +88,7 @@ function rip_register_post_types() {
  */
 add_filter( 'post_type_link', 'rip_industry_permalink', 10, 2 );
 function rip_industry_permalink( $permalink, $post ) {
-	if ( in_array( $post->post_type, array( 'rip_industry', 'rip_service' ), true ) && $post->post_status === 'publish' ) {
+	if ( in_array( $post->post_type, array( 'rip_city', 'rip_industry', 'rip_service' ), true ) && $post->post_status === 'publish' ) {
 		return home_url( '/' . $post->post_name . '/' );
 	}
 	return $permalink;
@@ -103,7 +119,7 @@ function rip_industry_url_fallback( $query ) {
 	if ( get_page_by_path( $slug, OBJECT, 'post' ) ) return;  // existing blog post
 
 	$landing = get_posts( array(
-		'post_type'      => array( 'rip_industry', 'rip_service' ),
+		'post_type'      => array( 'rip_city', 'rip_industry', 'rip_service' ),
 		'name'           => $slug,
 		'post_status'    => 'publish',
 		'posts_per_page' => 1,
@@ -159,6 +175,27 @@ add_action( 'init', 'rip_seed_service_content', 21 );
 add_action( 'init', 'rip_seed_city_content', 22 );
 
 /**
+ * One-time migration from the short-lived Page Template implementation.
+ * The strict template check ensures no client-created or unrelated Page can
+ * ever be converted. Post meta and publication status are preserved.
+ */
+add_action( 'init', 'rip_migrate_legacy_city_page', 19 );
+function rip_migrate_legacy_city_page() {
+	if ( get_option( 'rip_city_cpt_migrated' ) ) return;
+	$page = get_page_by_path( 'dallas', OBJECT, 'page' );
+	if ( ! $page || get_page_template_slug( $page->ID ) !== 'templates/template-city.php' ) {
+		update_option( 'rip_city_cpt_migrated', true );
+		return;
+	}
+
+	$result = wp_update_post( array( 'ID' => $page->ID, 'post_type' => 'rip_city' ), true );
+	if ( is_wp_error( $result ) ) return;
+	delete_post_meta( $page->ID, '_wp_page_template' );
+	clean_post_cache( $page->ID );
+	update_option( 'rip_city_cpt_migrated', true );
+}
+
+/**
  * Recovery switch: visiting /wp-admin/?rip_reseed=1 as an administrator
  * deletes the seeded DRAFTS (published or client-renamed posts are left
  * alone) and re-runs the seed. For repairing a site where the seed ran
@@ -171,6 +208,7 @@ function rip_maybe_reseed() {
 	if ( ! current_user_can( 'manage_options' ) ) return;
 
 	$seed_slugs = array(
+		'rip_city'      => array( 'dallas' ),
 		'rip_case_study' => array( 'alexis-delivery-service', 'bella-med-spa', 'dfw-flower-wall', 'reyes-custom-millwork', 'social-pro-photo-booth', 'turf-and-design' ),
 		'rip_industry'   => array( 'construction' ),
 		'rip_service'    => array( 'local-seo-services' ),

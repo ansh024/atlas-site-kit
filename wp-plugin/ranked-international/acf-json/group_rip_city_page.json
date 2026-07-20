@@ -44,14 +44,14 @@
     {"key":"field_rip_city_seo_title","label":"SEO title","name":"seo_title","type":"text"},
     {"key":"field_rip_city_seo_description","label":"SEO description","name":"seo_description","type":"textarea","rows":3}
   ],
-  "location": [[{"param":"page_template","operator":"==","value":"templates/template-city.php"}]],
+  "location": [[{"param":"post_type","operator":"==","value":"rip_city"}]],
   "menu_order": 0,
   "position": "normal",
   "style": "default",
   "label_placement": "top",
   "instruction_placement": "label",
   "active": true,
-  "description": "Editable location copy for pages using Ranked Intl: City Page.",
+  "description": "Editable location copy for reusable City Pages.",
   "show_in_rest": 0,
   "modified": 1784630400
 }
