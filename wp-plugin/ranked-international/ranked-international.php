@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Ranked International Pages
  * Description: Adds the Ranked International marketing pages (home, industry landers, case studies) as selectable Page Templates that work on top of any active theme.
- * Version: 1.0.8
+ * Version: 1.1.0
  * Author: Ranked International
  * Text Domain: ranked-international
  * GitHub Plugin URI: ansh024/atlas-site-kit
@@ -11,7 +11,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'RIP_VERSION', '1.0.8' );
+define( 'RIP_VERSION', '1.1.0' );
 define( 'RIP_DIR', plugin_dir_path( __FILE__ ) );
 define( 'RIP_URL', plugin_dir_url( __FILE__ ) );
 
@@ -66,9 +66,24 @@ add_action( 'admin_notices', function () {
 function rip_templates() {
 	return array(
 		'templates/template-home.php'            => 'Ranked Intl: Home',
+		'templates/template-city.php'            => 'Ranked Intl: City Page',
 		'templates/template-case-studies-hub.php' => 'Ranked Intl: Case Studies (Hub)',
 		'templates/template-turf-tree-service.php' => 'Ranked Intl: Turf & Tree Service',
 	);
+}
+
+/**
+ * Return editable city-page copy while keeping the shared home layout as the
+ * single source of truth. Home requests always receive the location-neutral
+ * fallback; City Page requests receive their ACF value when one is present.
+ */
+function rip_home_copy( $field, $neutral_fallback ) {
+	$is_city_page = is_page() && get_page_template_slug() === 'templates/template-city.php';
+	if ( ! $is_city_page || ! function_exists( 'get_field' ) ) {
+		return $neutral_fallback;
+	}
+	$value = get_field( $field, get_queried_object_id() );
+	return $value !== null && $value !== '' ? $value : $neutral_fallback;
 }
 
 /**

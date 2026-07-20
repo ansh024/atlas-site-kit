@@ -12,13 +12,12 @@
       <div class="hero__copy">
         <div class="hero__card">
           <div class="hero__text-block">
-            <p class="hero__eyebrow">DALLAS SEO AGENCY</p>
+            <p class="hero__eyebrow"><?php echo wp_kses_post( rip_home_copy( 'hero_eyebrow', 'SEO AGENCY FOR GROWING BUSINESSES' ) ); ?></p>
             <h1 class="hero__title">
-              Your customers are Googling. You're on page&nbsp;2.
+              <?php echo wp_kses_post( rip_home_copy( 'hero_title', "Your customers are Googling. You're on page&nbsp;2." ) ); ?>
             </h1>
             <p class="hero__sub">
-              We move Dallas roofers, HVAC crews, and clinics from buried on page two
-              to the top of Google, then turn those clicks into booked jobs.
+              <?php echo wp_kses_post( rip_home_copy( 'hero_subtitle', 'We move service businesses from buried on page two to the top of Google, then turn those clicks into booked jobs.' ) ); ?>
             </p>
           </div>
           <div class="hero__bottom">
@@ -169,7 +168,7 @@
       <div class="cs__header">
         <div class="cs__header-left">
           <p class="eyebrow"><span class="dot"></span>Client results</p>
-          <h2 class="cs__title">Results Dallas businesses<br>actually talk about.</h2>
+          <h2 class="cs__title"><?php echo wp_kses_post( rip_home_copy( 'results_heading', 'Results business owners<br>actually talk about.' ) ); ?></h2>
         </div>
         <a href="/case-studies/" class="cs__see-all">&#9658;&nbsp;See all results</a>
       </div>
@@ -178,41 +177,41 @@
           <div class="cs__stage">
             <article class="cs__card" data-cs-idx="0">
               <span class="cs__card-kicker">01 &mdash; Bella Med Spa</span>
-              <blockquote class="cs__quote">7.5&times; the organic traffic for a Dallas med spa.</blockquote>
+              <blockquote class="cs__quote"><?php echo wp_kses_post( rip_home_copy( 'case_study_1_quote', '7.5&times; the organic traffic for a growing med spa.' ) ); ?></blockquote>
               <footer class="cs__card-foot">
-                <p class="cs__client">Bella MedSpa &amp; Aesthetics &mdash; Dallas, TX</p>
+                <p class="cs__client"><?php echo esc_html( rip_home_copy( 'case_study_1_client', 'Bella MedSpa & Aesthetics' ) ); ?></p>
                 <a href="/case-studies/bella-med-spa/" class="cs__cta-link">&#9658;&nbsp;Read case study</a>
               </footer>
             </article>
             <article class="cs__card" data-cs-idx="1">
               <span class="cs__card-kicker">02 &mdash; Reyes Custom Millwork</span>
-              <blockquote class="cs__quote">#1 for Dallas custom cabinets, with 6.7&times; the traffic.</blockquote>
+              <blockquote class="cs__quote"><?php echo wp_kses_post( rip_home_copy( 'case_study_2_quote', '#1 for high-intent custom cabinet searches, with 6.7&times; the traffic.' ) ); ?></blockquote>
               <footer class="cs__card-foot">
-                <p class="cs__client">Reyes Custom Millwork &mdash; Dallas, TX</p>
+                <p class="cs__client"><?php echo esc_html( rip_home_copy( 'case_study_2_client', 'Reyes Custom Millwork' ) ); ?></p>
                 <a href="/case-studies/reyes-custom-millwork/" class="cs__cta-link">&#9658;&nbsp;Read case study</a>
               </footer>
             </article>
             <article class="cs__card" data-cs-idx="2">
-              <span class="cs__card-kicker">03 &mdash; DFW Flower Wall</span>
-              <blockquote class="cs__quote">From zero organic traffic to DFW&rsquo;s #1 party-rental brand.</blockquote>
+              <span class="cs__card-kicker">03 &mdash; <?php echo esc_html( rip_home_copy( 'case_study_3_name', 'Flower Wall Rental Brand' ) ); ?></span>
+              <blockquote class="cs__quote"><?php echo wp_kses_post( rip_home_copy( 'case_study_3_quote', 'From zero organic traffic to a leading party-rental brand.' ) ); ?></blockquote>
               <footer class="cs__card-foot">
-                <p class="cs__client">DFW Flower Wall &mdash; Dallas, TX</p>
+                <p class="cs__client"><?php echo esc_html( rip_home_copy( 'case_study_3_client', 'Flower Wall Rental Brand' ) ); ?></p>
                 <a href="/case-studies/dfw-flower-wall/" class="cs__cta-link">&#9658;&nbsp;Read case study</a>
               </footer>
             </article>
             <article class="cs__card" data-cs-idx="3">
               <span class="cs__card-kicker">04 &mdash; Social Pro Photo Booth</span>
-              <blockquote class="cs__quote">From one Dallas photo booth to #1 in 24 cities nationwide.</blockquote>
+              <blockquote class="cs__quote"><?php echo wp_kses_post( rip_home_copy( 'case_study_4_quote', 'From one local photo booth to #1 in 24 cities nationwide.' ) ); ?></blockquote>
               <footer class="cs__card-foot">
-                <p class="cs__client">Social Pro Photo Booth &mdash; Dallas, TX</p>
+                <p class="cs__client"><?php echo esc_html( rip_home_copy( 'case_study_4_client', 'Social Pro Photo Booth' ) ); ?></p>
                 <a href="/case-studies/social-pro-photo-booth/" class="cs__cta-link">&#9658;&nbsp;Read case study</a>
               </footer>
             </article>
             <article class="cs__card" data-cs-idx="4">
               <span class="cs__card-kicker">05 &mdash; TX Artificial Turf &amp; Design</span>
-              <blockquote class="cs__quote">Zero to Domain Authority 55 and #1 in Dallas turf.</blockquote>
+              <blockquote class="cs__quote"><?php echo wp_kses_post( rip_home_copy( 'case_study_5_quote', 'Zero to Domain Authority 55 and five #1 Google rankings.' ) ); ?></blockquote>
               <footer class="cs__card-foot">
-                <p class="cs__client">TX Artificial Turf &amp; Design &mdash; Dallas-Fort Worth</p>
+                <p class="cs__client"><?php echo esc_html( rip_home_copy( 'case_study_5_client', 'TX Artificial Turf & Design' ) ); ?></p>
                 <a href="/case-studies/turf-and-design/" class="cs__cta-link">&#9658;&nbsp;Read case study</a>
               </footer>
             </article>
@@ -220,7 +219,7 @@
               <span class="cs__card-kicker">06 &mdash; Alexis Delivery Service</span>
               <blockquote class="cs__quote">Building a 25-city moving footprint, one page at a time.</blockquote>
               <footer class="cs__card-foot">
-                <p class="cs__client">Alexis Delivery Service &mdash; Dallas-Fort Worth</p>
+                <p class="cs__client"><?php echo esc_html( rip_home_copy( 'case_study_6_client', 'Alexis Delivery Service' ) ); ?></p>
                 <a href="/case-studies/alexis-delivery-service/" class="cs__cta-link">&#9658;&nbsp;Read case study</a>
               </footer>
             </article>
@@ -264,7 +263,7 @@
             <div class="cs__metric-block">
               <p class="cs__metric-label">Search position</p>
               <p class="cs__metric-num">#1</p>
-              <p class="cs__metric-sub">for &ldquo;dallas custom cabinets&rdquo;</p>
+              <p class="cs__metric-sub"><?php echo wp_kses_post( rip_home_copy( 'metric_2_subtitle', 'for a high-intent custom cabinet search' ) ); ?></p>
             </div>
           </div>
           <div class="cs__metrics-panel" data-cs-metrics="2">
@@ -276,7 +275,7 @@
             <div class="cs__metric-block">
               <p class="cs__metric-label">#1 rankings</p>
               <p class="cs__metric-num">20</p>
-              <p class="cs__metric-sub">across DFW rental categories</p>
+              <p class="cs__metric-sub"><?php echo esc_html( rip_home_copy( 'metric_3_subtitle', 'across competitive rental categories' ) ); ?></p>
             </div>
           </div>
           <div class="cs__metrics-panel" data-cs-metrics="3">
@@ -288,7 +287,7 @@
             <div class="cs__metric-block">
               <p class="cs__metric-label">#1 rankings</p>
               <p class="cs__metric-num">24</p>
-              <p class="cs__metric-sub">across Dallas and 15+ U.S. cities</p>
+              <p class="cs__metric-sub"><?php echo esc_html( rip_home_copy( 'metric_4_subtitle', 'across 15+ U.S. cities' ) ); ?></p>
             </div>
           </div>
           <div class="cs__metrics-panel" data-cs-metrics="4">
@@ -307,7 +306,7 @@
             <div class="cs__metric-block">
               <p class="cs__metric-label">City pages live</p>
               <p class="cs__metric-num">25<span>+</span></p>
-              <p class="cs__metric-sub">across the DFW metro</p>
+              <p class="cs__metric-sub"><?php echo esc_html( rip_home_copy( 'metric_6_subtitle', 'across a major metro area' ) ); ?></p>
             </div>
             <div class="cs__metric-block">
               <p class="cs__metric-label">Best ranking</p>
@@ -324,7 +323,7 @@
   <section class="industries" id="industries">
     <div class="section-head">
       <p class="eyebrow eyebrow--light"><span class="dot"></span>Built for your trade</p>
-      <h2 class="section-title section-title--light">We rank the businesses Dallas searches for.</h2>
+      <h2 class="section-title section-title--light"><?php echo wp_kses_post( rip_home_copy( 'industries_heading', 'We rank the businesses customers search for.' ) ); ?></h2>
     </div>
     <div class="marquee" id="marquee">
       <div class="marquee__row" data-dir="1"></div>
@@ -336,17 +335,17 @@
     <div class="google-reviews__inner">
       <header class="google-reviews__head">
         <div class="google-reviews__rating"><span class="google-reviews__g" aria-hidden="true">G</span><span>5 Star Rated on Google</span><span class="google-reviews__stars" aria-label="Five stars">★★★★★</span></div>
-        <h2 id="reviews-title">Dallas businesses trust Ranked to <em>get them found.</em></h2>
+        <h2 id="reviews-title"><?php echo wp_kses_post( rip_home_copy( 'reviews_heading', 'Businesses trust Ranked to <em>get them found.</em>' ) ); ?></h2>
         <p>Search growth is only useful when it brings the right customers through the door.</p>
       </header>
       <div class="google-reviews__viewport" data-review-viewport tabindex="0" aria-label="Client reviews">
         <div class="google-reviews__grid" data-review-grid>
-          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">BM</span><div><h3>Bella MedSpa &amp; Aesthetics</h3><p>Dallas, TX</p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“Organic search has become a dependable way for the right patients to find us. We can finally see which pages and searches are moving the business.”</blockquote><a href="/case-studies/bella-med-spa/">View case study <span aria-hidden="true">→</span></a></article>
-          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">RM</span><div><h3>Reyes Custom Millwork</h3><p>Dallas, TX</p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“We went from barely showing up to ranking at the top for the cabinet searches that matter in Dallas. The reporting is clear, and the growth has held.”</blockquote><a href="/case-studies/reyes-custom-millwork/">View case study <span aria-hidden="true">→</span></a></article>
-          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">DF</span><div><h3>DFW Flower Wall</h3><p>Dallas, TX</p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“They built out every rental category properly and gave us visibility we never had before. Customers now find us for far more than just flower walls.”</blockquote><a href="/case-studies/dfw-flower-wall/">View case study <span aria-hidden="true">→</span></a></article>
-          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">SP</span><div><h3>Social Pro Photo Booth</h3><p>Dallas, TX</p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“Ranked understood that we serve markets beyond Dallas and built a strategy around every city and product. Our nationwide visibility is on another level.”</blockquote><a href="/case-studies/social-pro-photo-booth/">View case study <span aria-hidden="true">→</span></a></article>
-          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">TD</span><div><h3>TX Artificial Turf &amp; Design</h3><p>Dallas-Fort Worth</p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“The results took consistent work, but the authority and rankings kept building. We now show up for the Dallas turf searches we used to miss.”</blockquote><a href="/case-studies/turf-and-design/">View case study <span aria-hidden="true">→</span></a></article>
-          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">AD</span><div><h3>Alexis Delivery Service</h3><p>Dallas-Fort Worth</p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“We are still early in the campaign, but the city pages are starting to rank and the roadmap is clear. We know what is being built and why.”</blockquote><a href="/case-studies/alexis-delivery-service/">View case study <span aria-hidden="true">→</span></a></article>
+          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">BM</span><div><h3>Bella MedSpa &amp; Aesthetics</h3><p><?php echo esc_html( rip_home_copy( 'review_1_context', 'Medical aesthetics' ) ); ?></p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“Organic search has become a dependable way for the right patients to find us. We can finally see which pages and searches are moving the business.”</blockquote><a href="/case-studies/bella-med-spa/">View case study <span aria-hidden="true">→</span></a></article>
+          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">RM</span><div><h3>Reyes Custom Millwork</h3><p><?php echo esc_html( rip_home_copy( 'review_2_context', 'Custom millwork' ) ); ?></p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“<?php echo esc_html( rip_home_copy( 'review_2_quote', 'We went from barely showing up to ranking at the top for the cabinet searches that matter. The reporting is clear, and the growth has held.' ) ); ?>”</blockquote><a href="/case-studies/reyes-custom-millwork/">View case study <span aria-hidden="true">→</span></a></article>
+          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">DF</span><div><h3><?php echo esc_html( rip_home_copy( 'review_3_name', 'Flower Wall Rental Brand' ) ); ?></h3><p><?php echo esc_html( rip_home_copy( 'review_3_context', 'Event rentals' ) ); ?></p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“They built out every rental category properly and gave us visibility we never had before. Customers now find us for far more than just flower walls.”</blockquote><a href="/case-studies/dfw-flower-wall/">View case study <span aria-hidden="true">→</span></a></article>
+          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">SP</span><div><h3>Social Pro Photo Booth</h3><p><?php echo esc_html( rip_home_copy( 'review_4_context', 'Photo booth rentals' ) ); ?></p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“<?php echo esc_html( rip_home_copy( 'review_4_quote', 'Ranked understood that we serve multiple markets and built a strategy around every city and product. Our nationwide visibility is on another level.' ) ); ?>”</blockquote><a href="/case-studies/social-pro-photo-booth/">View case study <span aria-hidden="true">→</span></a></article>
+          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">TD</span><div><h3>TX Artificial Turf &amp; Design</h3><p><?php echo esc_html( rip_home_copy( 'review_5_context', 'Artificial turf' ) ); ?></p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“<?php echo esc_html( rip_home_copy( 'review_5_quote', 'The results took consistent work, but the authority and rankings kept building. We now show up for the turf searches we used to miss.' ) ); ?>”</blockquote><a href="/case-studies/turf-and-design/">View case study <span aria-hidden="true">→</span></a></article>
+          <article class="g-review"><div class="g-review__top"><span class="g-review__avatar">AD</span><div><h3>Alexis Delivery Service</h3><p><?php echo esc_html( rip_home_copy( 'review_6_context', 'Moving and delivery' ) ); ?></p></div><span class="g-review__mark" aria-hidden="true">G</span></div><div class="g-review__stars" aria-label="Five stars">★★★★★</div><blockquote>“We are still early in the campaign, but the city pages are starting to rank and the roadmap is clear. We know what is being built and why.”</blockquote><a href="/case-studies/alexis-delivery-service/">View case study <span aria-hidden="true">→</span></a></article>
         </div>
       </div>
       <div class="google-reviews__controls"><button type="button" data-review-prev aria-label="Previous reviews">←</button><span aria-hidden="true">Swipe to see more</span><button type="button" data-review-next aria-label="Next reviews">→</button></div>

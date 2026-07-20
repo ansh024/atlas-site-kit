@@ -156,6 +156,7 @@ function rip_on_activate() {
  */
 add_action( 'init', 'rip_seed_content', 20 );
 add_action( 'init', 'rip_seed_service_content', 21 );
+add_action( 'init', 'rip_seed_city_content', 22 );
 
 /**
  * Recovery switch: visiting /wp-admin/?rip_reseed=1 as an administrator
@@ -189,8 +190,10 @@ function rip_maybe_reseed() {
 
 	delete_option( 'rip_content_seeded' );
 	delete_option( 'rip_service_content_seeded' );
+	delete_option( 'rip_city_content_seeded' );
 	rip_seed_content();
 	rip_seed_service_content();
+	rip_seed_city_content();
 
 	add_action( 'admin_notices', function () {
 		$done = get_option( 'rip_content_seeded' ) ? 'Content re-seeded successfully.' : 'Re-seed could not run — is ACF active?';
