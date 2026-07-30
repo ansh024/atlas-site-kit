@@ -134,3 +134,15 @@ body.page-template-template-turf-tree-service main.trade-landing { --trade-navy:
   .trade-fit__columns li{grid-template-columns:22px minmax(0,1fr);gap:12px;padding-left:0}
   .mobile-sticky-audit{background:#caff00;color:#07162f;box-shadow:0 14px 32px rgba(10,21,41,.3)}
 }
+
+/* Must remain last: the shared case-study declarations above are loaded later
+   than the campaign-specific block at the start of this file. */
+@media (min-width:981px) {
+  body.page-template-template-turf-tree-service .trade-case__layout { align-items:start; }
+  body.page-template-template-turf-tree-service .trade-case__video { align-self:start; }
+  body.page-template-template-turf-tree-service .trade-case__video video { aspect-ratio:1 / 1; object-position:center 30%; }
+  body.page-template-template-turf-tree-service .trade-case__proof { grid-template-columns:minmax(0,1fr); align-self:start; }
+  body.page-template-template-turf-tree-service .trade-case__keyword-card { min-height:0; }
+  body.page-template-template-turf-tree-service .trade-case__metrics { grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:none; align-content:start; }
+  body.page-template-template-turf-tree-service .trade-case__metrics .cs__metric-block { min-height:176px; }
+}
