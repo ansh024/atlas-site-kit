@@ -59,6 +59,8 @@
 .trade-case__quote img{width:190px;height:54px;object-fit:contain;object-position:left center}
 .trade-case__quote>p{display:flex;align-items:center;flex:1;padding:38px 0;font-family:var(--font-serif);font-size:clamp(1.65rem,3vw,2.5rem);font-style:italic;line-height:1.18}
 .trade-case__quote footer{padding-top:22px;border-top:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.52);font-size:.8rem}
+.trade-case__video{display:block;padding:0;overflow:hidden;background:#07162f}
+.trade-case__video video{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#07162f}
 .trade-case__link{display:flex;align-items:center;gap:7px;margin-top:18px;color:var(--chartreuse);font-family:var(--font-display);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
 .trade-case__link svg{width:14px;height:14px}
 .trade-case__proof{display:grid;grid-template-columns:1fr 250px;gap:16px}

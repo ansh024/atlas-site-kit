@@ -165,11 +165,11 @@
         <h2 class="section-title">From 20 leads to 70 leads per month — <em>2× leads, 2× revenue.</em></h2>
       </header>
       <div class="trade-case__layout">
-        <blockquote class="trade-case__quote">
-          <img src="/assets/brand logos/9.png" alt="TX Artificial Turf and Design" width="190" height="54">
-          <p>Dedicated city pages for Richardson, Plano, Frisco and Fort Worth, backed by sustained link building, created the authority to compete across DFW.</p>
-          <a href="/case-studies/turf-and-design/" class="trade-case__link">See the complete case study <i data-lucide="arrow-up-right"></i></a>
-        </blockquote>
+        <div class="trade-case__quote trade-case__video">
+          <video controls playsinline preload="none" poster="/assets/brandon-testimonial-poster.jpg" data-lazy-video aria-label="Client testimonial from TX Artificial Turf and Design">
+            <source data-src="/assets/videos/brandon-testimonial.mp4" type="video/mp4">
+          </video>
+        </div>
         <div class="trade-case__proof">
           <div class="trade-case__keyword-card">
             <p class="trade-case__kicker">RANKING PROOF</p>
@@ -292,6 +292,26 @@
 <script src="https://unpkg.com/lucide@1.23.0/dist/umd/lucide.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/trade-landing.js?v=2"></script>
+<script>
+  document.querySelectorAll('[data-lazy-video]').forEach((video) => {
+    const loadVideo = () => {
+      if (video.dataset.loaded) return;
+      const source = video.querySelector('source[data-src]');
+      if (source) source.src = source.dataset.src;
+      video.dataset.loaded = 'true';
+      video.load();
+    };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries, observer) => entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        loadVideo();
+        observer.unobserve(video);
+      }), { rootMargin: '240px 0px' }).observe(video);
+    } else {
+      loadVideo();
+    }
+  });
+</script>
 <script>lucide.createIcons();</script>
 </body>
 </html>

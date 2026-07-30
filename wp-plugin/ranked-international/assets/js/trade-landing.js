@@ -94,4 +94,26 @@
     revealTargets.forEach((element) => revealObserver.observe(element));
   }
 
+  document.querySelectorAll('[data-lazy-video]').forEach((video) => {
+    const loadVideo = () => {
+      if (video.dataset.loaded) return;
+      const source = video.querySelector('source[data-src]');
+      if (source) source.src = source.dataset.src;
+      video.dataset.loaded = 'true';
+      video.load();
+    };
+    if (!('IntersectionObserver' in window)) {
+      loadVideo();
+      return;
+    }
+    const videoObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        loadVideo();
+        observer.unobserve(video);
+      });
+    }, { rootMargin: '240px 0px' });
+    videoObserver.observe(video);
+  });
+
 }());
