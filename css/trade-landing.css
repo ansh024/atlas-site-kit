@@ -326,3 +326,25 @@
   .ghl-audit-form{min-height:920px;border-radius:12px}
 }
 @media(prefers-reduced-motion:reduce){.ghl-audit-form:not([src]){animation:none}}
+
+/* Keep the desktop case study concise: evidence should scan beside the video,
+   not stretch into three tall stacked cards. */
+@media(min-width:981px){
+  .trade-case__layout{align-items:start}
+  .trade-case__video{align-self:start}
+  .trade-case__video video{aspect-ratio:1/1;object-position:center 30%}
+  .trade-case__proof{grid-template-columns:1fr;align-self:start}
+  .trade-case__keyword-card{min-height:0}
+  .trade-case__metrics{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:none;align-content:start}
+  .trade-case__metrics .cs__metric-block{min-height:176px}
+}
+
+/* On larger screens, commitments are a browseable rail rather than a tall
+   stacked sequence. The visible scrollbar keeps the horizontal affordance clear. */
+@media(min-width:981px){
+  .trade-commitments__list{display:flex;align-items:stretch;gap:20px;max-width:none;margin:0;padding:0 0 16px;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#1256d6 #e5edf7}
+  .trade-commitments__list::-webkit-scrollbar{height:10px}
+  .trade-commitments__list::-webkit-scrollbar-track{background:#e5edf7;border-radius:999px}
+  .trade-commitments__list::-webkit-scrollbar-thumb{background:#1256d6;border-radius:999px}
+  .trade-commitments__list li{position:relative;top:auto;flex:0 0 clamp(440px,46vw,610px);height:min(70vh,620px);min-height:0;scroll-snap-align:start}
+}
