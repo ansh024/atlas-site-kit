@@ -59,8 +59,25 @@ function rip_render_ghl_audit_modal() {
 		<div class="audit-modal__backdrop" data-audit-close></div>
 		<div class="audit-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="auditTitle">
 			<button class="audit-modal__close" type="button" data-audit-close aria-label="Close audit form"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-			<h2 class="screen-reader-text" id="auditTitle">Get your free SEO audit</h2>
-			<iframe class="ghl-audit-form" data-ghl-src="https://api.leadconnectorhq.com/widget/form/NnlAud8uVZoK09OlAAFj" style="width:100%;height:1000px;border:0;border-radius:20px" id="inline-NnlAud8uVZoK09OlAAFj" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-activation-type="alwaysActivated" data-deactivation-type="neverDeactivate" data-form-name="Meta Form" data-height="1000" data-layout-iframe-id="inline-NnlAud8uVZoK09OlAAFj" data-form-id="NnlAud8uVZoK09OlAAFj" title="Meta Form" loading="lazy"></iframe>
+			<div class="ghl-modal__layout">
+				<aside class="ghl-modal__value" aria-labelledby="auditTitle">
+					<p class="ghl-modal__eyebrow">Your free SEO audit</p>
+					<h2 id="auditTitle">See the clearest path to more leads.</h2>
+					<p class="ghl-modal__intro">We will review your search visibility and show you the highest-impact opportunities for your turf, tree care, or outdoor service business.</p>
+					<ul class="ghl-modal__benefits">
+						<li>Clear local SEO opportunities</li>
+						<li>Competitor and keyword insights</li>
+						<li>A practical plan for more calls</li>
+					</ul>
+					<p class="ghl-modal__reassurance">No obligation. No sales pressure.</p>
+				</aside>
+				<div class="ghl-modal__form-panel">
+					<p class="ghl-modal__eyebrow">Start your audit</p>
+					<h2>Tell us a little about your business.</h2>
+					<p>We will get back to you within one business day.</p>
+					<iframe class="ghl-audit-form" data-ghl-src="https://api.leadconnectorhq.com/widget/form/NnlAud8uVZoK09OlAAFj" id="inline-NnlAud8uVZoK09OlAAFj" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-activation-type="alwaysActivated" data-deactivation-type="neverDeactivate" data-form-name="Meta Form" data-height="1000" data-layout-iframe-id="inline-NnlAud8uVZoK09OlAAFj" data-form-id="NnlAud8uVZoK09OlAAFj" title="Request your free SEO audit" loading="lazy"></iframe>
+				</div>
+			</div>
 		</div>
 	</div>
 	<?php

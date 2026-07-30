@@ -290,3 +290,39 @@
 @media(prefers-reduced-motion:reduce){
   .rank-panel__rows li,.audit-preview__tabs button,.trade-faq__topics a{transition:none}
 }
+
+/* Campaign form: the embedded form is framed by the landing page, while GHL
+   remains responsible for its fields and submission flow. */
+.audit-modal--ghl{padding:18px}
+.audit-modal--ghl .audit-modal__dialog{width:min(1080px,calc(100vw - 36px));max-height:calc(100dvh - 36px);border:1px solid rgba(18,86,214,.13);border-radius:24px;background:#fff;overflow:hidden;box-shadow:0 34px 90px rgba(5,22,57,.34)}
+.audit-modal--ghl .audit-modal__close{top:16px;right:16px;width:42px;height:42px;border-color:rgba(7,22,47,.14);box-shadow:0 6px 18px rgba(7,22,47,.1)}
+.ghl-modal__layout{display:grid;grid-template-columns:minmax(290px,.82fr) minmax(0,1.18fr);min-height:min(840px,calc(100dvh - 36px))}
+.ghl-modal__value{display:flex;flex-direction:column;padding:clamp(34px,5vw,64px);background:#e9f6ff;color:#07162f}
+.ghl-modal__eyebrow{margin:0 0 16px;color:#1256d6;font-family:var(--font-display);font-size:.72rem;font-weight:800;letter-spacing:.1em!important;text-transform:uppercase}
+.audit-modal--ghl h2{max-width:14ch;margin:0;color:#07162f;font-family:var(--font-display);font-size:clamp(2rem,3.2vw,3rem);font-weight:800;letter-spacing:-.04em!important;line-height:1.04}
+.ghl-modal__intro{max-width:34ch;margin:24px 0 0;color:#385574;font-size:1rem;line-height:1.55}
+.ghl-modal__benefits{display:grid;gap:15px;margin:36px 0 0;padding:0;list-style:none;color:#18365e;font-size:.96rem;font-weight:650}
+.ghl-modal__benefits li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:11px;align-items:start}
+.ghl-modal__benefits li::before{content:"✓";display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--chartreuse);color:#07162f;font-size:.8rem;font-weight:900}
+.ghl-modal__reassurance{margin:32px 0 0;color:#385574;font-size:.86rem;font-weight:700}
+.ghl-modal__form-panel{height:min(840px,calc(100dvh - 36px));padding:clamp(34px,5vw,58px);overflow-y:auto;overscroll-behavior:contain;background:#fff}
+.ghl-modal__form-panel .ghl-modal__eyebrow{margin-right:46px}
+.ghl-modal__form-panel h2{font-size:clamp(1.7rem,2.6vw,2.3rem)}
+.ghl-modal__form-panel>p:not(.ghl-modal__eyebrow){margin:11px 0 24px;color:#53677e;line-height:1.5}
+.ghl-audit-form{display:block;width:100%;min-height:1000px;border:0;border-radius:14px;background:#fff}
+.ghl-audit-form:not([src]){min-height:240px;background:linear-gradient(100deg,#f2f5f8 20%,#fff 38%,#f2f5f8 54%);background-size:200% 100%;animation:rip-form-loading 1.35s linear infinite}
+@keyframes rip-form-loading{to{background-position:-200% 0}}
+@media(max-width:760px){
+  .audit-modal--ghl{place-items:end center;padding:10px}
+  .audit-modal--ghl .audit-modal__dialog{width:100%;max-height:calc(100dvh - 20px);border-radius:20px;overflow-y:auto}
+  .ghl-modal__layout{grid-template-columns:1fr;min-height:0}
+  .ghl-modal__value{padding:30px 26px 26px}
+  .ghl-modal__value h2{max-width:17ch;font-size:2rem}
+  .ghl-modal__intro{margin-top:14px;font-size:.92rem}
+  .ghl-modal__benefits{gap:10px;margin-top:20px;font-size:.88rem}
+  .ghl-modal__reassurance{margin-top:20px}
+  .ghl-modal__form-panel{height:auto;min-height:0;padding:29px 20px 20px;overflow:visible}
+  .ghl-modal__form-panel h2{max-width:18ch;font-size:1.65rem}
+  .ghl-audit-form{min-height:920px;border-radius:12px}
+}
+@media(prefers-reduced-motion:reduce){.ghl-audit-form:not([src]){animation:none}}

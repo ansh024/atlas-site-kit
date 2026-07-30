@@ -542,7 +542,33 @@ function titles() {
 function form() {
   const modal = $('#auditModal');
   const f = $('#auditForm');
-  if (!modal || !f) return;
+  if (!modal) return;
+
+  // Campaign pages can use an embedded form provider instead of WPForms.
+  // Keep the modal controls and focus return working in the static preview.
+  if (!f) {
+    let lastFocus = null;
+    const openAudit = event => {
+      event?.preventDefault();
+      lastFocus = document.activeElement;
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('audit-modal-open');
+      setTimeout(() => $('.audit-modal__close', modal)?.focus(), 40);
+    };
+    const closeAudit = () => {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('audit-modal-open');
+      lastFocus?.focus?.();
+    };
+    $$('a[href="#audit"]').forEach(link => link.addEventListener('click', openAudit));
+    $$('[data-audit-close]', modal).forEach(el => el.addEventListener('click', closeAudit));
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && modal.classList.contains('is-open')) closeAudit();
+    });
+    return;
+  }
 
   const steps = {
     one: $('[data-audit-step="1"]', f),
