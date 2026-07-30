@@ -116,4 +116,15 @@
     videoObserver.observe(video);
   });
 
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('a[href="#audit"]')) return;
+    const form = document.querySelector('.ghl-audit-form[data-ghl-src]');
+    if (!form || form.hasAttribute('src')) return;
+    form.src = form.dataset.ghlSrc;
+    const embed = document.createElement('script');
+    embed.src = 'https://link.msgsndr.com/js/form_embed.js';
+    embed.async = true;
+    document.body.appendChild(embed);
+  });
+
 }());

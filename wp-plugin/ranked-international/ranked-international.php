@@ -52,6 +52,20 @@ function rip_render_audit_modal() {
 	<?php
 }
 
+/** Render the campaign-specific GHL audit form without changing other pages. */
+function rip_render_ghl_audit_modal() {
+	?>
+	<div class="audit-modal audit-modal--ghl" id="auditModal" aria-hidden="true">
+		<div class="audit-modal__backdrop" data-audit-close></div>
+		<div class="audit-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="auditTitle">
+			<button class="audit-modal__close" type="button" data-audit-close aria-label="Close audit form"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+			<h2 class="screen-reader-text" id="auditTitle">Get your free SEO audit</h2>
+			<iframe class="ghl-audit-form" data-ghl-src="https://api.leadconnectorhq.com/widget/form/NnlAud8uVZoK09OlAAFj" style="width:100%;height:1000px;border:0;border-radius:20px" id="inline-NnlAud8uVZoK09OlAAFj" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-activation-type="alwaysActivated" data-deactivation-type="neverDeactivate" data-form-name="Meta Form" data-height="1000" data-layout-iframe-id="inline-NnlAud8uVZoK09OlAAFj" data-form-id="NnlAud8uVZoK09OlAAFj" title="Meta Form" loading="lazy"></iframe>
+		</div>
+	</div>
+	<?php
+}
+
 add_action( 'admin_notices', function () {
 	if ( ! current_user_can( 'manage_options' ) || rip_wpforms_audit_available() ) return;
 	echo '<div class="notice notice-error"><p><strong>Ranked audit modal:</strong> WPForms form 2845 is unavailable. Activate WPForms and publish form 2845.</p></div>';
@@ -70,6 +84,21 @@ function rip_templates() {
 		'templates/template-turf-tree-service.php' => 'Ranked Intl: Turf & Tree Service',
 	);
 }
+
+/** The campaign thank-you page is a plugin route, so it needs no database page. */
+function rip_is_audit_thank_you() {
+	if ( is_admin() ) return false;
+	$path = wp_parse_url( $_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH );
+	return untrailingslashit( $path ) === '/seo-audit-thank-you';
+}
+
+add_filter( 'redirect_canonical', function ( $redirect_url ) {
+	return rip_is_audit_thank_you() ? false : $redirect_url;
+} );
+
+add_action( 'template_redirect', function () {
+	if ( rip_is_audit_thank_you() ) status_header( 200 );
+}, 0 );
 
 /**
  * Return editable city-page copy while keeping the shared home layout as the
@@ -98,6 +127,9 @@ function rip_add_page_templates( $templates ) {
  */
 add_filter( 'template_include', 'rip_load_page_template' );
 function rip_load_page_template( $template ) {
+	if ( rip_is_audit_thank_you() ) {
+		return RIP_DIR . 'templates/template-audit-thank-you.php';
+	}
 	if ( is_singular( 'rip_city' ) ) {
 		return RIP_DIR . 'templates/template-city.php';
 	}
@@ -126,6 +158,7 @@ function rip_load_page_template( $template ) {
  * a Page using one of our Page Templates, or one of our reusable post types.
  */
 function rip_is_our_template() {
+	if ( rip_is_audit_thank_you() ) return true;
 	if ( is_singular( array( 'rip_city', 'rip_industry', 'rip_case_study', 'rip_service' ) ) ) return true;
 	if ( ! is_page() ) return false;
 	$slug = get_page_template_slug();
@@ -138,6 +171,10 @@ function rip_is_our_template() {
  */
 add_filter( 'body_class', 'rip_service_body_classes' );
 function rip_service_body_classes( $classes ) {
+	if ( rip_is_audit_thank_you() ) {
+		$classes[] = 'rip-audit-thank-you';
+		return array_unique( $classes );
+	}
 	if ( ! is_singular( 'rip_service' ) ) return $classes;
 
 	$classes[] = 'rip-service-page';
@@ -166,6 +203,7 @@ function rip_enqueue_assets() {
 	$is_case_study = is_singular( 'rip_case_study' ) || get_page_template_slug() === 'templates/template-case-studies-hub.php';
 	$is_service = is_singular( 'rip_service' );
 	$is_turf_tree = get_page_template_slug() === 'templates/template-turf-tree-service.php';
+	$is_audit_thank_you = rip_is_audit_thank_you();
 	if ( $is_case_study ) {
 		wp_enqueue_style( 'rip-case-study', RIP_URL . 'assets/css/case-study.css', array( 'rip-styles' ), RIP_VERSION );
 	}
@@ -174,6 +212,9 @@ function rip_enqueue_assets() {
 	}
 	if ( $is_turf_tree ) {
 		wp_enqueue_style( 'rip-turf-tree', RIP_URL . 'assets/css/trade-landing.css', array( 'rip-styles', 'rip-page-fixes' ), RIP_VERSION );
+	}
+	if ( $is_audit_thank_you ) {
+		wp_enqueue_style( 'rip-audit-thank-you', RIP_URL . 'assets/css/thank-you.css', array( 'rip-styles', 'rip-page-fixes' ), RIP_VERSION );
 	}
 
 	wp_enqueue_script( 'gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js', array(), '3.12.5', true );
@@ -206,6 +247,25 @@ function rip_disable_uicore_custom_cursor() {
 	if ( is_admin() ) return;
 	echo '<style id="rip-disable-uicore-cursor">.ui-cursor{display:none!important}</style>';
 }
+
+/** Meta Lead event is intentionally limited to the post-submission thank-you route. */
+add_action( 'wp_head', function () {
+	if ( ! rip_is_audit_thank_you() ) return;
+	?>
+	<!-- Meta Pixel Code -->
+	<script>
+	!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+	fbq('init','1686472339304024');
+	fbq('track','Lead');
+	</script>
+	<!-- End Meta Pixel Code -->
+	<?php
+}, 20 );
+
+add_action( 'wp_body_open', function () {
+	if ( ! rip_is_audit_thank_you() ) return;
+	echo '<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1686472339304024&amp;ev=Lead&amp;noscript=1" alt=""></noscript>';
+} );
 
 /**
  * Resolve the front-end URL for one of our templates, if a Page has it assigned.

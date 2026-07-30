@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&amp;family=Inter:wght@400;500;600&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/styles.css?v=4">
-<link rel="stylesheet" href="/css/trade-landing.css?v=14">
+<link rel="stylesheet" href="/css/trade-landing.css?v=16">
 <style>
   /* This is a conversion landing page: keep visitors focused on the audit. */
   .turf-tree-page .nav__menu,
@@ -18,6 +18,13 @@
   .turf-tree-page .nav__menu-mobile { display: none !important; }
   @media (max-width: 860px) {
     .turf-tree-page .nav .btn--sm { display: inline-flex !important; }
+  }
+  @media (max-width: 640px) {
+    .trade-case__layout,
+    .trade-case__proof,
+    .trade-case__metrics { grid-template-columns: 1fr !important; }
+    .trade-case__video { min-height: 0 !important; height: auto !important; width: 100%; }
+    .trade-case__video video { display:block; width:100% !important; height:auto !important; min-height:0 !important; max-height:540px; aspect-ratio:4 / 5; object-fit:cover; }
   }
 </style>
 </head>
@@ -180,6 +187,7 @@
           <div class="trade-case__metrics">
             <div class="cs__metric-block"><p class="cs__metric-label">Monthly organic visitors</p><p class="cs__metric-num" data-count="221">221</p><p class="cs__metric-sub">Up from zero after the 18-month breakout.</p></div>
             <div class="cs__metric-block"><p class="cs__metric-label">#1 Google rankings</p><p class="cs__metric-num" data-count="5">5</p><p class="cs__metric-sub">Including Dallas and Richardson turf terms.</p></div>
+            <div class="cs__metric-block"><p class="cs__metric-label">Annual revenue</p><p class="cs__metric-num cs__metric-num--revenue">$800K → $1.6M</p><p class="cs__metric-sub">2× annual revenue.</p></div>
           </div>
         </div>
       </div>
@@ -270,15 +278,12 @@
 
 <a href="#audit" class="mobile-sticky-audit" data-track="mobile-sticky-audit">Get Free SEO Audit <i data-lucide="arrow-right"></i></a>
 
-<div class="audit-modal" id="auditModal" aria-hidden="true">
+<div class="audit-modal audit-modal--ghl" id="auditModal" aria-hidden="true">
   <div class="audit-modal__backdrop" data-audit-close></div>
   <div class="audit-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="auditTitle">
     <button class="audit-modal__close" type="button" data-audit-close aria-label="Close audit form"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
-    <form class="audit-modal__form" id="auditForm">
-      <div class="audit-modal__step is-active" data-audit-step="1"><p class="audit-modal__eyebrow">Step 1 of 2</p><h2 id="auditTitle">Start your free audit</h2><p class="audit-modal__copy">Tell us where to send the first findings.</p><label class="audit-field"><span>Name</span><input type="text" name="name" autocomplete="name" required></label><label class="audit-field"><span>Email</span><input type="email" name="email" autocomplete="email" required></label><button type="button" class="btn btn--dark btn--block" data-audit-next>Continue</button></div>
-      <div class="audit-modal__step" data-audit-step="2"><p class="audit-modal__eyebrow">Step 2 of 2</p><h2>What should we inspect?</h2><p class="audit-modal__copy">A website, primary service and market are enough to start.</p><label class="audit-field"><span>Website</span><input type="url" name="website" autocomplete="url" placeholder="https://example.com" required></label><label class="audit-field"><span>Primary service</span><select name="service" required><option value="" disabled selected>Select one</option><option>Artificial turf</option><option>Tree care</option><option>Irrigation or sod</option><option>Landscaping</option><option>Other outdoor service</option></select></label><label class="audit-field"><span>Primary city or service area</span><input type="text" name="market" autocomplete="address-level2" placeholder="Dallas, TX" required></label><div class="audit-modal__actions"><button type="button" class="btn btn--outline" data-audit-back>Back</button><button type="submit" class="btn btn--dark">Submit audit</button></div></div>
-      <div class="audit-modal__step audit-modal__done" data-audit-step="done"><div class="audit-modal__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg></div><h2>Audit request received</h2><p class="audit-modal__copy">We’ll review the site and send the first findings within 24 hours.</p><button type="button" class="btn btn--primary btn--block" data-audit-close>Done</button></div>
-    </form>
+    <h2 class="screen-reader-text" id="auditTitle">Get your free SEO audit</h2>
+    <iframe class="ghl-audit-form" data-ghl-src="https://api.leadconnectorhq.com/widget/form/NnlAud8uVZoK09OlAAFj" style="width:100%;height:1000px;border:0;border-radius:20px" id="inline-NnlAud8uVZoK09OlAAFj" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-activation-type="alwaysActivated" data-deactivation-type="neverDeactivate" data-form-name="Meta Form" data-height="1000" data-layout-iframe-id="inline-NnlAud8uVZoK09OlAAFj" data-form-id="NnlAud8uVZoK09OlAAFj" title="Meta Form" loading="lazy"></iframe>
   </div>
 </div>
 
@@ -292,6 +297,18 @@
 <script src="https://unpkg.com/lucide@1.23.0/dist/umd/lucide.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/trade-landing.js?v=2"></script>
+<script>
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('a[href="#audit"]')) return;
+    const form = document.querySelector('.ghl-audit-form[data-ghl-src]');
+    if (!form || form.hasAttribute('src')) return;
+    form.src = form.dataset.ghlSrc;
+    const embed = document.createElement('script');
+    embed.src = 'https://link.msgsndr.com/js/form_embed.js';
+    embed.async = true;
+    document.body.appendChild(embed);
+  });
+</script>
 <script>
   document.querySelectorAll('[data-lazy-video]').forEach((video) => {
     const loadVideo = () => {

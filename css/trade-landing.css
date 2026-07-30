@@ -61,6 +61,8 @@
 .trade-case__quote footer{padding-top:22px;border-top:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.52);font-size:.8rem}
 .trade-case__video{display:block;padding:0;overflow:hidden;background:#07162f}
 .trade-case__video video{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#07162f}
+.audit-modal--ghl .audit-modal__dialog{height:min(860px,calc(100vh - 48px));overflow-y:auto}
+.audit-modal--ghl .ghl-audit-form{display:block;min-height:1000px}
 .trade-case__link{display:flex;align-items:center;gap:7px;margin-top:18px;color:var(--chartreuse);font-family:var(--font-display);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
 .trade-case__link svg{width:14px;height:14px}
 .trade-case__proof{display:grid;grid-template-columns:1fr 250px;gap:16px}
@@ -73,8 +75,9 @@
 .trade-case__keyword-card dl div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
 .trade-case__keyword-card dt{font-size:.78rem;color:var(--ink-soft)}
 .trade-case__keyword-card dd{font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--prussian-blue)}
-.trade-case__metrics{display:grid;grid-template-rows:1fr 1fr;gap:16px}
+.trade-case__metrics{display:grid;grid-template-rows:repeat(3,1fr);gap:16px}
 .trade-case__metrics .cs__metric-block{background:#fff;min-height:0}
+.trade-case__metrics .cs__metric-block:nth-child(3){order:-1}
 .trade-case__note{margin-top:16px;color:var(--ink-soft);font-size:.72rem}
 
 .audit-preview{padding:clamp(45px,5.5vw,72.5px) var(--pad);background:var(--bright-snow)}
@@ -248,9 +251,9 @@
   .audit-deliverables p{margin-top:4px;font-size:.84rem;line-height:1.35}
   .trade-commitments{padding:72px 20px 100px}
   .trade-commitments .section-head{margin-bottom:28px}
-  .trade-commitments__list{display:flex;gap:14px;max-width:none;margin:0 -20px;padding:0 20px 12px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .trade-commitments__list{display:flex;gap:14px;max-width:none;margin:0 -20px 0 0;padding:0 20px 12px 0;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .trade-commitments__list::-webkit-scrollbar{display:none}
-  .trade-commitments__list li{position:relative;top:auto;flex:0 0 calc(100% - 34px);min-height:520px;padding:24px;border-radius:18px;scroll-snap-align:start;scroll-snap-stop:always;box-shadow:0 26px 50px -38px rgba(10,21,41,.6)}
+  .trade-commitments__list li{position:relative;top:auto;flex:0 0 calc(100% - 34px);min-height:460px;padding:24px;border-radius:18px;scroll-snap-align:start;scroll-snap-stop:always;box-shadow:0 26px 50px -38px rgba(10,21,41,.6)}
   .trade-commitments__art{height:61%;object-position:center 36%}
   .trade-commitments__list li>span{top:22px;left:22px;width:36px;height:36px;font-size:.7rem}
   .trade-commitments__copy{gap:10px;padding-top:30px}
