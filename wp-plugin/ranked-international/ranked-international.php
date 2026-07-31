@@ -145,6 +145,21 @@ add_filter( 'redirect_canonical', function ( $redirect_url ) {
 	return rip_is_audit_thank_you() ? false : $redirect_url;
 } );
 
+/**
+ * These routes have no database page, so WordPress resolves them as a 404 and
+ * the theme builds a "Page not found" document title even though we send a
+ * 200. That title is what shows in the browser tab and in link previews.
+ */
+add_filter( 'pre_get_document_title', function ( $title ) {
+	if ( ! rip_is_audit_thank_you() ) return $title;
+	return 'Thank You | ' . get_bloginfo( 'name' );
+} );
+
+/** Campaign thank-you pages must never be indexed. */
+add_action( 'wp_head', function () {
+	if ( rip_is_audit_thank_you() ) echo '<meta name="robots" content="noindex, nofollow" />' . "\n";
+}, 1 );
+
 add_action( 'template_redirect', function () {
 	if ( rip_is_audit_thank_you() ) status_header( 200 );
 }, 0 );
