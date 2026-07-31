@@ -146,23 +146,38 @@ add_filter( 'redirect_canonical', function ( $redirect_url ) {
 } );
 
 /**
- * These routes have no database page, so WordPress resolves them as a 404 and
- * the theme builds a "Page not found" document title even though we send a
- * 200. That title is what shows in the browser tab and in link previews.
+ * These routes have no database page, so the main query finds nothing and
+ * flags the request as a 404. status_header( 200 ) corrects the HTTP status
+ * but not the query, which is what everything downstream reads: the theme
+ * built a "Page not found" title, body_class printed error404, and Yoast
+ * treated the page as missing. Clear the flag so the request is an ordinary
+ * 200 to the rest of WordPress.
+ */
+add_action( 'template_redirect', function () {
+	if ( ! rip_is_audit_thank_you() ) return;
+	global $wp_query;
+	$wp_query->is_404 = false;
+	status_header( 200 );
+}, 0 );
+
+/**
+ * Yoast also filters pre_get_document_title (priority 15), so this has to run
+ * after it to win.
  */
 add_filter( 'pre_get_document_title', function ( $title ) {
 	if ( ! rip_is_audit_thank_you() ) return $title;
 	return 'Thank You | ' . get_bloginfo( 'name' );
-} );
+}, 99 );
 
 /** Campaign thank-you pages must never be indexed. */
-add_action( 'wp_head', function () {
-	if ( rip_is_audit_thank_you() ) echo '<meta name="robots" content="noindex, nofollow" />' . "\n";
-}, 1 );
+add_filter( 'wpseo_robots', function ( $robots ) {
+	return rip_is_audit_thank_you() ? 'noindex, nofollow' : $robots;
+} );
 
-add_action( 'template_redirect', function () {
-	if ( rip_is_audit_thank_you() ) status_header( 200 );
-}, 0 );
+add_action( 'wp_head', function () {
+	if ( ! rip_is_audit_thank_you() || defined( 'WPSEO_VERSION' ) ) return;
+	echo '<meta name="robots" content="noindex, nofollow" />' . "\n";
+}, 1 );
 
 /**
  * Return editable city-page copy while keeping the shared home layout as the
