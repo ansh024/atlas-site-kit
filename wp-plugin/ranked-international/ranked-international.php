@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Ranked International Pages
  * Description: Adds the Ranked International marketing pages (home, industry landers, case studies) as selectable Page Templates that work on top of any active theme.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: Ranked International
  * Text Domain: ranked-international
  * GitHub Plugin URI: ansh024/atlas-site-kit
@@ -11,7 +11,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'RIP_VERSION', '1.1.0' );
+define( 'RIP_VERSION', '1.2.0' );
 define( 'RIP_DIR', plugin_dir_path( __FILE__ ) );
 define( 'RIP_URL', plugin_dir_url( __FILE__ ) );
 
@@ -52,8 +52,24 @@ function rip_render_audit_modal() {
 	<?php
 }
 
+/**
+ * GHL form ID per campaign. Each campaign needs its own GHL form because the
+ * post-submit redirect (which thank-you page the lead lands on) is configured
+ * inside GHL, not here. Duplicate the form in GHL, point its redirect at the
+ * campaign's thank-you path, then drop the new form ID in below.
+ */
+function rip_ghl_form_id( $campaign = 'default' ) {
+	$forms = array(
+		'default' => 'NnlAud8uVZoK09OlAAFj',
+		// Redirect this one to /turf-thank-you/ inside GHL.
+		'turf'    => 'NnlAud8uVZoK09OlAAFj',
+	);
+	return $forms[ $campaign ] ?? $forms['default'];
+}
+
 /** Render the campaign-specific GHL audit form without changing other pages. */
-function rip_render_ghl_audit_modal() {
+function rip_render_ghl_audit_modal( $campaign = 'default' ) {
+	$form_id = rip_ghl_form_id( $campaign );
 	?>
 	<div class="audit-modal audit-modal--ghl" id="auditModal" aria-hidden="true">
 		<div class="audit-modal__backdrop" data-audit-close></div>
@@ -69,7 +85,7 @@ function rip_render_ghl_audit_modal() {
 					</ul>
 				</aside>
 				<div class="ghl-modal__form-panel">
-					<iframe class="ghl-audit-form" data-ghl-src="https://api.leadconnectorhq.com/widget/form/NnlAud8uVZoK09OlAAFj" id="inline-NnlAud8uVZoK09OlAAFj" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-activation-type="alwaysActivated" data-deactivation-type="neverDeactivate" data-form-name="Meta Form" data-height="1000" data-layout-iframe-id="inline-NnlAud8uVZoK09OlAAFj" data-form-id="NnlAud8uVZoK09OlAAFj" title="Request your free SEO audit" loading="lazy"></iframe>
+					<iframe class="ghl-audit-form" data-ghl-src="https://api.leadconnectorhq.com/widget/form/<?php echo esc_attr( $form_id ); ?>" id="inline-<?php echo esc_attr( $form_id ); ?>" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-activation-type="alwaysActivated" data-deactivation-type="neverDeactivate" data-form-name="Meta Form" data-height="1000" data-layout-iframe-id="inline-<?php echo esc_attr( $form_id ); ?>" data-form-id="<?php echo esc_attr( $form_id ); ?>" title="Request your free SEO audit" loading="lazy"></iframe>
 				</div>
 			</div>
 		</div>
@@ -96,11 +112,33 @@ function rip_templates() {
 	);
 }
 
-/** The campaign thank-you page is a plugin route, so it needs no database page. */
-function rip_is_audit_thank_you() {
+/**
+ * Campaign thank-you pages are plugin routes, so they need no database page.
+ * Each campaign gets its own path so Meta can attribute leads per campaign
+ * (URL-based custom conversions) without the events clashing.
+ */
+function rip_thank_you_routes() {
+	return array(
+		'/seo-audit-thank-you' => 'audit',
+		'/turf-thank-you'      => 'turf',
+	);
+}
+
+/** True on the Turf & Tree paid-traffic landing page. */
+function rip_is_turf_tree_landing() {
+	return is_page() && get_page_template_slug() === 'templates/template-turf-tree-service.php';
+}
+
+/** Slug of the thank-you campaign for this request, or false when not one. */
+function rip_thank_you_route() {
 	if ( is_admin() ) return false;
-	$path = wp_parse_url( $_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH );
-	return untrailingslashit( $path ) === '/seo-audit-thank-you';
+	$path = untrailingslashit( wp_parse_url( $_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH ) );
+	$routes = rip_thank_you_routes();
+	return $routes[ $path ] ?? false;
+}
+
+function rip_is_audit_thank_you() {
+	return rip_thank_you_route() !== false;
 }
 
 add_filter( 'redirect_canonical', function ( $redirect_url ) {
@@ -182,8 +220,10 @@ function rip_is_our_template() {
  */
 add_filter( 'body_class', 'rip_service_body_classes' );
 function rip_service_body_classes( $classes ) {
-	if ( rip_is_audit_thank_you() ) {
+	$thank_you = rip_thank_you_route();
+	if ( $thank_you ) {
 		$classes[] = 'rip-audit-thank-you';
+		$classes[] = 'rip-thank-you--' . sanitize_html_class( $thank_you );
 		return array_unique( $classes );
 	}
 	if ( ! is_singular( 'rip_service' ) ) return $classes;
@@ -259,12 +299,32 @@ function rip_disable_uicore_custom_cursor() {
 	echo '<style id="rip-disable-uicore-cursor">.ui-cursor{display:none!important}</style>';
 }
 
+/**
+ * The theme's Elementor footer template ends every page with a "Schedule Your
+ * Free Strategy Call" band plus the full site nav. On the paid-traffic landing
+ * page that competes with the audit CTA and leaks clicks off the page, so drop
+ * the whole <footer> element there. The theme still owns the closing document
+ * markup, scripts, and back-to-top — only the footer element itself goes.
+ */
+add_action( 'get_footer', function () {
+	if ( rip_is_turf_tree_landing() ) ob_start();
+} );
+
+add_action( 'wp_footer', function () {
+	if ( ! rip_is_turf_tree_landing() || ! ob_get_level() ) return;
+	$footer = ob_get_clean();
+
+	$cleaned = preg_replace( '#<footer\b[^>]*id=["\']uicore-tb-footer["\'][^>]*>.*?</footer>#is', '', $footer );
+
+	echo $cleaned === null ? $footer : $cleaned; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}, 0 );
+
 /** Meta Lead event is intentionally limited to the post-submission thank-you route. */
 add_action( 'wp_head', function () {
 	if ( ! rip_is_audit_thank_you() ) return;
 	?>
 	<!-- Meta Pixel Code -->
-	<script>
+	<script id="rip-meta-lead">
 	!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 	fbq('init','1686472339304024');
 	fbq('track','Lead');
@@ -272,6 +332,40 @@ add_action( 'wp_head', function () {
 	<!-- End Meta Pixel Code -->
 	<?php
 }, 20 );
+
+/**
+ * A second Meta Pixel `Lead` snippet was pasted into WordPress by hand (it also
+ * has a mismatched `PageView` noscript fallback), so every submission counted
+ * as two conversions. The snippet above is the single source of truth for the
+ * Lead event, so drop any other Lead-firing pixel block from <head>.
+ *
+ * This is a safety net, not the real fix: delete the pasted snippet in WP admin
+ * (header-scripts plugin / theme or Elementor custom code) and this becomes a
+ * no-op. Deliberately narrow — it only touches thank-you routes, only removes
+ * blocks that fire `Lead`, and leaves the site-wide `PageView` pixel alone.
+ */
+add_action( 'wp_head', function () {
+	if ( rip_is_audit_thank_you() ) ob_start();
+}, 0 );
+
+add_action( 'wp_head', function () {
+	if ( ! rip_is_audit_thank_you() || ! ob_get_level() ) return;
+	$head = ob_get_clean();
+
+	$cleaned = preg_replace_callback(
+		'#<!--\s*Meta Pixel Code\s*-->.*?<!--\s*End Meta Pixel Code\s*-->#is',
+		function ( $match ) {
+			$block = $match[0];
+			// Keep our own block, and any block that does not fire Lead.
+			if ( strpos( $block, 'rip-meta-lead' ) !== false ) return $block;
+			if ( ! preg_match( '#fbq\(\s*[\'"]track[\'"]\s*,\s*[\'"]Lead[\'"]#i', $block ) ) return $block;
+			return '';
+		},
+		$head
+	);
+
+	echo $cleaned === null ? $head : $cleaned; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}, 999 );
 
 add_action( 'wp_body_open', function () {
 	if ( ! rip_is_audit_thank_you() ) return;

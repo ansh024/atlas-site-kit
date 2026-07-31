@@ -73,5 +73,5 @@ $case_study_url = home_url( '/case-studies/turf-and-design/' );
 
 <a href="#audit" class="mobile-sticky-audit" data-track="mobile-sticky-audit">Get free SEO audit <span aria-hidden="true">→</span></a>
 
-<?php rip_render_ghl_audit_modal(); ?>
+<?php rip_render_ghl_audit_modal( 'turf' ); ?>
 <?php get_footer(); ?>
