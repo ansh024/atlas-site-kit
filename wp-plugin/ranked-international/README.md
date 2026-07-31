@@ -310,11 +310,13 @@ convention to be careful about.
 
 The pipeline (`.github/workflows/publish-wp-plugin.yml` in the repo root):
 
-1. You edit templates/CSS/JS locally and push to `main`.
-2. GitHub Actions lints the PHP, stamps a new version number (so WordPress
+1. You edit templates/CSS/JS locally, test them, and push to `main`.
+2. When the release is approved, manually run **Publish WordPress plugin**
+   from the repository's GitHub Actions tab.
+3. GitHub Actions runs the local WordPress tests, lints the PHP, stamps a new version number (so WordPress
    sees an update and browser caches bust), and force-publishes just this
    plugin folder to the **`plugin-deploy`** branch.
-3. The WordPress site pulls it via **Git Updater** (free plugin,
+4. The WordPress site pulls it via **Git Updater** (free plugin,
    git-updater.com). The `GitHub Plugin URI` / `Primary Branch` headers in
    `ranked-international.php` tell it what to track.
 
@@ -332,8 +334,9 @@ One-time setup on the WordPress site:
    - Name: `GITUPDATER_WEBHOOK_URL`
    - Value: `https://rankedinternational.com/wp-json/git-updater/v1/update/?key=<THE-KEY>&plugin=atlas-site-kit&tag=plugin-deploy`
 
-   The CI workflow calls that URL after each publish, so the site installs
-   the new version within a minute of every push — no update screens at all.
+   The workflow calls that URL after each manually approved publish, so the
+   site normally installs the new version within a minute — no update screens
+   are required.
    (Pasting that same URL in a browser manually forces an update any time.)
 
 What a deploy can and cannot touch:

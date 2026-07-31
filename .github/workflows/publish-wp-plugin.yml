@@ -1,7 +1,7 @@
 # Publishes wp-plugin/ranked-international/ to the `plugin-deploy` branch on
-# every push to main that touches it. The WordPress site (via the free Git
-# Updater plugin) tracks that branch and offers/installs the new version like
-# any normal plugin update — content in the WP database is never touched.
+# each manually approved workflow run. The WordPress site (via the free Git
+# Updater plugin) tracks that branch and installs the new version like any
+# normal plugin update — content in the WP database is never touched.
 #
 # The version is stamped as 1.<run_number>.0 so WordPress detects an update
 # and RIP_VERSION cache-busts the enqueued CSS/JS on visitors' browsers.

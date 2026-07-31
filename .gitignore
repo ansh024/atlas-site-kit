@@ -9,3 +9,4 @@ playwright-report/
 .preview/
 wp-data/*
 !wp-data/.gitkeep
+wp-data.zip
