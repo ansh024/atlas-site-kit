@@ -69,6 +69,35 @@ test('audit CTA opens the WPForms-owned modal', async ({ page }) => {
   await expect(page.locator('.audit-modal__wpforms')).toBeVisible();
 });
 
+test('audit modal survives repeated CTA opens and always unlocks the page', async ({ page }) => {
+  const modal = page.locator('#auditModal');
+  const close = page.locator('[data-audit-close]').last();
+  const ctas = page.locator('a[href="#audit"]:visible');
+
+  for (let index = 0; index < await ctas.count(); index += 1) {
+    const cta = ctas.nth(index);
+    await cta.click();
+    await expect(modal).toHaveClass(/is-open/);
+    await expect(modal).toHaveAttribute('aria-hidden', 'false');
+    await expect(page.locator('body')).toHaveClass(/audit-modal-open/);
+
+    await close.click();
+    await expect(modal).not.toHaveClass(/is-open/);
+    await expect(modal).toHaveAttribute('aria-hidden', 'true');
+    await expect(modal).toHaveJSProperty('inert', true);
+    await expect(page.locator('body')).not.toHaveClass(/audit-modal-open/);
+  }
+
+  const firstCta = ctas.first();
+  await firstCta.evaluate(link => {
+    for (let tap = 0; tap < 8; tap += 1) link.click();
+  });
+  await expect(modal).toHaveClass(/is-open/);
+  await expect(page.locator('body')).toHaveClass(/audit-modal-open/);
+  await close.click();
+  await expect(page.locator('body')).not.toHaveClass(/audit-modal-open/);
+});
+
 test('mobile layout has no horizontal document overflow', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile');
   const dimensions = await page.evaluate(() => ({ scroll: document.body.scrollWidth, client: document.documentElement.clientWidth }));
