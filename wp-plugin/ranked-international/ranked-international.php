@@ -143,6 +143,19 @@ add_filter( 'wp_headers', function ( $headers ) {
 	return $headers;
 }, PHP_INT_MAX );
 
+// Some production cache plugins replace Cache-Control during send_headers,
+// after wp_headers has already run. Reassert the campaign policy at the last
+// WordPress header hook so the public response cannot advertise a month-long
+// browser TTL for page HTML.
+add_action( 'send_headers', function () {
+	if ( ! rip_is_turf_tree_landing() || headers_sent() ) return;
+
+	header( 'Cache-Control: no-cache, no-store, must-revalidate, max-age=0', true );
+	header( 'Cloudflare-CDN-Cache-Control: no-store', true );
+	header( 'CDN-Cache-Control: no-store', true );
+	header( 'Expires: Wed, 11 Jan 1984 05:00:00 GMT', true );
+}, PHP_INT_MAX );
+
 /** Slug of the thank-you campaign for this request, or false when not one. */
 function rip_thank_you_route() {
 	if ( is_admin() ) return false;
