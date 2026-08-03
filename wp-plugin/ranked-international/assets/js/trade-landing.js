@@ -6,29 +6,19 @@
   }));
 
   const auditSection = document.querySelector('#audit.trade-audit');
-  const auditForm = auditSection?.querySelector('.ghl-audit-form[data-ghl-src]');
-  const loadAuditForm = () => {
-    if (!auditForm || auditForm.getAttribute('src')) return;
-    auditForm.src = auditForm.dataset.ghlSrc;
-    if (document.querySelector('script[src*="link.msgsndr.com/js/form_embed.js"]')) return;
-    const embedScript = document.createElement('script');
-    embedScript.src = 'https://link.msgsndr.com/js/form_embed.js';
-    embedScript.async = true;
-    embedScript.dataset.ripGhlEmbed = 'true';
-    document.body.appendChild(embedScript);
-  };
-  document.querySelectorAll('a[href="#audit"]').forEach((link) => link.addEventListener('click', loadAuditForm));
-  if (auditSection && auditForm) {
-    if (location.hash === '#audit' || !('IntersectionObserver' in window)) {
-      loadAuditForm();
-    } else {
-      const auditObserver = new IntersectionObserver((entries, observer) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        loadAuditForm();
-        observer.disconnect();
-      }, { rootMargin: '500px 0px' });
-      auditObserver.observe(auditSection);
-    }
+  if (auditSection) {
+    document.querySelectorAll('a[href="#audit"]').forEach((link) => link.addEventListener('click', (event) => {
+      event.preventDefault();
+      history.pushState(null, '', '#audit');
+
+      // Jump reliably even while the third-party iframe is settling its
+      // height. A long CSS smooth-scroll can otherwise chase a moving target.
+      const root = document.documentElement;
+      const previousScrollBehavior = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      auditSection.scrollIntoView({ block: 'start' });
+      requestAnimationFrame(() => { root.style.scrollBehavior = previousScrollBehavior; });
+    }));
   }
 
   const sticky = document.querySelector('.mobile-sticky-actions');

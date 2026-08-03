@@ -129,6 +129,20 @@ function rip_is_turf_tree_landing() {
 	return is_page() && get_page_template_slug() === 'templates/template-turf-tree-service.php';
 }
 
+/**
+ * The campaign markup changes more often than static assets, so browsers and
+ * CDNs must revalidate this HTML instead of keeping an old modal for weeks.
+ */
+add_filter( 'wp_headers', function ( $headers ) {
+	if ( ! rip_is_turf_tree_landing() ) return $headers;
+
+	$headers['Cache-Control']                 = 'no-cache, no-store, must-revalidate, max-age=0';
+	$headers['Cloudflare-CDN-Cache-Control'] = 'no-store';
+	$headers['CDN-Cache-Control']            = 'no-store';
+	$headers['Expires']                      = 'Wed, 11 Jan 1984 05:00:00 GMT';
+	return $headers;
+}, PHP_INT_MAX );
+
 /** Slug of the thank-you campaign for this request, or false when not one. */
 function rip_thank_you_route() {
 	if ( is_admin() ) return false;
@@ -312,6 +326,7 @@ function rip_enqueue_assets() {
 	}
 	if ( $is_turf_tree ) {
 		wp_enqueue_script( 'rip-turf-tree', RIP_URL . 'assets/js/trade-landing.js', array( 'gsap', 'gsap-scrolltrigger', 'rip-main' ), RIP_VERSION, true );
+		wp_enqueue_script( 'rip-ghl-form-embed', 'https://link.msgsndr.com/js/form_embed.js', array(), null, true );
 	}
 
 	// Render once before styles/scripts print so WPForms can enqueue its assets.

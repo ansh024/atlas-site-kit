@@ -2,6 +2,8 @@
 /* Keep the campaign header focused on its sole conversion action on all viewports. */
 body.page-template-template-turf-tree-service #wrapper-navbar .uicore-nav-menu,
 body.page-template-template-turf-tree-service #wrapper-navbar .uicore-toggle { display:none !important; }
+/* Fail closed if a cached template or third party injects the retired popup. */
+body.page-template-template-turf-tree-service #auditModal { display:none !important; }
 body.page-template-template-turf-tree-service .trade-audit { scroll-margin-top:88px; padding:clamp(60px,8vw,104px) var(--pad); background:#07162f; }
 body.page-template-template-turf-tree-service .trade-audit__inner { display:grid; grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr); max-width:1120px; margin:0 auto; border:1px solid rgba(255,255,255,.12); border-radius:26px; overflow:hidden; background:#fff; box-shadow:0 32px 80px rgba(0,0,0,.24); }
 body.page-template-template-turf-tree-service .trade-audit__value { display:flex; flex-direction:column; padding:clamp(38px,5vw,64px); background:#e9f6ff; color:#07162f; }
