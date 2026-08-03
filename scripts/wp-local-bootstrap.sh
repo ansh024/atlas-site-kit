@@ -31,6 +31,16 @@ if [[ ! "$SERVICE_ID" =~ ^[0-9]+$ ]]; then
   exit 1
 fi
 "$WP_ENV_BIN" run cli wp post update "$SERVICE_ID" --post_status=publish >/dev/null
+
+# Create the paid turf landing-page fixture only inside disposable wp-env so
+# campaign-specific CTA and modal behavior can be covered by browser tests.
+TURF_ID="$("$WP_ENV_BIN" run cli wp post list --post_type=page --name=seo-for-turf-tree-care-outdoor-services --post_status=draft,publish --field=ID | tr -d '\r' | grep -E '^[0-9]+$' | head -1 || true)"
+if [[ ! "$TURF_ID" =~ ^[0-9]+$ ]]; then
+  TURF_ID="$("$WP_ENV_BIN" run cli wp post create --post_type=page --post_status=publish --post_title='SEO for Turf, Tree Care & Outdoor Services' --post_name=seo-for-turf-tree-care-outdoor-services --porcelain | tr -d '\r' | grep -E '^[0-9]+$' | head -1)"
+fi
+[[ "$TURF_ID" =~ ^[0-9]+$ ]] || { echo "Turf landing-page fixture could not be created." >&2; exit 1; }
+"$WP_ENV_BIN" run cli wp post meta update "$TURF_ID" _wp_page_template templates/template-turf-tree-service.php >/dev/null
+"$WP_ENV_BIN" run cli wp post update "$TURF_ID" --post_status=publish >/dev/null
 "$WP_ENV_BIN" run cli wp rewrite flush --hard >/dev/null
 
 echo "Local WordPress ready: $WP_LOCAL_URL/local-seo-services/"

@@ -1,9 +1,11 @@
 (function () {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const track = (placement) => window.dispatchEvent(new CustomEvent('ranked:analytics', { detail: { event: 'audit_cta_click', placement } }));
-  document.querySelectorAll('.trade-landing [data-track]').forEach((button) => button.addEventListener('click', () => track(button.dataset.track)));
+  const track = (event, placement) => window.dispatchEvent(new CustomEvent('ranked:analytics', { detail: { event, placement } }));
+  document.querySelectorAll('[data-track]').forEach((button) => button.addEventListener('click', () => {
+    track(button.dataset.trackEvent || 'audit_cta_click', button.dataset.track);
+  }));
 
-  const sticky = document.querySelector('.mobile-sticky-audit');
+  const sticky = document.querySelector('.mobile-sticky-actions');
   const mobile = window.matchMedia('(max-width: 640px)');
   const updateSticky = () => sticky?.classList.toggle('is-visible', mobile.matches && window.scrollY > 120);
   addEventListener('scroll', updateSticky, { passive: true });
