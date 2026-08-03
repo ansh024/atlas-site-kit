@@ -543,6 +543,17 @@ function titles() {
 /* ---------- audit modal (WPForms owns validation and submission) ---------- */
 function form() {
   const modal = $('#auditModal');
+  const inlineAudit = $('#audit.trade-audit');
+
+  // This paid-traffic page owns an inline audit form. If stale cached markup
+  // or another integration also injects the legacy modal, remove it before
+  // the shared click delegation can turn #audit links back into popup links.
+  if (inlineAudit) {
+    modal?.remove();
+    document.body.classList.remove('audit-modal-open');
+    return;
+  }
+
   if (!modal) return;
 
   let lastFocus = null;
