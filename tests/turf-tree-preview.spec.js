@@ -24,6 +24,19 @@ test('offers tracked audit and phone actions at every conversion point', async (
   });
 });
 
+test('takes every audit CTA to the inline form instead of opening a popup', async ({ page }) => {
+  await expect(page.locator('#auditModal')).toHaveCount(0);
+  await expect(page.locator('#audit.trade-audit')).toHaveCount(1);
+
+  await page.locator('[data-track="hero-audit"]').click();
+  await expect(page).toHaveURL(/#audit$/);
+  await expect(page.locator('#audit')).toBeInViewport();
+  await expect(page.locator('#audit .ghl-audit-form')).toHaveAttribute('src', /api\.leadconnectorhq\.com\/widget\/form\//);
+  if (page.viewportSize().width <= 640) {
+    await expect(page.locator('.mobile-sticky-actions')).not.toHaveClass(/is-visible/);
+  }
+});
+
 test('keeps the mobile audit and call actions visible and touch safe', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile');
   await page.evaluate(() => scrollTo(0, 500));

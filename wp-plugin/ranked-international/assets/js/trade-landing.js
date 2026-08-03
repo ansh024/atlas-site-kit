@@ -5,12 +5,46 @@
     track(button.dataset.trackEvent || 'audit_cta_click', button.dataset.track);
   }));
 
+  const auditSection = document.querySelector('#audit.trade-audit');
+  const auditForm = auditSection?.querySelector('.ghl-audit-form[data-ghl-src]');
+  const loadAuditForm = () => {
+    if (!auditForm || auditForm.getAttribute('src')) return;
+    auditForm.src = auditForm.dataset.ghlSrc;
+    if (document.querySelector('script[src*="link.msgsndr.com/js/form_embed.js"]')) return;
+    const embedScript = document.createElement('script');
+    embedScript.src = 'https://link.msgsndr.com/js/form_embed.js';
+    embedScript.async = true;
+    embedScript.dataset.ripGhlEmbed = 'true';
+    document.body.appendChild(embedScript);
+  };
+  document.querySelectorAll('a[href="#audit"]').forEach((link) => link.addEventListener('click', loadAuditForm));
+  if (auditSection && auditForm) {
+    if (location.hash === '#audit' || !('IntersectionObserver' in window)) {
+      loadAuditForm();
+    } else {
+      const auditObserver = new IntersectionObserver((entries, observer) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        loadAuditForm();
+        observer.disconnect();
+      }, { rootMargin: '500px 0px' });
+      auditObserver.observe(auditSection);
+    }
+  }
+
   const sticky = document.querySelector('.mobile-sticky-actions');
   const mobile = window.matchMedia('(max-width: 640px)');
-  const updateSticky = () => sticky?.classList.toggle('is-visible', mobile.matches && window.scrollY > 120);
+  let auditVisible = false;
+  const updateSticky = () => sticky?.classList.toggle('is-visible', mobile.matches && window.scrollY > 120 && !auditVisible);
   addEventListener('scroll', updateSticky, { passive: true });
   mobile.addEventListener?.('change', updateSticky);
   updateSticky();
+  if (auditSection && 'IntersectionObserver' in window) {
+    const stickyObserver = new IntersectionObserver((entries) => {
+      auditVisible = entries.some((entry) => entry.isIntersecting);
+      updateSticky();
+    }, { threshold: .01 });
+    stickyObserver.observe(auditSection);
+  }
 
   document.querySelectorAll('.trade-faq__topics a').forEach((link) => link.addEventListener('click', () => {
     document.querySelectorAll('.trade-faq__topics a').forEach((item) => item.classList.toggle('is-active', item === link));

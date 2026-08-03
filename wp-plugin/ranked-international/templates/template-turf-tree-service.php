@@ -69,6 +69,29 @@ $case_study_url = home_url( '/case-studies/turf-and-design/' );
   <section class="faq trade-faq" id="faq"><div class="faq__head"><p class="eyebrow"><span class="dot"></span>Common questions</p><h2>What business owners ask us.</h2></div><div class="trade-faq__layout"><nav class="trade-faq__topics" aria-label="FAQ topics"><a href="#faq-engagement" class="is-active">Engagement</a><a href="#faq-results">Results</a><a href="#faq-ownership">Ownership</a><a href="#faq-audit">Audit</a></nav><div class="faq__list"><p class="trade-faq__group" id="faq-engagement">Engagement</p><article class="faq__item is-open"><button class="faq__question" type="button" aria-expanded="true"><span>Do I have to sign a long-term contract?</span><span aria-hidden="true">+</span></button><div class="faq__answer"><p>No. You stay month to month because the work is bringing results. If it is not, you are free to leave.</p></div></article><article class="faq__item"><button class="faq__question" type="button" aria-expanded="false"><span>How is pricing determined?</span><span aria-hidden="true">+</span></button><div class="faq__answer"><p>Pricing depends on services, locations, competition and website work. The audit establishes scope before a proposal.</p></div></article><p class="trade-faq__group" id="faq-results">Results</p><article class="faq__item"><button class="faq__question" type="button" aria-expanded="false"><span>How quickly should I expect results?</span><span aria-hidden="true">+</span></button><div class="faq__answer"><p>SEO is not overnight. Early movement can begin in months and compounds over time.</p></div></article><article class="faq__item"><button class="faq__question" type="button" aria-expanded="false"><span>Can you target every city we serve?</span><span aria-hidden="true">+</span></button><div class="faq__answer"><p>We prioritize cities you can genuinely cover, then build useful service-area pages where the opportunity supports them.</p></div></article><p class="trade-faq__group" id="faq-ownership">Ownership</p><article class="faq__item"><button class="faq__question" type="button" aria-expanded="false"><span>Who owns the website, content and accounts?</span><span aria-hidden="true">+</span></button><div class="faq__answer"><p>You do. We work through client-owned properties so the business retains its assets if the engagement ends.</p></div></article><p class="trade-faq__group" id="faq-audit">Audit</p><article class="faq__item"><button class="faq__question" type="button" aria-expanded="false"><span>What is included in the free audit?</span><span aria-hidden="true">+</span></button><div class="faq__answer"><p>Where you rank, the keywords you are missing, how your Maps profile appears, and the biggest fixes to get you climbing.</p></div></article></div></div></section>
 
   <section class="cta" id="cta-final"><div class="cta__inner"><div class="cta__copy"><p class="cta__title">Stop losing customers to businesses with worse work and better <em>rankings.</em></p><p class="cta__sub">Every month you are invisible on Google is a month of jobs going to someone else. Let’s fix that.</p></div><div class="trade-cta__actions"><div class="trade-cta__buttons"><a href="#audit" class="btn btn--dark btn--lg" data-track="final-audit">Get free SEO audit</a><a href="tel:+18334024789" class="btn btn--lg trade-call-btn" data-track="final-call" data-track-event="call_cta_click" aria-label="Call Ranked International at 833-402-4789">Call 833-402-4789</a></div><span>No contract. No obligation.</span></div></div></section>
+
+  <?php $audit_form_id = rip_ghl_form_id( 'turf' ); ?>
+  <section class="trade-audit" id="audit" aria-labelledby="auditTitle">
+    <div class="trade-audit__inner">
+      <div class="trade-audit__value">
+        <p class="trade-audit__eyebrow">Your free SEO audit</p>
+        <h2 id="auditTitle">Get a clearer path to more leads.</h2>
+        <p class="trade-audit__intro">See the search opportunities most likely to bring in more calls for your turf, tree care, or outdoor service business.</p>
+        <ul class="trade-audit__benefits">
+          <li>Keywords your competitors rank for and you do not</li>
+          <li>Google Maps opportunities in your service areas</li>
+          <li>A practical plan focused on the biggest wins first</li>
+        </ul>
+        <p class="trade-audit__reassurance">No contract. No obligation. Just a clear next step.</p>
+      </div>
+      <div class="trade-audit__form-panel">
+        <p class="trade-audit__eyebrow">Let’s get started</p>
+        <h2>Tell us about your business.</h2>
+        <p>Share a few details so we can review the right markets, services, and competitors.</p>
+        <iframe class="ghl-audit-form" data-ghl-src="https://api.leadconnectorhq.com/widget/form/<?php echo esc_attr( $audit_form_id ); ?>" id="inline-<?php echo esc_attr( $audit_form_id ); ?>" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-activation-type="alwaysActivated" data-deactivation-type="neverDeactivate" data-form-name="Meta Form" data-height="1000" data-layout-iframe-id="inline-<?php echo esc_attr( $audit_form_id ); ?>" data-form-id="<?php echo esc_attr( $audit_form_id ); ?>" title="Request your free SEO audit" loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
 </main>
 
 <div class="mobile-sticky-actions" aria-label="Contact Ranked International">
@@ -76,5 +99,4 @@ $case_study_url = home_url( '/case-studies/turf-and-design/' );
   <a href="tel:+18334024789" class="mobile-sticky-call" data-track="mobile-sticky-call" data-track-event="call_cta_click" aria-label="Call Ranked International at 833-402-4789">Call now</a>
 </div>
 
-<?php rip_render_ghl_audit_modal( 'turf' ); ?>
 <?php get_footer(); ?>
