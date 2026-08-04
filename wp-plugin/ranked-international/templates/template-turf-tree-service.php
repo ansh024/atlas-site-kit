@@ -74,18 +74,11 @@ $case_study_url = home_url( '/case-studies/turf-and-design/' );
   <section class="trade-audit" id="audit" aria-labelledby="auditTitle">
     <div class="trade-audit__inner">
       <div class="trade-audit__value">
-        <p class="trade-audit__eyebrow">Your free SEO audit</p>
         <h2 id="auditTitle">Get a clearer path to more leads.</h2>
         <p class="trade-audit__intro">See the search opportunities most likely to bring in more calls for your turf, tree care, or outdoor service business.</p>
-        <ul class="trade-audit__benefits">
-          <li>Keywords your competitors rank for and you do not</li>
-          <li>Google Maps opportunities in your service areas</li>
-          <li>A practical plan focused on the biggest wins first</li>
-        </ul>
         <p class="trade-audit__reassurance">No contract. No obligation. Just a clear next step.</p>
       </div>
       <div class="trade-audit__form-panel">
-        <p class="trade-audit__eyebrow">Let’s get started</p>
         <h2>Tell us about your business.</h2>
         <p>Share a few details so we can review the right markets, services, and competitors.</p>
         <iframe class="ghl-audit-form" src="https://api.leadconnectorhq.com/widget/form/<?php echo esc_attr( $audit_form_id ); ?>" id="inline-<?php echo esc_attr( $audit_form_id ); ?>" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-activation-type="alwaysActivated" data-deactivation-type="neverDeactivate" data-form-name="Meta Form" data-height="1000" data-layout-iframe-id="inline-<?php echo esc_attr( $audit_form_id ); ?>" data-form-id="<?php echo esc_attr( $audit_form_id ); ?>" title="Request your free SEO audit"></iframe>

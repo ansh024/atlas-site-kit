@@ -7,12 +7,8 @@ body.page-template-template-turf-tree-service #auditModal { display:none !import
 body.page-template-template-turf-tree-service .trade-audit { scroll-margin-top:88px; padding:clamp(60px,8vw,104px) var(--pad); background:#07162f; }
 body.page-template-template-turf-tree-service .trade-audit__inner { display:grid; grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr); max-width:1120px; margin:0 auto; border:1px solid rgba(255,255,255,.12); border-radius:26px; overflow:hidden; background:#fff; box-shadow:0 32px 80px rgba(0,0,0,.24); }
 body.page-template-template-turf-tree-service .trade-audit__value { display:flex; flex-direction:column; padding:clamp(38px,5vw,64px); background:#e9f6ff; color:#07162f; }
-body.page-template-template-turf-tree-service .trade-audit__eyebrow { margin:0 0 16px; color:#1256d6; font-family:var(--font-display); font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; }
 body.page-template-template-turf-tree-service .trade-audit h2 { max-width:14ch; margin:0; color:#07162f; font-family:var(--font-display); font-size:clamp(2rem,3.2vw,3rem); font-weight:800; letter-spacing:-.04em; line-height:1.04; }
 body.page-template-template-turf-tree-service .trade-audit__intro { max-width:36ch; margin:24px 0 0; color:#385574; font-size:1rem; line-height:1.6; }
-body.page-template-template-turf-tree-service .trade-audit__benefits { display:grid; gap:15px; margin:36px 0 0; padding:0; list-style:none; color:#18365e; font-size:.96rem; font-weight:650; }
-body.page-template-template-turf-tree-service .trade-audit__benefits li { display:grid; grid-template-columns:22px minmax(0,1fr); gap:11px; align-items:start; }
-body.page-template-template-turf-tree-service .trade-audit__benefits li::before { content:"✓"; display:grid; place-items:center; width:22px; height:22px; border-radius:50%; background:#caff00; color:#07162f; font-size:.8rem; font-weight:900; }
 body.page-template-template-turf-tree-service .trade-audit__reassurance { margin:auto 0 0; padding-top:36px; color:#385574; font-size:.86rem; font-weight:700; }
 body.page-template-template-turf-tree-service .trade-audit__form-panel { padding:clamp(38px,5vw,58px); background:#fff; }
 body.page-template-template-turf-tree-service .trade-audit__form-panel h2 { font-size:clamp(1.7rem,2.6vw,2.3rem); }
@@ -26,7 +22,6 @@ body.page-template-template-turf-tree-service .trade-audit .ghl-audit-form:not([
   body.page-template-template-turf-tree-service .trade-audit__value { padding:34px 26px 30px; }
   body.page-template-template-turf-tree-service .trade-audit__value h2 { max-width:17ch; font-size:2rem; }
   body.page-template-template-turf-tree-service .trade-audit__intro { margin-top:16px; font-size:.92rem; }
-  body.page-template-template-turf-tree-service .trade-audit__benefits { gap:11px; margin-top:22px; font-size:.88rem; }
   body.page-template-template-turf-tree-service .trade-audit__reassurance { margin-top:22px; padding-top:0; }
   body.page-template-template-turf-tree-service .trade-audit__form-panel { padding:32px 20px 20px; }
   body.page-template-template-turf-tree-service .trade-audit__form-panel h2 { max-width:18ch; font-size:1.65rem; }
