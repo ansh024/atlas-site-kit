@@ -34,6 +34,14 @@ assert_present '"@type"[[:space:]]*:[[:space:]]*"BreadcrumbList"' 'Breadcrumb sc
 assert_present '"@type"[[:space:]]*:[[:space:]]*"FAQPage"' 'FAQ schema'
 assert_absent 'Benchling|Outgrid|Biopharmaceutical|Industrial Biotech' 'legacy template content in the service page'
 
+# The Meta Ads landing page is a database-free clone of the homepage with a
+# minimal WordPress document shell. It must not leak the theme header/footer.
+LANDING_STATUS="$(curl --silent --output /tmp/ranked-seo-businesses.html --write-out '%{http_code}' "$WP_LOCAL_URL/seo-for-businesses/")"
+[[ "$LANDING_STATUS" == "200" ]] || { echo "Expected HTTP 200 for /seo-for-businesses/, got $LANDING_STATUS" >&2; exit 1; }
+grep -Fq 'Your customers are Googling' /tmp/ranked-seo-businesses.html || { echo "Missing: SEO businesses homepage content" >&2; exit 1; }
+grep -Fq 'rip-seo-businesses-landing' /tmp/ranked-seo-businesses.html || { echo "Missing: SEO businesses body class" >&2; exit 1; }
+! grep -Eiq '<header[^>]+(uicore|wrapper-navbar)|<footer[^>]+uicore' /tmp/ranked-seo-businesses.html || { echo "Unexpected: theme navigation chrome on SEO businesses landing page" >&2; exit 1; }
+
 "$WP_ENV_BIN" run cli wp plugin is-active ranked-international
 YOAST_SLUG="$("$WP_ENV_BIN" run cli wp plugin list --status=active --field=name | grep '^wordpress-seo' | head -1 | tr -d '\r')"
 [[ -n "$YOAST_SLUG" ]] || { echo "Yoast SEO is not active." >&2; exit 1; }

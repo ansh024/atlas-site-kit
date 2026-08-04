@@ -1,4 +1,16 @@
+<?php if ( rip_is_seo_businesses_landing() ) : ?>
+<!doctype html>
+<html <?php language_attributes(); ?>>
+<head>
+  <meta charset="<?php bloginfo( 'charset' ); ?>">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <?php wp_head(); ?>
+</head>
+<body <?php body_class(); ?>>
+<?php wp_body_open(); ?>
+<?php else : ?>
 <?php get_header(); ?>
+<?php endif; ?>
 
 <main id="top">
 
@@ -464,4 +476,10 @@
 </main>
 
 <?php rip_render_audit_modal(); ?>
+<?php if ( rip_is_seo_businesses_landing() ) : ?>
+<?php wp_footer(); ?>
+</body>
+</html>
+<?php else : ?>
 <?php get_footer(); ?>
+<?php endif; ?>
