@@ -350,6 +350,7 @@ function rip_enqueue_assets() {
 	$is_case_study = is_singular( 'rip_case_study' ) || get_page_template_slug() === 'templates/template-case-studies-hub.php';
 	$is_service = is_singular( 'rip_service' );
 	$is_turf_tree = get_page_template_slug() === 'templates/template-turf-tree-service.php';
+	$is_seo_businesses = rip_is_seo_businesses_landing();
 	$is_audit_thank_you = rip_is_audit_thank_you();
 	$is_legal_page = rip_is_legal_page();
 	if ( $is_case_study ) {
@@ -358,7 +359,7 @@ function rip_enqueue_assets() {
 	if ( $is_service ) {
 		wp_enqueue_style( 'rip-service', RIP_URL . 'assets/css/service.css', array( 'rip-styles' ), RIP_VERSION );
 	}
-	if ( $is_turf_tree ) {
+	if ( $is_turf_tree || $is_seo_businesses ) {
 		wp_enqueue_style( 'rip-turf-tree', RIP_URL . 'assets/css/trade-landing.css', array( 'rip-styles', 'rip-page-fixes' ), RIP_VERSION );
 	}
 	if ( $is_audit_thank_you ) {
@@ -380,8 +381,10 @@ function rip_enqueue_assets() {
 	if ( $is_service ) {
 		wp_enqueue_script( 'rip-service', RIP_URL . 'assets/js/service.js', array( 'gsap', 'gsap-scrolltrigger', 'rip-main' ), RIP_VERSION, true );
 	}
-	if ( $is_turf_tree ) {
+	if ( $is_turf_tree || $is_seo_businesses ) {
 		wp_enqueue_script( 'rip-turf-tree', RIP_URL . 'assets/js/trade-landing.js', array( 'gsap', 'gsap-scrolltrigger', 'rip-main' ), RIP_VERSION, true );
+	}
+	if ( $is_turf_tree ) {
 		wp_enqueue_script( 'rip-ghl-form-embed', 'https://link.msgsndr.com/js/form_embed.js', array(), null, true );
 	}
 

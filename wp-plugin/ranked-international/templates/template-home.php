@@ -12,7 +12,7 @@
 <?php get_header(); ?>
 <?php endif; ?>
 
-<main id="top">
+<main id="top"<?php echo rip_is_seo_businesses_landing() ? ' class="trade-landing"' : ''; ?>>
 
   <!-- ===== 1. HERO ===== -->
   <section class="hero" id="hero">
@@ -175,6 +175,40 @@
   </section>
 
   <!-- ===== 6. CASE STUDIES ===== -->
+  <?php if ( rip_is_seo_businesses_landing() ) : ?>
+  <section class="trade-case" id="case-study">
+    <div class="trade-case__inner">
+      <header class="section-head trade-case__head">
+        <p class="eyebrow"><span class="dot"></span>Featured turf case study</p>
+        <h2 class="section-title">From 20 leads to 70 leads per month — <em>2× leads, 2× revenue.</em></h2>
+      </header>
+      <div class="trade-case__layout">
+        <div class="trade-case__quote trade-case__video">
+          <video controls playsinline preload="none" poster="<?php echo rip_asset( 'brandon-testimonial-poster.jpg' ); ?>" data-lazy-video aria-label="Client testimonial from TX Artificial Turf and Design">
+            <source data-src="<?php echo esc_url( RIP_URL . 'assets/videos/brandon-testimonial.mp4' ); ?>" type="video/mp4">
+          </video>
+        </div>
+        <div class="trade-case__proof">
+          <div class="trade-case__keyword-card">
+            <p class="trade-case__kicker">RANKING PROOF</p>
+            <h3>Four city pages. One stronger domain.</h3>
+            <div class="keyword-locations"><span>Dallas</span><span>Richardson</span><span>Plano</span><span>Fort Worth</span></div>
+            <dl>
+              <div><dt>Domain Authority</dt><dd data-trade-count="55">55</dd></div>
+              <div><dt>Ranking keywords</dt><dd data-trade-count="275">275</dd></div>
+              <div><dt>Backlinks earned</dt><dd data-trade-count="4400" data-trade-suffix="+">4,400+</dd></div>
+            </dl>
+          </div>
+          <div class="trade-case__metrics">
+            <div class="cs__metric-block"><p class="cs__metric-label">Monthly organic visitors</p><p class="cs__metric-num" data-trade-count="221">221</p><p class="cs__metric-sub">Up from zero after the 18-month breakout.</p></div>
+            <div class="cs__metric-block"><p class="cs__metric-label">#1 Google rankings</p><p class="cs__metric-num" data-trade-count="5">5</p><p class="cs__metric-sub">Including Dallas and Richardson turf terms.</p></div>
+            <div class="cs__metric-block"><p class="cs__metric-label">Annual revenue</p><p class="cs__metric-num cs__metric-num--revenue">$800K → $1.6M</p><p class="cs__metric-sub">2× annual revenue.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <?php else : ?>
   <section class="case-studies" id="results">
     <div class="cs__inner">
       <div class="cs__header">
@@ -330,6 +364,7 @@
       </div>
     </div>
   </section>
+  <?php endif; ?>
 
   <!-- ===== 8. INDUSTRIES MARQUEE ===== -->
   <section class="industries" id="industries">

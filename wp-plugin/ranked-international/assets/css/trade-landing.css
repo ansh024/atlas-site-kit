@@ -47,7 +47,8 @@ body.page-template-template-turf-tree-service .trade-audit .ghl-audit-form:not([
   .trade-commitments__list::-webkit-scrollbar-thumb { background:#1256d6; border-radius:999px; }
   .trade-commitments__list li { position:relative; top:auto; flex:0 0 clamp(440px,46vw,610px); height:min(70vh,620px); min-height:0; scroll-snap-align:start; }
 }
-body.page-template-template-turf-tree-service main.trade-landing { --trade-navy:#07162f; --trade-blue:#1256d6; --trade-lime:#caff00; --trade-line:#dce4ef; color:#0a1b38; }
+body.page-template-template-turf-tree-service main.trade-landing,
+body.rip-seo-businesses-landing main.trade-landing { --trade-navy:#07162f; --trade-blue:#1256d6; --trade-lime:#caff00; --trade-line:#dce4ef; color:#0a1b38; }
 .trade-landing, .trade-landing * { box-sizing:border-box; text-transform:none; }
 .trade-hero { min-height:760px; padding-bottom:64px; }
 .trade-hero .hero__inner { align-items:center; gap:54px; padding-top:136px; }
