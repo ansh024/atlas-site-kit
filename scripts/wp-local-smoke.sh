@@ -40,6 +40,9 @@ LANDING_STATUS="$(curl --silent --output /tmp/ranked-seo-businesses.html --write
 [[ "$LANDING_STATUS" == "200" ]] || { echo "Expected HTTP 200 for /seo-for-businesses/, got $LANDING_STATUS" >&2; exit 1; }
 grep -Fq 'Your customers are Googling' /tmp/ranked-seo-businesses.html || { echo "Missing: SEO businesses homepage content" >&2; exit 1; }
 grep -Fq 'rip-seo-businesses-landing' /tmp/ranked-seo-businesses.html || { echo "Missing: SEO businesses body class" >&2; exit 1; }
+grep -Fq 'Featured turf case study' /tmp/ranked-seo-businesses.html || { echo "Missing: featured turf case study" >&2; exit 1; }
+grep -Fq 'brandon-testimonial.mp4' /tmp/ranked-seo-businesses.html || { echo "Missing: turf case study testimonial video" >&2; exit 1; }
+! grep -Fq 'Results business owners' /tmp/ranked-seo-businesses.html || { echo "Unexpected: homepage results carousel on SEO businesses landing page" >&2; exit 1; }
 ! grep -Eiq '<header[^>]+(uicore|wrapper-navbar)|<footer[^>]+uicore' /tmp/ranked-seo-businesses.html || { echo "Unexpected: theme navigation chrome on SEO businesses landing page" >&2; exit 1; }
 
 "$WP_ENV_BIN" run cli wp plugin is-active ranked-international
