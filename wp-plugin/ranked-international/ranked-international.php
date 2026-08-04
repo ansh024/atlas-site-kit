@@ -119,8 +119,10 @@ function rip_templates() {
  */
 function rip_thank_you_routes() {
 	return array(
-		'/seo-audit-thank-you' => 'audit',
-		'/turf-thank-you'      => 'turf',
+		'/seo-audit-thank-you'           => 'audit',
+		'/turf-thank-you'                => 'turf',
+		'/thank-you-seo-for-businesses-lp' => 'seo-businesses-lp',
+		'/thank-you-main-site'             => 'main-site',
 	);
 }
 

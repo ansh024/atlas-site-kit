@@ -1,5 +1,5 @@
 <?php
-/** Dedicated post-submission page for the Turf & Tree GHL campaign. */
+/** Shared post-submission page for campaign-specific thank-you routes. */
 
 get_header();
 ?>
