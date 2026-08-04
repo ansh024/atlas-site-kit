@@ -132,6 +132,13 @@ function rip_legal_routes() {
 	);
 }
 
+/** The focused homepage clone used by Meta Ads. No database Page is required. */
+function rip_is_seo_businesses_landing() {
+	if ( is_admin() ) return false;
+	$path = untrailingslashit( wp_parse_url( $_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH ) );
+	return $path === '/seo-for-businesses';
+}
+
 function rip_legal_route() {
 	if ( is_admin() ) return false;
 	$path = untrailingslashit( wp_parse_url( $_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH ) );
@@ -188,7 +195,7 @@ function rip_is_audit_thank_you() {
 }
 
 add_filter( 'redirect_canonical', function ( $redirect_url ) {
-	return ( rip_is_audit_thank_you() || rip_is_legal_page() ) ? false : $redirect_url;
+	return ( rip_is_audit_thank_you() || rip_is_legal_page() || rip_is_seo_businesses_landing() ) ? false : $redirect_url;
 } );
 
 /**
@@ -200,7 +207,7 @@ add_filter( 'redirect_canonical', function ( $redirect_url ) {
  * 200 to the rest of WordPress.
  */
 add_action( 'template_redirect', function () {
-	if ( ! rip_is_audit_thank_you() && ! rip_is_legal_page() ) return;
+	if ( ! rip_is_audit_thank_you() && ! rip_is_legal_page() && ! rip_is_seo_businesses_landing() ) return;
 	global $wp_query;
 	$wp_query->is_404 = false;
 	status_header( 200 );
@@ -214,6 +221,7 @@ add_filter( 'pre_get_document_title', function ( $title ) {
 	if ( rip_is_audit_thank_you() ) return 'Thank You | ' . get_bloginfo( 'name' );
 	if ( rip_legal_route() === 'privacy' ) return 'Privacy Policy | ' . get_bloginfo( 'name' );
 	if ( rip_legal_route() === 'terms' ) return 'Terms of Service | ' . get_bloginfo( 'name' );
+	if ( rip_is_seo_businesses_landing() ) return 'SEO for Businesses | ' . get_bloginfo( 'name' );
 	return $title;
 }, 99 );
 
@@ -254,6 +262,9 @@ function rip_add_page_templates( $templates ) {
  */
 add_filter( 'template_include', 'rip_load_page_template' );
 function rip_load_page_template( $template ) {
+	if ( rip_is_seo_businesses_landing() ) {
+		return RIP_DIR . 'templates/template-home.php';
+	}
 	if ( rip_is_audit_thank_you() ) {
 		return RIP_DIR . 'templates/template-audit-thank-you.php';
 	}
@@ -288,7 +299,7 @@ function rip_load_page_template( $template ) {
  * a Page using one of our Page Templates, or one of our reusable post types.
  */
 function rip_is_our_template() {
-	if ( rip_is_audit_thank_you() || rip_is_legal_page() ) return true;
+	if ( rip_is_audit_thank_you() || rip_is_legal_page() || rip_is_seo_businesses_landing() ) return true;
 	if ( is_singular( array( 'rip_city', 'rip_industry', 'rip_case_study', 'rip_service' ) ) ) return true;
 	if ( ! is_page() ) return false;
 	$slug = get_page_template_slug();
@@ -301,6 +312,10 @@ function rip_is_our_template() {
  */
 add_filter( 'body_class', 'rip_service_body_classes' );
 function rip_service_body_classes( $classes ) {
+	if ( rip_is_seo_businesses_landing() ) {
+		$classes[] = 'rip-seo-businesses-landing';
+		return array_unique( $classes );
+	}
 	$thank_you = rip_thank_you_route();
 	if ( $thank_you ) {
 		$classes[] = 'rip-audit-thank-you';
