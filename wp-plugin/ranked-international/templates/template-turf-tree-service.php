@@ -79,8 +79,6 @@ $case_study_url = home_url( '/case-studies/turf-and-design/' );
         <p class="trade-audit__reassurance">No contract. No obligation. Just a clear next step.</p>
       </div>
       <div class="trade-audit__form-panel">
-        <h2>Tell us about your business.</h2>
-        <p>Share a few details so we can review the right markets, services, and competitors.</p>
         <iframe class="ghl-audit-form" src="https://api.leadconnectorhq.com/widget/form/<?php echo esc_attr( $audit_form_id ); ?>" id="inline-<?php echo esc_attr( $audit_form_id ); ?>" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-activation-type="alwaysActivated" data-deactivation-type="neverDeactivate" data-form-name="Meta Form" data-height="1000" data-layout-iframe-id="inline-<?php echo esc_attr( $audit_form_id ); ?>" data-form-id="<?php echo esc_attr( $audit_form_id ); ?>" title="Request your free SEO audit"></iframe>
       </div>
     </div>
