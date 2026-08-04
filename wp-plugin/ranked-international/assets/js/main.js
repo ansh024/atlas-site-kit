@@ -543,28 +543,79 @@ function titles() {
 /* ---------- audit modal (WPForms owns validation and submission) ---------- */
 function form() {
   const modal = $('#auditModal');
+  const inlineAudit = $('#audit.trade-audit');
+
+  // This paid-traffic page owns an inline audit form. If stale cached markup
+  // or another integration also injects the legacy modal, remove it before
+  // the shared click delegation can turn #audit links back into popup links.
+  if (inlineAudit) {
+    modal?.remove();
+    document.body.classList.remove('audit-modal-open');
+    return;
+  }
+
   if (!modal) return;
 
   let lastFocus = null;
-  const openAudit = event => {
-    event?.preventDefault();
-    lastFocus = document.activeElement;
-    modal.classList.add("is-open");
-    modal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("audit-modal-open");
-    setTimeout(() => $('input:not([type=hidden]), select, textarea', modal)?.focus(), 40);
+  let focusTimer = null;
+
+  const auditLinks = () => $$('a[href="#audit"]');
+  const setExpanded = expanded => auditLinks().forEach(link => {
+    link.setAttribute('aria-expanded', String(expanded));
+  });
+  const loadEmbeddedForm = () => {
+    const embeddedForm = $('.ghl-audit-form[data-ghl-src]', modal);
+    if (!embeddedForm || embeddedForm.getAttribute('src')) return;
+
+    embeddedForm.src = embeddedForm.dataset.ghlSrc;
+    if (document.querySelector('script[src*="link.msgsndr.com/js/form_embed.js"]')) return;
+
+    const embedScript = document.createElement('script');
+    embedScript.src = 'https://link.msgsndr.com/js/form_embed.js';
+    embedScript.async = true;
+    embedScript.dataset.ripGhlEmbed = 'true';
+    document.body.appendChild(embedScript);
   };
-  const closeAudit = () => {
-    modal.classList.remove("is-open");
-    modal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("audit-modal-open");
-    lastFocus?.focus?.();
+  const openAudit = (event, opener) => {
+    event?.preventDefault();
+    if (!modal.classList.contains('is-open')) {
+      lastFocus = opener || document.activeElement;
+    }
+
+    clearTimeout(focusTimer);
+    loadEmbeddedForm();
+    modal.inert = false;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('audit-modal-open');
+    setExpanded(true);
+    focusTimer = setTimeout(() => {
+      $('.audit-modal__close', modal)?.focus({ preventScroll: true });
+    }, 40);
+  };
+  const closeAudit = event => {
+    event?.preventDefault();
+    clearTimeout(focusTimer);
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('audit-modal-open');
+    setExpanded(false);
+
+    const focusTarget = lastFocus;
+    lastFocus = null;
+    if (focusTarget?.isConnected) focusTarget.focus?.({ preventScroll: true });
+    modal.inert = true;
   };
 
-  $$('a[href="#audit"]').forEach(link => link.addEventListener('click', openAudit));
+  modal.inert = true;
+  setExpanded(false);
+  document.addEventListener('click', event => {
+    const link = event.target.closest?.('a[href="#audit"]');
+    if (link) openAudit(event, link);
+  });
   $$('[data-audit-close]', modal).forEach(element => element.addEventListener('click', closeAudit));
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape" && modal.classList.contains("is-open")) closeAudit();
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && modal.classList.contains('is-open')) closeAudit(event);
   });
 }
 

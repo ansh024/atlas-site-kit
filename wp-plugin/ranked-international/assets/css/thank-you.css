@@ -7,5 +7,12 @@ body.rip-audit-thank-you .uicore-page-title { display:none; }
 .rip-thank-you h1 { max-width:12ch; margin:24px auto 0; color:#fff; font-family:var(--font-display); font-size:clamp(2.7rem, 7vw, 5rem); line-height:1.02; }
 .rip-thank-you h1 em { color:#caff00; font-family:var(--font-serif); }
 .rip-thank-you__inner > p:not(.rip-thank-you__eyebrow):not(.rip-thank-you__note) { max-width:52ch; margin:24px auto 0; color:rgba(255,255,255,.8); font-size:1.08rem; line-height:1.6; }
-.rip-thank-you__cta { display:inline-flex; align-items:center; justify-content:center; gap:.7em; margin-top:32px; padding:1em 1.5em; border-radius:999px; background:#caff00; color:#07162f; font-family:var(--font-display); font-weight:800; font-size:1.05rem; }
+.rip-thank-you__actions { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:32px; }
+.rip-thank-you__cta { display:inline-flex; min-height:52px; align-items:center; justify-content:center; gap:.7em; padding:1em 1.5em; border:2px solid #caff00; border-radius:999px; background:#caff00; color:#07162f; font-family:var(--font-display); font-weight:800; font-size:1.05rem; line-height:1; white-space:nowrap; }
+.rip-thank-you__cta--phone { background:transparent; color:#fff; border-color:rgba(255,255,255,.72); }
+.rip-thank-you__cta:hover, .rip-thank-you__cta:focus-visible { color:#07162f; background:#fff; border-color:#fff; }
 .rip-thank-you__note { margin-top:16px; color:rgba(255,255,255,.58); font-size:.86rem; }
+@media (max-width:560px) {
+  .rip-thank-you__actions { flex-direction:column; }
+  .rip-thank-you__cta { width:100%; }
+}

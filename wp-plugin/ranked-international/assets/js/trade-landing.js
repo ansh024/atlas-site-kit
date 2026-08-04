@@ -1,14 +1,40 @@
 (function () {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const track = (placement) => window.dispatchEvent(new CustomEvent('ranked:analytics', { detail: { event: 'audit_cta_click', placement } }));
-  document.querySelectorAll('.trade-landing [data-track]').forEach((button) => button.addEventListener('click', () => track(button.dataset.track)));
+  const track = (event, placement) => window.dispatchEvent(new CustomEvent('ranked:analytics', { detail: { event, placement } }));
+  document.querySelectorAll('[data-track]').forEach((button) => button.addEventListener('click', () => {
+    track(button.dataset.trackEvent || 'audit_cta_click', button.dataset.track);
+  }));
 
-  const sticky = document.querySelector('.mobile-sticky-audit');
+  const auditSection = document.querySelector('#audit.trade-audit');
+  if (auditSection) {
+    document.querySelectorAll('a[href="#audit"]').forEach((link) => link.addEventListener('click', (event) => {
+      event.preventDefault();
+      history.pushState(null, '', '#audit');
+
+      // Jump reliably even while the third-party iframe is settling its
+      // height. A long CSS smooth-scroll can otherwise chase a moving target.
+      const root = document.documentElement;
+      const previousScrollBehavior = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      auditSection.scrollIntoView({ block: 'start' });
+      requestAnimationFrame(() => { root.style.scrollBehavior = previousScrollBehavior; });
+    }));
+  }
+
+  const sticky = document.querySelector('.mobile-sticky-actions');
   const mobile = window.matchMedia('(max-width: 640px)');
-  const updateSticky = () => sticky?.classList.toggle('is-visible', mobile.matches && window.scrollY > 120);
+  let auditVisible = false;
+  const updateSticky = () => sticky?.classList.toggle('is-visible', mobile.matches && window.scrollY > 120 && !auditVisible);
   addEventListener('scroll', updateSticky, { passive: true });
   mobile.addEventListener?.('change', updateSticky);
   updateSticky();
+  if (auditSection && 'IntersectionObserver' in window) {
+    const stickyObserver = new IntersectionObserver((entries) => {
+      auditVisible = entries.some((entry) => entry.isIntersecting);
+      updateSticky();
+    }, { threshold: .01 });
+    stickyObserver.observe(auditSection);
+  }
 
   document.querySelectorAll('.trade-faq__topics a').forEach((link) => link.addEventListener('click', () => {
     document.querySelectorAll('.trade-faq__topics a').forEach((item) => item.classList.toggle('is-active', item === link));
@@ -114,17 +140,6 @@
       });
     }, { rootMargin: '240px 0px' });
     videoObserver.observe(video);
-  });
-
-  document.addEventListener('click', (event) => {
-    if (!event.target.closest('a[href="#audit"]')) return;
-    const form = document.querySelector('.ghl-audit-form[data-ghl-src]');
-    if (!form || form.hasAttribute('src')) return;
-    form.src = form.dataset.ghlSrc;
-    const embed = document.createElement('script');
-    embed.src = 'https://link.msgsndr.com/js/form_embed.js';
-    embed.async = true;
-    document.body.appendChild(embed);
   });
 
 }());
