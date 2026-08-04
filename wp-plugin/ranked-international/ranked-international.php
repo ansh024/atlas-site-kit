@@ -124,6 +124,25 @@ function rip_thank_you_routes() {
 	);
 }
 
+/** Legal pages are plugin routes so they do not rely on manually-created WP pages. */
+function rip_legal_routes() {
+	return array(
+		'/privacy-policy'   => 'privacy',
+		'/terms-of-service' => 'terms',
+	);
+}
+
+function rip_legal_route() {
+	if ( is_admin() ) return false;
+	$path = untrailingslashit( wp_parse_url( $_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH ) );
+	$routes = rip_legal_routes();
+	return $routes[ $path ] ?? false;
+}
+
+function rip_is_legal_page() {
+	return rip_legal_route() !== false;
+}
+
 /** True on the Turf & Tree paid-traffic landing page. */
 function rip_is_turf_tree_landing() {
 	return is_page() && get_page_template_slug() === 'templates/template-turf-tree-service.php';
@@ -142,7 +161,7 @@ function rip_is_audit_thank_you() {
 }
 
 add_filter( 'redirect_canonical', function ( $redirect_url ) {
-	return rip_is_audit_thank_you() ? false : $redirect_url;
+	return ( rip_is_audit_thank_you() || rip_is_legal_page() ) ? false : $redirect_url;
 } );
 
 /**
@@ -154,7 +173,7 @@ add_filter( 'redirect_canonical', function ( $redirect_url ) {
  * 200 to the rest of WordPress.
  */
 add_action( 'template_redirect', function () {
-	if ( ! rip_is_audit_thank_you() ) return;
+	if ( ! rip_is_audit_thank_you() && ! rip_is_legal_page() ) return;
 	global $wp_query;
 	$wp_query->is_404 = false;
 	status_header( 200 );
@@ -165,8 +184,10 @@ add_action( 'template_redirect', function () {
  * after it to win.
  */
 add_filter( 'pre_get_document_title', function ( $title ) {
-	if ( ! rip_is_audit_thank_you() ) return $title;
-	return 'Thank You | ' . get_bloginfo( 'name' );
+	if ( rip_is_audit_thank_you() ) return 'Thank You | ' . get_bloginfo( 'name' );
+	if ( rip_legal_route() === 'privacy' ) return 'Privacy Policy | ' . get_bloginfo( 'name' );
+	if ( rip_legal_route() === 'terms' ) return 'Terms of Service | ' . get_bloginfo( 'name' );
+	return $title;
 }, 99 );
 
 /** Campaign thank-you pages must never be indexed. */
@@ -209,6 +230,9 @@ function rip_load_page_template( $template ) {
 	if ( rip_is_audit_thank_you() ) {
 		return RIP_DIR . 'templates/template-audit-thank-you.php';
 	}
+	if ( rip_is_legal_page() ) {
+		return RIP_DIR . 'templates/template-legal.php';
+	}
 	if ( is_singular( 'rip_city' ) ) {
 		return RIP_DIR . 'templates/template-city.php';
 	}
@@ -237,7 +261,7 @@ function rip_load_page_template( $template ) {
  * a Page using one of our Page Templates, or one of our reusable post types.
  */
 function rip_is_our_template() {
-	if ( rip_is_audit_thank_you() ) return true;
+	if ( rip_is_audit_thank_you() || rip_is_legal_page() ) return true;
 	if ( is_singular( array( 'rip_city', 'rip_industry', 'rip_case_study', 'rip_service' ) ) ) return true;
 	if ( ! is_page() ) return false;
 	$slug = get_page_template_slug();
@@ -285,6 +309,7 @@ function rip_enqueue_assets() {
 	$is_service = is_singular( 'rip_service' );
 	$is_turf_tree = get_page_template_slug() === 'templates/template-turf-tree-service.php';
 	$is_audit_thank_you = rip_is_audit_thank_you();
+	$is_legal_page = rip_is_legal_page();
 	if ( $is_case_study ) {
 		wp_enqueue_style( 'rip-case-study', RIP_URL . 'assets/css/case-study.css', array( 'rip-styles' ), RIP_VERSION );
 	}
@@ -296,6 +321,9 @@ function rip_enqueue_assets() {
 	}
 	if ( $is_audit_thank_you ) {
 		wp_enqueue_style( 'rip-audit-thank-you', RIP_URL . 'assets/css/thank-you.css', array( 'rip-styles', 'rip-page-fixes' ), RIP_VERSION );
+	}
+	if ( $is_legal_page ) {
+		wp_enqueue_style( 'rip-legal', RIP_URL . 'assets/css/legal.css', array( 'rip-styles', 'rip-page-fixes' ), RIP_VERSION );
 	}
 
 	wp_enqueue_script( 'gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js', array(), '3.12.5', true );
