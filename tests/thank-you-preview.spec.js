@@ -21,3 +21,15 @@ for (const path of [
     );
   });
 }
+
+test('SEO businesses thank-you fires only its dedicated Meta conversion pixel', async ({ page }) => {
+  await page.goto('/thank-you-seo-for-businesses-lp/', { waitUntil: 'networkidle' });
+
+  await expect(page.locator('#rip-meta-seo-businesses-conversion')).toHaveCount(1);
+  const html = await page.content();
+  expect(html).toContain("fbq('init','1975861066398590')");
+  expect(html).toContain("fbq('track','PageView')");
+  expect(html).toContain("fbq('track','Lead')");
+  expect(html).not.toContain("fbq('init','1686472339304024')");
+  expect(html).toContain('1975861066398590&amp;ev=PageView&amp;noscript=1');
+});

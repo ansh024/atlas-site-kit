@@ -41,6 +41,14 @@ for THANK_YOU_PATH in /thank-you-seo-for-businesses-lp/ /thank-you-main-site/; d
   grep -Eiq 'noindex[^>]*nofollow|nofollow[^>]*noindex' /tmp/ranked-thank-you.html || { echo "Missing: noindex/nofollow at $THANK_YOU_PATH" >&2; exit 1; }
 done
 
+SEO_BUSINESS_THANK_YOU_HTML=/tmp/ranked-thank-you-seo-businesses.html
+curl --silent "$WP_LOCAL_URL/thank-you-seo-for-businesses-lp/" --output "$SEO_BUSINESS_THANK_YOU_HTML"
+grep -Fq "fbq('init','1975861066398590')" "$SEO_BUSINESS_THANK_YOU_HTML" || { echo "Missing: SEO businesses thank-you pixel init" >&2; exit 1; }
+grep -Fq "fbq('track','PageView')" "$SEO_BUSINESS_THANK_YOU_HTML" || { echo "Missing: SEO businesses thank-you PageView event" >&2; exit 1; }
+grep -Fq "fbq('track','Lead')" "$SEO_BUSINESS_THANK_YOU_HTML" || { echo "Missing: SEO businesses thank-you Lead event" >&2; exit 1; }
+! grep -Fq "fbq('init','1686472339304024')" "$SEO_BUSINESS_THANK_YOU_HTML" || { echo "Unexpected: legacy Lead pixel on SEO businesses thank-you" >&2; exit 1; }
+grep -Fq '1975861066398590&amp;ev=PageView&amp;noscript=1' "$SEO_BUSINESS_THANK_YOU_HTML" || { echo "Missing: SEO businesses thank-you noscript fallback" >&2; exit 1; }
+
 # The Meta Ads landing page is a database-free clone of the homepage with a
 # minimal WordPress document shell. It must not leak the theme header/footer.
 LANDING_STATUS="$(curl --silent --output /tmp/ranked-seo-businesses.html --write-out '%{http_code}' "$WP_LOCAL_URL/seo-for-businesses/")"
