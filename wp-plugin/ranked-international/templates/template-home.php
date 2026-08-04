@@ -7,6 +7,7 @@
     cta.textContent = 'Get Free SEO Audit';
   });
 </script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1975861066398590&amp;ev=PageView&amp;noscript=1" alt=""></noscript>
 <?php endif; ?>
 
 <main id="top"<?php echo rip_is_seo_businesses_landing() ? ' class="trade-landing"' : ''; ?>>
