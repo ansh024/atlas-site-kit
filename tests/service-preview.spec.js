@@ -61,12 +61,22 @@ test('workstream tabs and FAQ are keyboard operable', async ({ page }) => {
   await expect(secondFaq).toHaveAttribute('aria-expanded', 'true');
 });
 
-test('audit CTA opens the WPForms-owned modal', async ({ page }) => {
+test('audit CTA opens the Organic GHL modal', async ({ page }) => {
   await page.locator('.svc-hero__actions a[href="#audit"]').click();
   await expect(page.locator('#auditModal')).toHaveClass(/is-open/);
   await expect(page.locator('#auditModal')).toHaveAttribute('aria-hidden', 'false');
   await expect(page.locator('#auditForm')).toHaveCount(0);
-  await expect(page.locator('.audit-modal__wpforms')).toBeVisible();
+  const form = page.locator('#inline-f0ApiaQNdHgKKFOqtp8q');
+  await expect(form).toBeVisible();
+  await expect(form).toHaveAttribute('src', 'https://api.leadconnectorhq.com/widget/form/f0ApiaQNdHgKKFOqtp8q');
+  await expect(form).toHaveAttribute('data-form-name', 'Organic');
+  await expect(form).toHaveAttribute('data-height', '915');
+});
+
+test('SEO businesses campaign keeps its existing form', async ({ page }) => {
+  await page.goto('/seo-for-businesses/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#inline-f0ApiaQNdHgKKFOqtp8q')).toHaveCount(0);
+  await expect(page.locator('.audit-modal__wpforms')).toHaveCount(1);
 });
 
 test('audit modal survives repeated CTA opens and always unlocks the page', async ({ page }) => {

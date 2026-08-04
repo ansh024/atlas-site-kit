@@ -40,8 +40,11 @@ test('takes every audit CTA to the inline form instead of opening a popup', asyn
       await page.goto('/seo-for-turf-tree-care-outdoor-services/', { waitUntil: 'domcontentloaded' });
     }
     if (placement === 'mobile-sticky-audit') {
-      await page.evaluate(() => scrollTo(0, 500));
-      await expect(page.locator('.mobile-sticky-actions')).toHaveClass(/is-visible/);
+      await expect.poll(async () => page.evaluate(() => {
+        scrollTo(0, 500);
+        dispatchEvent(new Event('scroll'));
+        return document.querySelector('.mobile-sticky-actions').classList.contains('is-visible');
+      })).toBe(true);
     }
     await page.locator(`[data-track="${placement}"]`).click();
     await expect(page).toHaveURL(/#audit$/);
@@ -76,9 +79,12 @@ test('prevents long-lived browser or CDN caching of campaign HTML', async ({ req
 
 test('keeps the mobile audit and call actions visible and touch safe', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile');
-  await page.evaluate(() => scrollTo(0, 500));
   const sticky = page.locator('.mobile-sticky-actions');
-  await expect(sticky).toHaveClass(/is-visible/);
+  await expect.poll(async () => page.evaluate(() => {
+    scrollTo(0, 500);
+    dispatchEvent(new Event('scroll'));
+    return document.querySelector('.mobile-sticky-actions').classList.contains('is-visible');
+  })).toBe(true);
 
   for (const selector of ['.mobile-sticky-audit', '.mobile-sticky-call']) {
     const box = await page.locator(selector).boundingBox();
