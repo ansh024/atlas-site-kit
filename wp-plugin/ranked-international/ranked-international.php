@@ -423,6 +423,20 @@ add_action( 'wp_footer', function () {
 	echo $cleaned === null ? $footer : $cleaned; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }, 0 );
 
+/** Meta PageView pixel for the SEO for Businesses paid-traffic campaign. */
+add_action( 'wp_head', function () {
+	if ( ! rip_is_seo_businesses_landing() ) return;
+	?>
+	<!-- Meta Pixel Code -->
+	<script id="rip-meta-seo-businesses">
+	!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+	fbq('init','1975861066398590');
+	fbq('track','PageView');
+	</script>
+	<!-- End Meta Pixel Code -->
+	<?php
+}, 20 );
+
 /** Meta Lead event is intentionally limited to the post-submission thank-you route. */
 add_action( 'wp_head', function () {
 	if ( ! rip_is_audit_thank_you() ) return;

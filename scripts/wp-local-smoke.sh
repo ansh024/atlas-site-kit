@@ -45,6 +45,8 @@ grep -Fq 'brandon-testimonial.mp4' /tmp/ranked-seo-businesses.html || { echo "Mi
 ! grep -Fq 'Results business owners' /tmp/ranked-seo-businesses.html || { echo "Unexpected: homepage results carousel on SEO businesses landing page" >&2; exit 1; }
 grep -Fq "cta.textContent = 'Get Free SEO Audit'" /tmp/ranked-seo-businesses.html || { echo "Missing: focused header CTA configuration" >&2; exit 1; }
 grep -Fq 'mobile-sticky-actions' /tmp/ranked-seo-businesses.html || { echo "Missing: mobile sticky actions on SEO businesses landing page" >&2; exit 1; }
+[[ "$(grep -Fo "fbq('init','1975861066398590')" /tmp/ranked-seo-businesses.html | wc -l | tr -d ' ')" == "1" ]] || { echo "SEO businesses Meta pixel init must appear exactly once" >&2; exit 1; }
+grep -Fq '1975861066398590&amp;ev=PageView&amp;noscript=1' /tmp/ranked-seo-businesses.html || { echo "Missing: SEO businesses Meta pixel noscript fallback" >&2; exit 1; }
 ! grep -Eiq '<footer[^>]+uicore' /tmp/ranked-seo-businesses.html || { echo "Unexpected: theme footer navigation on SEO businesses landing page" >&2; exit 1; }
 
 "$WP_ENV_BIN" run cli wp plugin is-active ranked-international
