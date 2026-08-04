@@ -40,6 +40,10 @@ function rip_wpforms_audit_html() {
 }
 
 function rip_render_audit_modal() {
+	if ( ! rip_is_turf_tree_landing() && ! rip_is_seo_businesses_landing() ) {
+		rip_render_ghl_audit_modal( 'organic' );
+		return;
+	}
 	?>
 	<div class="audit-modal" id="auditModal" aria-hidden="true">
 		<div class="audit-modal__backdrop" data-audit-close></div>
@@ -61,6 +65,7 @@ function rip_render_audit_modal() {
 function rip_ghl_form_id( $campaign = 'default' ) {
 	$forms = array(
 		'default' => 'NnlAud8uVZoK09OlAAFj',
+		'organic' => 'f0ApiaQNdHgKKFOqtp8q',
 		// Redirect this one to /turf-thank-you/ inside GHL.
 		'turf'    => 'NnlAud8uVZoK09OlAAFj',
 	);
@@ -70,6 +75,8 @@ function rip_ghl_form_id( $campaign = 'default' ) {
 /** Render the campaign-specific GHL audit form without changing other pages. */
 function rip_render_ghl_audit_modal( $campaign = 'default' ) {
 	$form_id = rip_ghl_form_id( $campaign );
+	$form_name = $campaign === 'organic' ? 'Organic' : 'Meta Form';
+	$form_height = $campaign === 'organic' ? 915 : 1000;
 	?>
 	<div class="audit-modal audit-modal--ghl" id="auditModal" aria-hidden="true">
 		<div class="audit-modal__backdrop" data-audit-close></div>
@@ -85,7 +92,7 @@ function rip_render_ghl_audit_modal( $campaign = 'default' ) {
 					</ul>
 				</aside>
 				<div class="ghl-modal__form-panel">
-					<iframe class="ghl-audit-form" data-ghl-src="https://api.leadconnectorhq.com/widget/form/<?php echo esc_attr( $form_id ); ?>" id="inline-<?php echo esc_attr( $form_id ); ?>" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-activation-type="alwaysActivated" data-deactivation-type="neverDeactivate" data-form-name="Meta Form" data-height="1000" data-layout-iframe-id="inline-<?php echo esc_attr( $form_id ); ?>" data-form-id="<?php echo esc_attr( $form_id ); ?>" title="Request your free SEO audit" loading="lazy"></iframe>
+					<iframe class="ghl-audit-form" data-ghl-src="https://api.leadconnectorhq.com/widget/form/<?php echo esc_attr( $form_id ); ?>" style="width:100%;height:100%;border:none;border-radius:20px" id="inline-<?php echo esc_attr( $form_id ); ?>" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-trigger-value="" data-activation-type="alwaysActivated" data-activation-value="" data-deactivation-type="neverDeactivate" data-deactivation-value="" data-form-name="<?php echo esc_attr( $form_name ); ?>" data-height="<?php echo esc_attr( $form_height ); ?>" data-layout-iframe-id="inline-<?php echo esc_attr( $form_id ); ?>" data-form-id="<?php echo esc_attr( $form_id ); ?>" title="<?php echo esc_attr( $form_name ); ?>" loading="lazy"></iframe>
 				</div>
 			</div>
 		</div>
