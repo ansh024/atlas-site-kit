@@ -10,9 +10,7 @@ body.page-template-template-turf-tree-service .trade-audit__value { display:flex
 body.page-template-template-turf-tree-service .trade-audit h2 { max-width:14ch; margin:0; color:#07162f; font-family:var(--font-display); font-size:clamp(2rem,3.2vw,3rem); font-weight:800; letter-spacing:-.04em; line-height:1.04; }
 body.page-template-template-turf-tree-service .trade-audit__intro { max-width:36ch; margin:24px 0 0; color:#385574; font-size:1rem; line-height:1.6; }
 body.page-template-template-turf-tree-service .trade-audit__reassurance { margin:auto 0 0; padding-top:36px; color:#385574; font-size:.86rem; font-weight:700; }
-body.page-template-template-turf-tree-service .trade-audit__form-panel { padding:clamp(38px,5vw,58px); background:#fff; }
-body.page-template-template-turf-tree-service .trade-audit__form-panel h2 { font-size:clamp(1.7rem,2.6vw,2.3rem); }
-body.page-template-template-turf-tree-service .trade-audit__form-panel > p:not(.trade-audit__eyebrow) { margin:11px 0 24px; color:#53677e; line-height:1.5; }
+body.page-template-template-turf-tree-service .trade-audit__form-panel { padding:clamp(24px,3vw,34px); background:#fff; }
 body.page-template-template-turf-tree-service .trade-audit .ghl-audit-form { display:block; width:100%; min-height:1000px; border:0; border-radius:14px; background:#fff; }
 body.page-template-template-turf-tree-service .trade-audit .ghl-audit-form:not([src]) { min-height:420px; background:linear-gradient(100deg,#f2f5f8 20%,#fff 38%,#f2f5f8 54%); background-size:200% 100%; animation:rip-form-loading 1.35s linear infinite; }
 @keyframes rip-form-loading { to { background-position:-200% 0; } }
@@ -23,8 +21,7 @@ body.page-template-template-turf-tree-service .trade-audit .ghl-audit-form:not([
   body.page-template-template-turf-tree-service .trade-audit__value h2 { max-width:17ch; font-size:2rem; }
   body.page-template-template-turf-tree-service .trade-audit__intro { margin-top:16px; font-size:.92rem; }
   body.page-template-template-turf-tree-service .trade-audit__reassurance { margin-top:22px; padding-top:0; }
-  body.page-template-template-turf-tree-service .trade-audit__form-panel { padding:32px 20px 20px; }
-  body.page-template-template-turf-tree-service .trade-audit__form-panel h2 { max-width:18ch; font-size:1.65rem; }
+  body.page-template-template-turf-tree-service .trade-audit__form-panel { padding:20px 12px 12px; }
   body.page-template-template-turf-tree-service .trade-audit .ghl-audit-form { min-height:920px; border-radius:12px; }
 }
 @media (prefers-reduced-motion:reduce) { body.page-template-template-turf-tree-service .trade-audit .ghl-audit-form:not([src]) { animation:none; } }
