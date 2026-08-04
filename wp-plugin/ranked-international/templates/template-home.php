@@ -1,15 +1,12 @@
-<?php if ( rip_is_seo_businesses_landing() ) : ?>
-<!doctype html>
-<html <?php language_attributes(); ?>>
-<head>
-  <meta charset="<?php bloginfo( 'charset' ); ?>">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <?php wp_head(); ?>
-</head>
-<body <?php body_class(); ?>>
-<?php wp_body_open(); ?>
-<?php else : ?>
 <?php get_header(); ?>
+
+<?php if ( rip_is_seo_businesses_landing() ) : ?>
+<script>
+  document.querySelectorAll('#wrapper-navbar .uicore-cta-wrapper a').forEach((cta) => {
+    cta.href = '#audit';
+    cta.textContent = 'Get Free SEO Audit';
+  });
+</script>
 <?php endif; ?>
 
 <main id="top"<?php echo rip_is_seo_businesses_landing() ? ' class="trade-landing"' : ''; ?>>
@@ -512,9 +509,9 @@
 
 <?php rip_render_audit_modal(); ?>
 <?php if ( rip_is_seo_businesses_landing() ) : ?>
-<?php wp_footer(); ?>
-</body>
-</html>
-<?php else : ?>
-<?php get_footer(); ?>
+<div class="mobile-sticky-actions" aria-label="Contact Ranked International">
+  <a href="#audit" class="mobile-sticky-audit" data-track="mobile-sticky-audit">Free audit</a>
+  <a href="tel:+18334024789" class="mobile-sticky-call" data-track="mobile-sticky-call" data-track-event="call_cta_click" aria-label="Call Ranked International at 833-402-4789">Call now</a>
+</div>
 <?php endif; ?>
+<?php get_footer(); ?>
