@@ -34,6 +34,13 @@ assert_present '"@type"[[:space:]]*:[[:space:]]*"BreadcrumbList"' 'Breadcrumb sc
 assert_present '"@type"[[:space:]]*:[[:space:]]*"FAQPage"' 'FAQ schema'
 assert_absent 'Benchling|Outgrid|Biopharmaceutical|Industrial Biotech' 'legacy template content in the service page'
 
+for THANK_YOU_PATH in /thank-you-seo-for-businesses-lp/ /thank-you-main-site/; do
+  THANK_YOU_STATUS="$(curl --silent --output /tmp/ranked-thank-you.html --write-out '%{http_code}' "$WP_LOCAL_URL$THANK_YOU_PATH")"
+  [[ "$THANK_YOU_STATUS" == "200" ]] || { echo "Expected HTTP 200 for $THANK_YOU_PATH, got $THANK_YOU_STATUS" >&2; exit 1; }
+  grep -Fq 'Thanks — your free SEO audit is' /tmp/ranked-thank-you.html || { echo "Missing: thank-you content at $THANK_YOU_PATH" >&2; exit 1; }
+  grep -Eiq 'noindex[^>]*nofollow|nofollow[^>]*noindex' /tmp/ranked-thank-you.html || { echo "Missing: noindex/nofollow at $THANK_YOU_PATH" >&2; exit 1; }
+done
+
 # The Meta Ads landing page is a database-free clone of the homepage with a
 # minimal WordPress document shell. It must not leak the theme header/footer.
 LANDING_STATUS="$(curl --silent --output /tmp/ranked-seo-businesses.html --write-out '%{http_code}' "$WP_LOCAL_URL/seo-for-businesses/")"

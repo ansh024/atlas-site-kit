@@ -1,6 +1,11 @@
 const { test, expect } = require('@playwright/test');
 
-for (const path of ['/seo-audit-thank-you/', '/turf-thank-you/']) {
+for (const path of [
+  '/seo-audit-thank-you/',
+  '/turf-thank-you/',
+  '/thank-you-seo-for-businesses-lp/',
+  '/thank-you-main-site/',
+]) {
   test(`${path} offers a direct phone call`, async ({ page }) => {
     await page.goto(path, { waitUntil: 'networkidle' });
 
