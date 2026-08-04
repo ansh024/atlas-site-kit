@@ -196,6 +196,10 @@ function rip_is_audit_thank_you() {
 	return rip_thank_you_route() !== false;
 }
 
+function rip_is_seo_businesses_thank_you() {
+	return rip_thank_you_route() === 'seo-businesses-lp';
+}
+
 add_filter( 'redirect_canonical', function ( $redirect_url ) {
 	return ( rip_is_audit_thank_you() || rip_is_legal_page() || rip_is_seo_businesses_landing() ) ? false : $redirect_url;
 } );
@@ -439,14 +443,17 @@ add_action( 'wp_head', function () {
 	<?php
 }, 20 );
 
-/** Meta Lead event is intentionally limited to the post-submission thank-you route. */
+/** Meta conversion events are intentionally limited to post-submission routes. */
 add_action( 'wp_head', function () {
 	if ( ! rip_is_audit_thank_you() ) return;
+	$seo_businesses = rip_is_seo_businesses_thank_you();
 	?>
 	<!-- Meta Pixel Code -->
-	<script id="rip-meta-lead">
+	<script id="<?php echo $seo_businesses ? 'rip-meta-seo-businesses-conversion' : 'rip-meta-lead'; ?>">
 	!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-	fbq('init','1686472339304024');
+	fbq('init','<?php echo $seo_businesses ? '1975861066398590' : '1686472339304024'; ?>');
+	<?php if ( $seo_businesses ) : ?>fbq('track','PageView');
+	<?php endif; ?>
 	fbq('track','Lead');
 	</script>
 	<!-- End Meta Pixel Code -->
@@ -477,7 +484,7 @@ add_action( 'wp_head', function () {
 		function ( $match ) {
 			$block = $match[0];
 			// Keep our own block, and any block that does not fire Lead.
-			if ( strpos( $block, 'rip-meta-lead' ) !== false ) return $block;
+			if ( strpos( $block, 'rip-meta-lead' ) !== false || strpos( $block, 'rip-meta-seo-businesses-conversion' ) !== false ) return $block;
 			if ( ! preg_match( '#fbq\(\s*[\'"]track[\'"]\s*,\s*[\'"]Lead[\'"]#i', $block ) ) return $block;
 			return '';
 		},
@@ -486,11 +493,6 @@ add_action( 'wp_head', function () {
 
 	echo $cleaned === null ? $head : $cleaned; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }, 999 );
-
-add_action( 'wp_body_open', function () {
-	if ( ! rip_is_audit_thank_you() ) return;
-	echo '<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1686472339304024&amp;ev=Lead&amp;noscript=1" alt=""></noscript>';
-} );
 
 /**
  * Resolve the front-end URL for one of our templates, if a Page has it assigned.

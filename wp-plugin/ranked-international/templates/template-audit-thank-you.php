@@ -4,6 +4,12 @@
 get_header();
 ?>
 
+<?php if ( rip_is_seo_businesses_thank_you() ) : ?>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1975861066398590&amp;ev=PageView&amp;noscript=1" alt=""></noscript>
+<?php else : ?>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1686472339304024&amp;ev=Lead&amp;noscript=1" alt=""></noscript>
+<?php endif; ?>
+
 <main class="rip-thank-you" id="top">
   <section class="rip-thank-you__hero">
     <div class="rip-thank-you__inner">
