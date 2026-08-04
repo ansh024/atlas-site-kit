@@ -43,7 +43,9 @@ grep -Fq 'rip-seo-businesses-landing' /tmp/ranked-seo-businesses.html || { echo 
 grep -Fq 'Featured turf case study' /tmp/ranked-seo-businesses.html || { echo "Missing: featured turf case study" >&2; exit 1; }
 grep -Fq 'brandon-testimonial.mp4' /tmp/ranked-seo-businesses.html || { echo "Missing: turf case study testimonial video" >&2; exit 1; }
 ! grep -Fq 'Results business owners' /tmp/ranked-seo-businesses.html || { echo "Unexpected: homepage results carousel on SEO businesses landing page" >&2; exit 1; }
-! grep -Eiq '<header[^>]+(uicore|wrapper-navbar)|<footer[^>]+uicore' /tmp/ranked-seo-businesses.html || { echo "Unexpected: theme navigation chrome on SEO businesses landing page" >&2; exit 1; }
+grep -Fq "cta.textContent = 'Get Free SEO Audit'" /tmp/ranked-seo-businesses.html || { echo "Missing: focused header CTA configuration" >&2; exit 1; }
+grep -Fq 'mobile-sticky-actions' /tmp/ranked-seo-businesses.html || { echo "Missing: mobile sticky actions on SEO businesses landing page" >&2; exit 1; }
+! grep -Eiq '<footer[^>]+uicore' /tmp/ranked-seo-businesses.html || { echo "Unexpected: theme footer navigation on SEO businesses landing page" >&2; exit 1; }
 
 "$WP_ENV_BIN" run cli wp plugin is-active ranked-international
 YOAST_SLUG="$("$WP_ENV_BIN" run cli wp plugin list --status=active --field=name | grep '^wordpress-seo' | head -1 | tr -d '\r')"

@@ -411,11 +411,11 @@ function rip_disable_uicore_custom_cursor() {
  * markup, scripts, and back-to-top — only the footer element itself goes.
  */
 add_action( 'get_footer', function () {
-	if ( rip_is_turf_tree_landing() ) ob_start();
+	if ( rip_is_turf_tree_landing() || rip_is_seo_businesses_landing() ) ob_start();
 } );
 
 add_action( 'wp_footer', function () {
-	if ( ! rip_is_turf_tree_landing() || ! ob_get_level() ) return;
+	if ( ( ! rip_is_turf_tree_landing() && ! rip_is_seo_businesses_landing() ) || ! ob_get_level() ) return;
 	$footer = ob_get_clean();
 
 	$cleaned = preg_replace( '#<footer\b[^>]*id=["\']uicore-tb-footer["\'][^>]*>.*?</footer>#is', '', $footer );
