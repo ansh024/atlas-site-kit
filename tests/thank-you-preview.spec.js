@@ -30,6 +30,13 @@ test('SEO businesses thank-you fires only its dedicated Meta conversion pixel', 
   expect(html).toContain("fbq('init','1975861066398590')");
   expect(html).toContain("fbq('track','PageView')");
   expect(html).toContain("fbq('track','Lead')");
-  expect(html).not.toContain("fbq('init','1686472339304024')");
+  // Whitespace-tolerant: the stray block pasted into WP admin writes
+  // `fbq('init', '1686…')` with a space, which an exact match would miss.
+  expect(html).not.toMatch(/fbq\(\s*'init'\s*,\s*'1686472339304024'/);
+  expect(html).not.toContain('facebook.com/tr?id=1686472339304024');
   expect(html).toContain('1975861066398590&amp;ev=PageView&amp;noscript=1');
+
+  // Exactly one pixel, one PageView fallback — no duplicate noscript beacons.
+  expect(html.match(/facebook\.com\/tr\?id=/g)).toHaveLength(1);
+  expect(html.match(/fbq\(\s*'init'/g)).toHaveLength(1);
 });

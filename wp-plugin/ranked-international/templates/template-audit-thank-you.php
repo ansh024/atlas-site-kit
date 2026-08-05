@@ -4,9 +4,8 @@
 get_header();
 ?>
 
-<?php if ( rip_is_seo_businesses_thank_you() ) : ?>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1975861066398590&amp;ev=PageView&amp;noscript=1" alt=""></noscript>
-<?php else : ?>
+<?php // The SEO-businesses route ships its own noscript fallback inside the <head> pixel block. ?>
+<?php if ( ! rip_is_seo_businesses_thank_you() ) : ?>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1686472339304024&amp;ev=Lead&amp;noscript=1" alt=""></noscript>
 <?php endif; ?>
 
