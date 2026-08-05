@@ -73,21 +73,24 @@ test('audit CTA opens the Organic GHL modal', async ({ page }) => {
   await expect(form).toHaveAttribute('data-height', '792');
 });
 
-test('SEO businesses campaign uses the Organic GHL form', async ({ page }) => {
+// This campaign runs its own GHL form, not the site-wide Organic one.
+test('SEO businesses campaign uses its own Meta Form', async ({ page }) => {
   await page.goto('/seo-for-businesses/', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('.audit-modal__wpforms')).toHaveCount(0);
+  await expect(page.locator('#inline-f0ApiaQNdHgKKFOqtp8q')).toHaveCount(0);
 
-  const form = page.locator('#inline-f0ApiaQNdHgKKFOqtp8q');
+  const form = page.locator('#inline-NnlAud8uVZoK09OlAAFj');
   await expect(form).toHaveCount(1);
-  await expect(form).toHaveAttribute('data-form-name', 'Organic');
-  await expect(form).toHaveAttribute('data-form-id', 'f0ApiaQNdHgKKFOqtp8q');
+  await expect(form).toHaveAttribute('data-form-name', 'Meta Form - General');
+  await expect(form).toHaveAttribute('data-form-id', 'NnlAud8uVZoK09OlAAFj');
+  await expect(form).toHaveAttribute('data-height', '772');
 
   // The iframe stays unloaded until the modal opens, then takes its real src.
   await expect(form).not.toHaveAttribute('src', /./);
   await page.locator('a[href="#audit"]:visible').first().click();
   await expect(form).toHaveAttribute(
     'src',
-    'https://api.leadconnectorhq.com/widget/form/f0ApiaQNdHgKKFOqtp8q'
+    'https://api.leadconnectorhq.com/widget/form/NnlAud8uVZoK09OlAAFj'
   );
 });
 
