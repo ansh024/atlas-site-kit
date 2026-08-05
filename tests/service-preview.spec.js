@@ -70,7 +70,7 @@ test('audit CTA opens the Organic GHL modal', async ({ page }) => {
   await expect(form).toBeVisible();
   await expect(form).toHaveAttribute('src', 'https://api.leadconnectorhq.com/widget/form/f0ApiaQNdHgKKFOqtp8q');
   await expect(form).toHaveAttribute('data-form-name', 'Organic');
-  await expect(form).toHaveAttribute('data-height', '915');
+  await expect(form).toHaveAttribute('data-height', '792');
 });
 
 test('SEO businesses campaign uses the Organic GHL form', async ({ page }) => {
