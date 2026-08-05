@@ -463,6 +463,9 @@ add_action( 'wp_head', function () {
 	<?php endif; ?>
 	fbq('track','Lead');
 	</script>
+	<?php if ( $seo_businesses ) : ?>
+	<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1975861066398590&amp;ev=PageView&amp;noscript=1" alt=""></noscript>
+	<?php endif; ?>
 	<!-- End Meta Pixel Code -->
 	<?php
 }, 20 );
@@ -477,6 +480,12 @@ add_action( 'wp_head', function () {
  * (header-scripts plugin / theme or Elementor custom code) and this becomes a
  * no-op. Deliberately narrow — it only touches thank-you routes, only removes
  * blocks that fire `Lead`, and leaves the site-wide `PageView` pixel alone.
+ *
+ * The SEO-businesses thank-you is the one exception: it must carry pixel
+ * 1975861066398590 and nothing else. `fbq('track', …)` broadcasts to every
+ * initialised pixel, so leaving the site-wide 1686472339304024 block in that
+ * page's <head> would silently bill it a second PageView plus the campaign's
+ * Lead. On that route every foreign Meta Pixel block is dropped.
  */
 add_action( 'wp_head', function () {
 	if ( rip_is_audit_thank_you() ) ob_start();
@@ -484,14 +493,17 @@ add_action( 'wp_head', function () {
 
 add_action( 'wp_head', function () {
 	if ( ! rip_is_audit_thank_you() || ! ob_get_level() ) return;
-	$head = ob_get_clean();
+	$head          = ob_get_clean();
+	$seo_exclusive = rip_is_seo_businesses_thank_you();
 
 	$cleaned = preg_replace_callback(
 		'#<!--\s*Meta Pixel Code\s*-->.*?<!--\s*End Meta Pixel Code\s*-->#is',
-		function ( $match ) {
+		function ( $match ) use ( $seo_exclusive ) {
 			$block = $match[0];
-			// Keep our own block, and any block that does not fire Lead.
+			// Keep our own block, always.
 			if ( strpos( $block, 'rip-meta-lead' ) !== false || strpos( $block, 'rip-meta-seo-businesses-conversion' ) !== false ) return $block;
+			// On the SEO-businesses thank-you, ours is the only pixel allowed.
+			if ( $seo_exclusive ) return '';
 			if ( ! preg_match( '#fbq\(\s*[\'"]track[\'"]\s*,\s*[\'"]Lead[\'"]#i', $block ) ) return $block;
 			return '';
 		},
