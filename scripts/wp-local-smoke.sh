@@ -64,6 +64,15 @@ grep -Fq 'mobile-sticky-actions' /tmp/ranked-seo-businesses.html || { echo "Miss
 grep -Fq '1975861066398590&amp;ev=PageView&amp;noscript=1' /tmp/ranked-seo-businesses.html || { echo "Missing: SEO businesses Meta pixel noscript fallback" >&2; exit 1; }
 ! grep -Eiq '<footer[^>]+uicore' /tmp/ranked-seo-businesses.html || { echo "Unexpected: theme footer navigation on SEO businesses landing page" >&2; exit 1; }
 
+# The UiCore theme is not installed in wp-env, so these two campaign regressions
+# can only be caught in the stylesheet itself.
+TRADE_CSS="$(dirname "$0")/../wp-plugin/ranked-international/assets/css/trade-landing.css"
+# UiCore nests the header CTA (.uicore-extra) inside .uicore-nav-menu, so hiding
+# that wrapper strips the landing page's only header action above 1025px.
+! grep -Eq 'rip-seo-businesses-landing #wrapper-navbar \.uicore-nav-menu' "$TRADE_CSS" || { echo "SEO businesses landing must hide the nav links, not the whole .uicore-nav-menu (it contains the header CTA)" >&2; exit 1; }
+# The desktop case-study layout only wins from the must-remain-last block.
+grep -Fq 'body.rip-seo-businesses-landing .trade-case__metrics' "$TRADE_CSS" || { echo "Missing: SEO businesses desktop case-study layout in the must-remain-last block" >&2; exit 1; }
+
 "$WP_ENV_BIN" run cli wp plugin is-active ranked-international
 YOAST_SLUG="$("$WP_ENV_BIN" run cli wp plugin list --status=active --field=name | grep '^wordpress-seo' | head -1 | tr -d '\r')"
 [[ -n "$YOAST_SLUG" ]] || { echo "Yoast SEO is not active." >&2; exit 1; }

@@ -512,7 +512,7 @@
 <?php if ( rip_is_seo_businesses_landing() ) : ?>
 <div class="mobile-sticky-actions" aria-label="Contact Ranked International">
   <a href="#audit" class="mobile-sticky-audit" data-track="mobile-sticky-audit">Free audit</a>
-  <a href="tel:+18334024789" class="mobile-sticky-call" data-track="mobile-sticky-call" data-track-event="call_cta_click" aria-label="Call Ranked International at 833-402-4789">Call now</a>
+  <a href="tel:+18333857090" class="mobile-sticky-call" data-track="mobile-sticky-call" data-track-event="call_cta_click" aria-label="Call Ranked International at 833-385-7090">Call now</a>
 </div>
 <?php endif; ?>
 <?php get_footer(); ?>
