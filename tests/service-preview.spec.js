@@ -73,10 +73,22 @@ test('audit CTA opens the Organic GHL modal', async ({ page }) => {
   await expect(form).toHaveAttribute('data-height', '915');
 });
 
-test('SEO businesses campaign keeps its existing form', async ({ page }) => {
+test('SEO businesses campaign uses the Organic GHL form', async ({ page }) => {
   await page.goto('/seo-for-businesses/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('#inline-f0ApiaQNdHgKKFOqtp8q')).toHaveCount(0);
-  await expect(page.locator('.audit-modal__wpforms')).toHaveCount(1);
+  await expect(page.locator('.audit-modal__wpforms')).toHaveCount(0);
+
+  const form = page.locator('#inline-f0ApiaQNdHgKKFOqtp8q');
+  await expect(form).toHaveCount(1);
+  await expect(form).toHaveAttribute('data-form-name', 'Organic');
+  await expect(form).toHaveAttribute('data-form-id', 'f0ApiaQNdHgKKFOqtp8q');
+
+  // The iframe stays unloaded until the modal opens, then takes its real src.
+  await expect(form).not.toHaveAttribute('src', /./);
+  await page.locator('a[href="#audit"]:visible').first().click();
+  await expect(form).toHaveAttribute(
+    'src',
+    'https://api.leadconnectorhq.com/widget/form/f0ApiaQNdHgKKFOqtp8q'
+  );
 });
 
 // The desktop case-study rules only win from the "must remain last" block in

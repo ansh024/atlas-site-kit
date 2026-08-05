@@ -40,7 +40,7 @@ function rip_wpforms_audit_html() {
 }
 
 function rip_render_audit_modal() {
-	if ( ! rip_is_turf_tree_landing() && ! rip_is_seo_businesses_landing() ) {
+	if ( ! rip_is_turf_tree_landing() ) {
 		rip_render_ghl_audit_modal( 'organic' );
 		return;
 	}
