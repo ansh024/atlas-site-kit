@@ -41,7 +41,7 @@ function rip_wpforms_audit_html() {
 
 function rip_render_audit_modal() {
 	if ( ! rip_is_turf_tree_landing() ) {
-		rip_render_ghl_audit_modal( 'organic' );
+		rip_render_ghl_audit_modal( rip_is_seo_businesses_landing() ? 'seo-businesses' : 'organic' );
 		return;
 	}
 	?>
@@ -57,26 +57,40 @@ function rip_render_audit_modal() {
 }
 
 /**
- * GHL form ID per campaign. Each campaign needs its own GHL form because the
- * post-submit redirect (which thank-you page the lead lands on) is configured
- * inside GHL, not here. Duplicate the form in GHL, point its redirect at the
- * campaign's thank-you path, then drop the new form ID in below.
+ * GHL embed per campaign: form ID, form name and iframe height, exactly as the
+ * GHL embed snippet supplies them. Which thank-you page a lead lands on is the
+ * form's post-submit redirect, configured inside GHL rather than here — so two
+ * campaigns sharing a form ID also share that redirect.
+ *
+ * To give a campaign its own destination: duplicate the form in GHL, point the
+ * copy's redirect at that campaign's thank-you path, then add it below.
  */
-function rip_ghl_form_id( $campaign = 'default' ) {
-	$forms = array(
-		'default' => 'NnlAud8uVZoK09OlAAFj',
-		'organic' => 'f0ApiaQNdHgKKFOqtp8q',
+function rip_ghl_forms() {
+	return array(
+		'default'        => array( 'id' => 'NnlAud8uVZoK09OlAAFj', 'name' => 'Meta Form', 'height' => 1000 ),
+		'organic'        => array( 'id' => 'f0ApiaQNdHgKKFOqtp8q', 'name' => 'Organic', 'height' => 792 ),
 		// Redirect this one to /turf-thank-you/ inside GHL.
-		'turf'    => 'NnlAud8uVZoK09OlAAFj',
+		'turf'           => array( 'id' => 'NnlAud8uVZoK09OlAAFj', 'name' => 'Meta Form', 'height' => 1000 ),
+		'seo-businesses' => array( 'id' => 'NnlAud8uVZoK09OlAAFj', 'name' => 'Meta Form - General', 'height' => 772 ),
 	);
+}
+
+function rip_ghl_form( $campaign = 'default' ) {
+	$forms = rip_ghl_forms();
 	return $forms[ $campaign ] ?? $forms['default'];
+}
+
+function rip_ghl_form_id( $campaign = 'default' ) {
+	$form = rip_ghl_form( $campaign );
+	return $form['id'];
 }
 
 /** Render the campaign-specific GHL audit form without changing other pages. */
 function rip_render_ghl_audit_modal( $campaign = 'default' ) {
-	$form_id = rip_ghl_form_id( $campaign );
-	$form_name = $campaign === 'organic' ? 'Organic' : 'Meta Form';
-	$form_height = $campaign === 'organic' ? 792 : 1000;
+	$form = rip_ghl_form( $campaign );
+	$form_id = $form['id'];
+	$form_name = $form['name'];
+	$form_height = $form['height'];
 	?>
 	<div class="audit-modal audit-modal--ghl" id="auditModal" aria-hidden="true">
 		<div class="audit-modal__backdrop" data-audit-close></div>
