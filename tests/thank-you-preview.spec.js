@@ -1,18 +1,20 @@
 const { test, expect } = require('@playwright/test');
 
-for (const path of [
-  '/seo-audit-thank-you/',
-  '/turf-thank-you/',
-  '/thank-you-seo-for-businesses-lp/',
-  '/thank-you-main-site/',
+// The SEO for Businesses campaign advertises its own tracked line; every other
+// route keeps the general number.
+for (const [path, number] of [
+  ['/seo-audit-thank-you/', '833-402-4789'],
+  ['/turf-thank-you/', '833-402-4789'],
+  ['/thank-you-seo-for-businesses-lp/', '833-385-7090'],
+  ['/thank-you-main-site/', '833-402-4789'],
 ]) {
   test(`${path} offers a direct phone call`, async ({ page }) => {
     await page.goto(path, { waitUntil: 'networkidle' });
 
     const phone = page.locator('.rip-thank-you__cta--phone');
-    await expect(phone).toHaveAttribute('href', 'tel:+18334024789');
-    await expect(phone).toHaveText('Call 833-402-4789');
-    await expect(phone).toHaveAttribute('aria-label', /833-402-4789/);
+    await expect(phone).toHaveAttribute('href', `tel:+1${number.replace(/-/g, '')}`);
+    await expect(phone).toHaveText(`Call ${number}`);
+    await expect(phone).toHaveAttribute('aria-label', new RegExp(number));
 
     const box = await phone.boundingBox();
     expect(box.height).toBeGreaterThanOrEqual(44);

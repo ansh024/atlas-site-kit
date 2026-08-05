@@ -79,6 +79,15 @@ test('SEO businesses campaign keeps its existing form', async ({ page }) => {
   await expect(page.locator('.audit-modal__wpforms')).toHaveCount(1);
 });
 
+// The campaign has its own tracked line, so its sticky call must not fall back
+// to the general number the homepage template ships with.
+test('SEO businesses campaign calls its own tracked line', async ({ page }) => {
+  await page.goto('/seo-for-businesses/', { waitUntil: 'domcontentloaded' });
+  const call = page.locator('.mobile-sticky-call');
+  await expect(call).toHaveAttribute('href', 'tel:+18333857090');
+  await expect(call).toHaveAttribute('aria-label', /833-385-7090/);
+});
+
 test('audit modal survives repeated CTA opens and always unlocks the page', async ({ page }) => {
   const modal = page.locator('#auditModal');
   const close = page.locator('[data-audit-close]').last();
