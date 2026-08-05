@@ -76,7 +76,7 @@ function rip_ghl_form_id( $campaign = 'default' ) {
 function rip_render_ghl_audit_modal( $campaign = 'default' ) {
 	$form_id = rip_ghl_form_id( $campaign );
 	$form_name = $campaign === 'organic' ? 'Organic' : 'Meta Form';
-	$form_height = $campaign === 'organic' ? 915 : 1000;
+	$form_height = $campaign === 'organic' ? 792 : 1000;
 	?>
 	<div class="audit-modal audit-modal--ghl" id="auditModal" aria-hidden="true">
 		<div class="audit-modal__backdrop" data-audit-close></div>
