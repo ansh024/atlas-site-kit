@@ -73,10 +73,54 @@ test('audit CTA opens the Organic GHL modal', async ({ page }) => {
   await expect(form).toHaveAttribute('data-height', '915');
 });
 
-test('SEO businesses campaign keeps its existing form', async ({ page }) => {
+test('SEO businesses campaign uses the Organic GHL form', async ({ page }) => {
   await page.goto('/seo-for-businesses/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('#inline-f0ApiaQNdHgKKFOqtp8q')).toHaveCount(0);
-  await expect(page.locator('.audit-modal__wpforms')).toHaveCount(1);
+  await expect(page.locator('.audit-modal__wpforms')).toHaveCount(0);
+
+  const form = page.locator('#inline-f0ApiaQNdHgKKFOqtp8q');
+  await expect(form).toHaveCount(1);
+  await expect(form).toHaveAttribute('data-form-name', 'Organic');
+  await expect(form).toHaveAttribute('data-form-id', 'f0ApiaQNdHgKKFOqtp8q');
+
+  // The iframe stays unloaded until the modal opens, then takes its real src.
+  await expect(form).not.toHaveAttribute('src', /./);
+  await page.locator('a[href="#audit"]:visible').first().click();
+  await expect(form).toHaveAttribute(
+    'src',
+    'https://api.leadconnectorhq.com/widget/form/f0ApiaQNdHgKKFOqtp8q'
+  );
+});
+
+// The desktop case-study rules only win from the "must remain last" block in
+// trade-landing.css. When a template is left out of it, the metrics collapse
+// into the narrow 250px column and clip their numbers.
+test('SEO businesses case study lays its metrics across the full width', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/seo-for-businesses/', { waitUntil: 'domcontentloaded' });
+
+  const proof = page.locator('.trade-case__proof');
+  await expect(proof).toHaveCSS('grid-template-columns', /^\d+(\.\d+)?px$/);
+
+  const blocks = page.locator('.trade-case__metrics .cs__metric-block');
+  await expect(blocks).toHaveCount(3);
+  for (let i = 0; i < 3; i += 1) {
+    const block = blocks.nth(i);
+    const { width, scrollWidth } = await block.evaluate(el => ({
+      width: el.getBoundingClientRect().width,
+      scrollWidth: el.scrollWidth,
+    }));
+    expect(width).toBeGreaterThan(150);
+    expect(scrollWidth).toBeLessThanOrEqual(Math.ceil(width));
+  }
+});
+
+// The campaign has its own tracked line, so its sticky call must not fall back
+// to the general number the homepage template ships with.
+test('SEO businesses campaign calls its own tracked line', async ({ page }) => {
+  await page.goto('/seo-for-businesses/', { waitUntil: 'domcontentloaded' });
+  const call = page.locator('.mobile-sticky-call');
+  await expect(call).toHaveAttribute('href', 'tel:+18333857090');
+  await expect(call).toHaveAttribute('aria-label', /833-385-7090/);
 });
 
 // The desktop case-study rules only win from the "must remain last" block in
