@@ -79,6 +79,29 @@ test('SEO businesses campaign keeps its existing form', async ({ page }) => {
   await expect(page.locator('.audit-modal__wpforms')).toHaveCount(1);
 });
 
+// The desktop case-study rules only win from the "must remain last" block in
+// trade-landing.css. When a template is left out of it, the metrics collapse
+// into the narrow 250px column and clip their numbers.
+test('SEO businesses case study lays its metrics across the full width', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/seo-for-businesses/', { waitUntil: 'domcontentloaded' });
+
+  const proof = page.locator('.trade-case__proof');
+  await expect(proof).toHaveCSS('grid-template-columns', /^\d+(\.\d+)?px$/);
+
+  const blocks = page.locator('.trade-case__metrics .cs__metric-block');
+  await expect(blocks).toHaveCount(3);
+  for (let i = 0; i < 3; i += 1) {
+    const block = blocks.nth(i);
+    const { width, scrollWidth } = await block.evaluate(el => ({
+      width: el.getBoundingClientRect().width,
+      scrollWidth: el.scrollWidth,
+    }));
+    expect(width).toBeGreaterThan(150);
+    expect(scrollWidth).toBeLessThanOrEqual(Math.ceil(width));
+  }
+});
+
 // The campaign has its own tracked line, so its sticky call must not fall back
 // to the general number the homepage template ships with.
 test('SEO businesses campaign calls its own tracked line', async ({ page }) => {

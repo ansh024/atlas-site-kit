@@ -1,8 +1,12 @@
 /* Turf & Tree Service page. Scoped to this template so the active theme stays untouched. */
-/* Keep the campaign header focused on its sole conversion action on all viewports. */
+/* Keep the campaign header focused on its sole conversion action on all viewports.
+   UiCore nests the header CTA (.uicore-extra) *inside* .uicore-nav-menu, so hiding
+   that wrapper takes the campaign's only header action down with it above 1025px,
+   where the theme's mobile header — and its duplicate CTA — is not rendered.
+   Hide the link list instead and let the theme keep owning the CTA's visibility. */
 body.page-template-template-turf-tree-service #wrapper-navbar .uicore-nav-menu,
 body.page-template-template-turf-tree-service #wrapper-navbar .uicore-toggle,
-body.rip-seo-businesses-landing #wrapper-navbar .uicore-nav-menu,
+body.rip-seo-businesses-landing #wrapper-navbar .uicore-menu-container,
 body.rip-seo-businesses-landing #wrapper-navbar .uicore-toggle { display:none !important; }
 body.rip-seo-businesses-landing #wrapper-navbar .uicore-cta-wrapper a {
   border-color:#caff00 !important;
@@ -53,17 +57,9 @@ body.page-template-template-turf-tree-service .trade-audit .ghl-audit-form:not([
 }
 @media (prefers-reduced-motion:reduce) { body.page-template-template-turf-tree-service .trade-audit .ghl-audit-form:not([src]) { animation:none; } }
 
-/* Keep the desktop case study concise: evidence should scan beside the video,
-   not stretch into three tall stacked cards. */
-@media (min-width:981px) {
-  .trade-case__layout { align-items:start; }
-  .trade-case__video { align-self:start; }
-  .trade-case__video video { aspect-ratio:1 / 1; object-position:center 30%; }
-  .trade-case__proof { grid-template-columns:1fr; align-self:start; }
-  .trade-case__keyword-card { min-height:0; }
-  .trade-case__metrics { grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:none; align-content:start; }
-  .trade-case__metrics .cs__metric-block { min-height:176px; }
-}
+/* The desktop case-study layout lives in the "must remain last" block at the end
+   of this file — the shared .trade-case__* declarations below would otherwise
+   override it. Do not re-add a copy here. */
 
 /* On larger screens, commitments are a browseable rail rather than a tall
    stacked sequence. The visible scrollbar keeps the horizontal affordance clear. */
@@ -158,14 +154,24 @@ body.rip-seo-businesses-landing main.trade-landing { --trade-navy:#07162f; --tra
   .mobile-sticky-audit{background:#caff00;color:#07162f}
 }
 
-/* Must remain last: the shared case-study declarations above are loaded later
-   than the campaign-specific block at the start of this file. */
+/* Must remain last: the shared .trade-case__* declarations above are written
+   later in this file than any media query placed near the top, so the desktop
+   layout only wins from here. Every template that renders the case study needs
+   to be listed — a template missing from this block falls back to the narrow
+   250px metrics column and clips its numbers. */
 @media (min-width:981px) {
-  body.page-template-template-turf-tree-service .trade-case__layout { align-items:start; }
-  body.page-template-template-turf-tree-service .trade-case__video { align-self:start; }
-  body.page-template-template-turf-tree-service .trade-case__video video { aspect-ratio:1 / 1; object-position:center 30%; }
-  body.page-template-template-turf-tree-service .trade-case__proof { grid-template-columns:minmax(0,1fr); align-self:start; }
-  body.page-template-template-turf-tree-service .trade-case__keyword-card { min-height:0; }
-  body.page-template-template-turf-tree-service .trade-case__metrics { grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:none; align-content:start; }
-  body.page-template-template-turf-tree-service .trade-case__metrics .cs__metric-block { min-height:176px; }
+  body.page-template-template-turf-tree-service .trade-case__layout,
+  body.rip-seo-businesses-landing .trade-case__layout { align-items:start; }
+  body.page-template-template-turf-tree-service .trade-case__video,
+  body.rip-seo-businesses-landing .trade-case__video { align-self:start; }
+  body.page-template-template-turf-tree-service .trade-case__video video,
+  body.rip-seo-businesses-landing .trade-case__video video { aspect-ratio:1 / 1; object-position:center 30%; }
+  body.page-template-template-turf-tree-service .trade-case__proof,
+  body.rip-seo-businesses-landing .trade-case__proof { grid-template-columns:minmax(0,1fr); align-self:start; }
+  body.page-template-template-turf-tree-service .trade-case__keyword-card,
+  body.rip-seo-businesses-landing .trade-case__keyword-card { min-height:0; }
+  body.page-template-template-turf-tree-service .trade-case__metrics,
+  body.rip-seo-businesses-landing .trade-case__metrics { grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:none; align-content:start; }
+  body.page-template-template-turf-tree-service .trade-case__metrics .cs__metric-block,
+  body.rip-seo-businesses-landing .trade-case__metrics .cs__metric-block { min-height:176px; }
 }
