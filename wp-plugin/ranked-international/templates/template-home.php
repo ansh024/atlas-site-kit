@@ -506,6 +506,9 @@
     </div>
   </section>
 
+  <?php if ( rip_is_seo_businesses_landing() ) : ?>
+  <?php rip_render_inline_ghl_audit( 'seo-businesses', 'See the search opportunities most likely to bring in more calls for your business.' ); ?>
+  <?php endif; ?>
 </main>
 
 <?php rip_render_audit_modal(); ?>
