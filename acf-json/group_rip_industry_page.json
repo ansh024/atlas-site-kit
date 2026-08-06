@@ -1,0 +1,572 @@
+{
+  "key": "group_rip_industry_page",
+  "title": "Industry Page Details",
+  "fields": [
+    {
+      "key": "field_rip_ind_name",
+      "label": "Industry name",
+      "name": "industry_name",
+      "type": "text",
+      "required": 1,
+      "instructions": "e.g. \"Construction\", \"Roofing\" \u2014 used in the nav/footer link text and defaults."
+    },
+    {
+      "key": "field_rip_ind_hero_eyebrow",
+      "label": "Hero eyebrow",
+      "name": "hero_eyebrow",
+      "type": "text",
+      "instructions": "e.g. \"DALLAS CONSTRUCTION SEO\""
+    },
+    {
+      "key": "field_rip_ind_hero_title",
+      "label": "Hero title",
+      "name": "hero_title",
+      "type": "text",
+      "required": 1,
+      "instructions": "HTML allowed, e.g. <em>...</em> to italicize a phrase."
+    },
+    {
+      "key": "field_rip_ind_hero_sub",
+      "label": "Hero subheading",
+      "name": "hero_sub",
+      "type": "textarea",
+      "rows": 3
+    },
+    {
+      "key": "field_rip_ind_hero_stat1_value",
+      "label": "Hero stat 1 value",
+      "name": "hero_stat1_value",
+      "type": "text",
+      "default_value": "100+"
+    },
+    {
+      "key": "field_rip_ind_hero_stat1_label",
+      "label": "Hero stat 1 label",
+      "name": "hero_stat1_label",
+      "type": "text",
+      "default_value": "Businesses Ranked"
+    },
+    {
+      "key": "field_rip_ind_hero_stat2_value",
+      "label": "Hero stat 2 value",
+      "name": "hero_stat2_value",
+      "type": "text",
+      "default_value": "5 Star"
+    },
+    {
+      "key": "field_rip_ind_hero_stat2_label",
+      "label": "Hero stat 2 label",
+      "name": "hero_stat2_label",
+      "type": "text",
+      "default_value": "Rated on Google"
+    },
+    {
+      "key": "field_rip_ind_hero_video_poster",
+      "label": "Hero visual poster image",
+      "name": "hero_video_poster",
+      "type": "image",
+      "return_format": "url"
+    },
+    {
+      "key": "field_rip_ind_hero_video",
+      "label": "Hero visual video (mp4)",
+      "name": "hero_video",
+      "type": "file",
+      "return_format": "url",
+      "mime_types": "mp4"
+    },
+    {
+      "key": "field_rip_ind_hero_chips",
+      "label": "Hero checklist chips",
+      "name": "hero_chips",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_ind_chip_text",
+          "label": "Text",
+          "name": "text",
+          "type": "text"
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "instructions": "Short checkmarked lines over the hero visual, e.g. 'Ranking #1 for \"GC near me\"'.",
+      "min": 0,
+      "max": 3
+    },
+    {
+      "key": "field_rip_ind_hero_stat3_label",
+      "label": "Hero visual stat label",
+      "name": "hero_stat3_label",
+      "type": "text",
+      "default_value": "\u2014 Up to"
+    },
+    {
+      "key": "field_rip_ind_hero_stat3_value",
+      "label": "Hero visual stat value",
+      "name": "hero_stat3_value",
+      "type": "text",
+      "instructions": "e.g. \"3.2x\""
+    },
+    {
+      "key": "field_rip_ind_hero_stat3_sub",
+      "label": "Hero visual stat sub-label",
+      "name": "hero_stat3_sub",
+      "type": "text",
+      "default_value": "More leads booked"
+    },
+    {
+      "key": "field_rip_ind_hero_card_name",
+      "label": "Hero visual card business name",
+      "name": "hero_card_name",
+      "type": "text"
+    },
+    {
+      "key": "field_rip_ind_hero_card_rating",
+      "label": "Hero visual card rating text",
+      "name": "hero_card_rating",
+      "type": "text",
+      "instructions": "e.g. \"\u2605 4.9 \u00b7 128 reviews\""
+    },
+    {
+      "key": "field_rip_ind_hero_card_badge",
+      "label": "Hero visual card badge",
+      "name": "hero_card_badge",
+      "type": "text",
+      "default_value": "#1 on Google"
+    },
+    {
+      "key": "field_rip_ind_trusted_logos",
+      "label": "Trusted-by logos",
+      "name": "trusted_logos",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_ind_trusted_logo",
+          "label": "Logo",
+          "name": "logo",
+          "type": "image",
+          "return_format": "url"
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "instructions": "Client logos for the scrolling marquee. Rendered twice automatically for a seamless loop.",
+      "min": 0,
+      "max": 12
+    },
+    {
+      "key": "field_rip_ind_proof_eyebrow",
+      "label": "Proof section eyebrow",
+      "name": "proof_eyebrow",
+      "type": "text"
+    },
+    {
+      "key": "field_rip_ind_proof_title",
+      "label": "Proof section title",
+      "name": "proof_title",
+      "type": "text",
+      "instructions": "HTML allowed."
+    },
+    {
+      "key": "field_rip_ind_proof_stats",
+      "label": "Proof stat cards",
+      "name": "proof_stats",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_ind_proof_num",
+          "label": "Number",
+          "name": "num",
+          "type": "text",
+          "instructions": "e.g. \"98\", \"2\u20135\""
+        },
+        {
+          "key": "field_rip_ind_proof_suffix",
+          "label": "Suffix",
+          "name": "suffix",
+          "type": "text",
+          "instructions": "e.g. \"%\", \"x\""
+        },
+        {
+          "key": "field_rip_ind_proof_label",
+          "label": "Label",
+          "name": "label",
+          "type": "textarea",
+          "rows": 2
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "min": 0,
+      "max": 3
+    },
+    {
+      "key": "field_rip_ind_segments_title",
+      "label": "Segments section title",
+      "name": "segments_title",
+      "type": "text",
+      "instructions": "HTML allowed. Leave blank to hide this section."
+    },
+    {
+      "key": "field_rip_ind_segments_banner",
+      "label": "Segments banner image",
+      "name": "segments_banner",
+      "type": "image",
+      "return_format": "url"
+    },
+    {
+      "key": "field_rip_ind_segments",
+      "label": "Segment cards",
+      "name": "segments",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_ind_segment_icon",
+          "label": "Icon (lucide name)",
+          "name": "icon",
+          "type": "text",
+          "default_value": "hard-hat"
+        },
+        {
+          "key": "field_rip_ind_segment_title",
+          "label": "Title",
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_ind_segment_text",
+          "label": "Text",
+          "name": "text",
+          "type": "textarea",
+          "rows": 2
+        },
+        {
+          "key": "field_rip_ind_segment_kw",
+          "label": "Ranks-for keywords",
+          "name": "keywords",
+          "type": "text",
+          "instructions": "e.g. '\"general contractor near me,\" \"custom home builder Dallas\"'"
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "min": 0,
+      "max": 4
+    },
+    {
+      "key": "field_rip_ind_compare_title",
+      "label": "Comparison table title",
+      "name": "compare_title",
+      "type": "text",
+      "instructions": "HTML allowed. Leave blank to hide this section."
+    },
+    {
+      "key": "field_rip_ind_compare_subhead",
+      "label": "Comparison table subhead",
+      "name": "compare_subhead",
+      "type": "text"
+    },
+    {
+      "key": "field_rip_ind_compare_rows",
+      "label": "Comparison rows",
+      "name": "compare_rows",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_ind_cmp_label",
+          "label": "Row label",
+          "name": "label",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_ind_cmp_type",
+          "label": "Row type",
+          "name": "type",
+          "type": "select",
+          "choices": {
+            "metric": "Two numbers",
+            "check": "Check / cross"
+          },
+          "default_value": "metric"
+        },
+        {
+          "key": "field_rip_ind_cmp_ranked",
+          "label": "Ranked International value",
+          "name": "ranked_value",
+          "type": "text",
+          "instructions": "For \"check\" rows, type yes or no."
+        },
+        {
+          "key": "field_rip_ind_cmp_agency",
+          "label": "Typical agency value",
+          "name": "agency_value",
+          "type": "text",
+          "instructions": "For \"check\" rows, type yes or no."
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "min": 0,
+      "max": 8
+    },
+    {
+      "key": "field_rip_ind_compare_footnote",
+      "label": "Comparison footnote",
+      "name": "compare_footnote",
+      "type": "textarea",
+      "rows": 2
+    },
+    {
+      "key": "field_rip_ind_spotlight_eyebrow",
+      "label": "Client spotlight eyebrow",
+      "name": "spotlight_eyebrow",
+      "type": "text",
+      "default_value": "Client results"
+    },
+    {
+      "key": "field_rip_ind_spotlight_title",
+      "label": "Client spotlight title",
+      "name": "spotlight_title",
+      "type": "text",
+      "instructions": "HTML allowed, <br> for a line break."
+    },
+    {
+      "key": "field_rip_ind_spotlights",
+      "label": "Spotlight quote slides",
+      "name": "spotlights",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_ind_spot_kicker",
+          "label": "Kicker",
+          "name": "kicker",
+          "type": "text",
+          "instructions": "e.g. \"01 \u2014 Lone Star Roofing\""
+        },
+        {
+          "key": "field_rip_ind_spot_quote",
+          "label": "Quote",
+          "name": "quote",
+          "type": "textarea",
+          "rows": 2,
+          "instructions": "HTML allowed, <br> for a line break."
+        },
+        {
+          "key": "field_rip_ind_spot_client",
+          "label": "Client credit line",
+          "name": "client",
+          "type": "text",
+          "instructions": "e.g. \"Derek S. \u2014 Lone Star Roofing, Dallas TX\""
+        },
+        {
+          "key": "field_rip_ind_spot_m1_label",
+          "label": "Metric 1 label",
+          "name": "metric1_label",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_ind_spot_m1_value",
+          "label": "Metric 1 value",
+          "name": "metric1_value",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_ind_spot_m1_sub",
+          "label": "Metric 1 sub-text",
+          "name": "metric1_sub",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_ind_spot_m2_label",
+          "label": "Metric 2 label",
+          "name": "metric2_label",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_ind_spot_m2_value",
+          "label": "Metric 2 value",
+          "name": "metric2_value",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_ind_spot_m2_sub",
+          "label": "Metric 2 sub-text",
+          "name": "metric2_sub",
+          "type": "text"
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "instructions": "1-3 rotating client quote slides with matching metrics.",
+      "min": 0,
+      "max": 3
+    },
+    {
+      "key": "field_rip_ind_services_title",
+      "label": "Services diagram title",
+      "name": "services_title",
+      "type": "text",
+      "default_value": "Every Service Under One Roof For Your Trade"
+    },
+    {
+      "key": "field_rip_ind_services_center",
+      "label": "Services diagram center label",
+      "name": "services_center",
+      "type": "text",
+      "default_value": "Get You Ranked"
+    },
+    {
+      "key": "field_rip_ind_services",
+      "label": "Service chips",
+      "name": "services",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_ind_svc_icon",
+          "label": "Icon (lucide name or icon filename)",
+          "name": "icon",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_ind_svc_title",
+          "label": "Title",
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_ind_svc_text",
+          "label": "Text",
+          "name": "text",
+          "type": "textarea",
+          "rows": 2
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "instructions": "Exactly 6 recommended \u2014 this section is a fixed 6-slot wiring diagram.",
+      "min": 0,
+      "max": 6
+    },
+    {
+      "key": "field_rip_ind_process_eyebrow",
+      "label": "Process eyebrow",
+      "name": "process_eyebrow",
+      "type": "text",
+      "default_value": "How it works"
+    },
+    {
+      "key": "field_rip_ind_process_steps",
+      "label": "Process steps",
+      "name": "process_steps",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_ind_proc_icon",
+          "label": "Icon (lucide name)",
+          "name": "icon",
+          "type": "text",
+          "default_value": "search"
+        },
+        {
+          "key": "field_rip_ind_proc_title",
+          "label": "Title",
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_ind_proc_desc",
+          "label": "Description",
+          "name": "desc",
+          "type": "textarea",
+          "rows": 2
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "min": 0,
+      "max": 6
+    },
+    {
+      "key": "field_rip_ind_faq_title",
+      "label": "FAQ title",
+      "name": "faq_title",
+      "type": "text"
+    },
+    {
+      "key": "field_rip_ind_faq_sub",
+      "label": "FAQ subheading",
+      "name": "faq_sub",
+      "type": "textarea",
+      "rows": 2
+    },
+    {
+      "key": "field_rip_ind_faqs",
+      "label": "FAQ items",
+      "name": "faqs",
+      "type": "repeater",
+      "sub_fields": [
+        {
+          "key": "field_rip_ind_faq_q",
+          "label": "Question",
+          "name": "question",
+          "type": "text"
+        },
+        {
+          "key": "field_rip_ind_faq_a",
+          "label": "Answer",
+          "name": "answer",
+          "type": "textarea",
+          "rows": 3
+        }
+      ],
+      "layout": "block",
+      "button_label": "Add row",
+      "min": 0,
+      "max": 10
+    },
+    {
+      "key": "field_rip_ind_cta_title",
+      "label": "Final CTA title",
+      "name": "cta_title",
+      "type": "text",
+      "instructions": "HTML allowed, e.g. <em>...</em>."
+    },
+    {
+      "key": "field_rip_ind_cta_sub",
+      "label": "Final CTA subheading",
+      "name": "cta_sub",
+      "type": "textarea",
+      "rows": 2
+    },
+    {
+      "key": "field_rip_ind_seo_title",
+      "label": "Fallback SEO title (Yoast takes priority)",
+      "name": "seo_title",
+      "type": "text"
+    },
+    {
+      "key": "field_rip_ind_seo_description",
+      "label": "Fallback meta description (Yoast takes priority)",
+      "name": "seo_description",
+      "type": "textarea",
+      "rows": 2
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "rip_industry"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "modified": 1783627995
+}
