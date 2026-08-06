@@ -68,7 +68,8 @@ The reference page is tested from 320px upward. At the mobile breakpoint
 - The connected-system diagram does not animate on mobile. It renders complete
   immediately, and the phone icon is explicitly sized so the "Calls &
   bookings" label cannot overlap it.
-- The shared audit modal cannot contribute horizontal overflow when closed.
+- The audit CTAs scroll to the form in the theme footer; no overlay is
+  rendered, so none can contribute horizontal overflow.
 
 Desktop retains the editorial two-column compositions where appropriate, with
 the system map and workstream detail panel presented alongside their content.

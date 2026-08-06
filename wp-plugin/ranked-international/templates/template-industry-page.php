@@ -406,8 +406,6 @@ $spotlights = is_array( $raw_spotlights ) ? array_map( function( $row ) use ( $s
 
 </main>
 
-<?php rip_render_audit_modal(); ?>
-
 <script>
 (function(){
   if (typeof gsap === 'undefined') return;

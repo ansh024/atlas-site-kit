@@ -511,7 +511,6 @@
   <?php endif; ?>
 </main>
 
-<?php rip_render_audit_modal(); ?>
 <?php if ( rip_is_seo_businesses_landing() ) : ?>
 <div class="mobile-sticky-actions" aria-label="Contact Ranked International">
   <a href="#audit" class="mobile-sticky-audit" data-track="mobile-sticky-audit">Free audit</a>

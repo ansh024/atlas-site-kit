@@ -14,116 +14,27 @@
   display: none;
 }
 
-.audit-modal__wpforms {
-  max-height: min(78vh, 760px);
-  overflow-y: auto;
-  padding: 32px;
+/* The audit CTAs scroll to the form instead of opening a popup. On these pages
+   the form is the GHL embed in the theme footer; main.js gives that section the
+   `#audit` anchor the CTAs point at and tags it here. Clear the theme's fixed
+   navigation so the form's heading is not scrolled underneath it. */
+[data-rip-audit-target] {
+  scroll-margin-top: 112px;
 }
 
-.audit-modal__wpforms .wpforms-container {
-  margin: 0;
+[data-rip-audit-target]:focus {
+  outline: none;
 }
 
-.audit-modal__unavailable {
-  margin: 0;
-  padding: 48px 32px;
-  color: var(--prussian-blue);
-  text-align: center;
-}
-
-.audit-modal--ghl .audit-modal__dialog {
-  width: min(980px, 100%);
-  max-height: calc(100vh - 48px);
-  overflow: auto;
-}
-
-.ghl-modal__layout {
-  display: grid;
-  grid-template-columns: minmax(260px, .72fr) minmax(420px, 1.28fr);
-  min-height: min(760px, calc(100vh - 48px));
-}
-
-.ghl-modal__value {
-  padding: clamp(42px, 6vw, 72px) clamp(28px, 4vw, 48px);
-  background: var(--prussian-blue);
-  color: #fff;
-}
-
-.ghl-modal__value h2 {
-  max-width: 9ch;
-  color: #fff;
-}
-
-.ghl-modal__intro {
-  margin-top: 18px;
-  color: rgba(255, 255, 255, .72);
-  line-height: 1.55;
-}
-
-.ghl-modal__benefits {
-  display: grid;
-  gap: 14px;
-  margin: 30px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.ghl-modal__benefits li::before {
-  content: "\2713";
-  margin-right: 10px;
-  color: var(--chartreuse);
-  font-weight: 800;
-}
-
-.ghl-modal__form-panel {
-  min-height: 760px;
-  padding: 18px;
-  background: #fff;
-}
-
-.audit-modal--ghl .ghl-audit-form {
-  display: block;
-  min-height: 915px;
-  background: #fff;
-}
-
-@media (max-width: 760px) {
-  .audit-modal--ghl {
-    padding: 12px;
-  }
-
-  .audit-modal--ghl .audit-modal__dialog {
-    max-height: calc(100dvh - 24px);
-  }
-
-  .ghl-modal__layout {
-    display: block;
-    min-height: 0;
-  }
-
-  .ghl-modal__value {
-    padding: 28px 54px 26px 24px;
-  }
-
-  .ghl-modal__value h2 {
-    max-width: 13ch;
-    font-size: 1.75rem;
-  }
-
-  .ghl-modal__intro,
-  .ghl-modal__benefits {
-    display: none;
-  }
-
-  .ghl-modal__form-panel {
-    min-height: 915px;
-    padding: 8px;
-  }
+/* Fail closed if cached markup or a third party injects the retired popup. */
+#auditModal {
+  display: none !important;
 }
 
 @media (max-width: 640px) {
-  .audit-modal__wpforms {
-    padding: 24px 18px;
+  /* The mobile theme bar is 89px tall. */
+  [data-rip-audit-target] {
+    scroll-margin-top: 90px;
   }
 }
 
