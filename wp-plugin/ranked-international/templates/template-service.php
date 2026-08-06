@@ -177,5 +177,4 @@ $proof = array(
   <section class="svc-final"><div class="svc-wrap"><div><p>Free service audit · No commitment</p><h2><?php echo wp_kses_post( get_field( 'final_cta_title' ) ?: 'Find out why you’re missing from the <em>Map Pack</em>.' ); ?></h2><span><?php echo esc_html( get_field( 'final_cta_summary' ) ?: 'We’ll show you the three local-search gaps costing you calls.' ); ?></span></div><a href="#audit" class="btn btn--dark btn--lg"><?php echo esc_html( get_field( 'final_cta_label' ) ?: $cta_label ); ?></a></div></section>
 </main>
 
-<?php rip_render_audit_modal(); ?>
 <?php get_footer(); ?>

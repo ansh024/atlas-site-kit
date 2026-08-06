@@ -208,6 +208,4 @@ if ( have_rows( 'chart_points' ) ) {
   </div>
 </section>
 
-<!-- ===== AUDIT MODAL ===== -->
-<?php rip_render_audit_modal(); ?>
 <?php get_footer(); ?>

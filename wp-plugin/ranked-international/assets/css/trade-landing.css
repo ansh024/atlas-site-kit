@@ -33,9 +33,7 @@ body.rip-seo-businesses-landing #wrapper-navbar .uicore-cta-wrapper a:hover {
     -webkit-backdrop-filter:blur(14px);
   }
 }
-/* Fail closed if a cached template or third party injects the retired popup. */
-body.page-template-template-turf-tree-service #auditModal,
-body.rip-seo-businesses-landing #auditModal { display:none !important; }
+/* The retired popup is hidden site-wide in page-fixes.css. */
 body.page-template-template-turf-tree-service .trade-audit,
 body.rip-seo-businesses-landing .trade-audit { scroll-margin-top:88px; padding:clamp(60px,8vw,104px) var(--pad); background:#07162f; }
 body.page-template-template-turf-tree-service .trade-audit__inner,

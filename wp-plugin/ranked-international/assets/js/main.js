@@ -540,82 +540,60 @@ function titles() {
   });
 }
 
-/* ---------- audit modal (WPForms owns validation and submission) ---------- */
+/* ---------- audit CTAs: scroll to the form, never a popup ---------- */
+
+/**
+ * On our landing pages the audit form is an `#audit` section in the template.
+ * Everywhere else it is the GHL embed in the theme's Elementor footer, which
+ * editors rebuild from the WordPress panel — so find it by the embed itself
+ * rather than by an Elementor element id that changes when they do.
+ */
+function auditTarget() {
+  const anchored = $('#audit');
+  if (anchored) return anchored;
+
+  const embed = $('iframe[src*="leadconnectorhq.com/widget/form"]');
+  if (!embed) return null;
+  return embed.closest('.elementor-top-section') || embed.closest('section') || embed;
+}
+
 function form() {
-  const modal = $('#auditModal');
-  const inlineAudit = $('#audit.trade-audit');
+  // The audit popup is retired. Drop it before the click delegation below runs,
+  // so stale cached markup or another integration cannot turn the CTAs back
+  // into popup links.
+  $('#auditModal')?.remove();
+  document.body.classList.remove('audit-modal-open');
+  $$('a[href="#audit"]').forEach(link => link.removeAttribute('aria-expanded'));
 
-  // This paid-traffic page owns an inline audit form. If stale cached markup
-  // or another integration also injects the legacy modal, remove it before
-  // the shared click delegation can turn #audit links back into popup links.
-  if (inlineAudit) {
-    modal?.remove();
-    document.body.classList.remove('audit-modal-open');
-    return;
-  }
+  // The landers render their own `#audit.trade-audit` section, and
+  // trade-landing.js already owns the scroll for it.
+  if ($('#audit.trade-audit')) return;
 
-  if (!modal) return;
+  const target = auditTarget();
+  if (!target) return;
 
-  let lastFocus = null;
-  let focusTimer = null;
+  // Give the footer form the anchor every CTA already points at, so `#audit`
+  // resolves natively too — deep links, and clicks if this script never runs.
+  if (!target.id) target.id = 'audit';
+  target.dataset.ripAuditTarget = 'true';
+  // Keyboard and screen-reader users followed the CTA to reach the form, so
+  // move focus with them the way opening the dialog used to.
+  if (!target.hasAttribute('tabindex')) target.tabIndex = -1;
 
-  const auditLinks = () => $$('a[href="#audit"]');
-  const setExpanded = expanded => auditLinks().forEach(link => {
-    link.setAttribute('aria-expanded', String(expanded));
-  });
-  const loadEmbeddedForm = () => {
-    const embeddedForm = $('.ghl-audit-form[data-ghl-src]', modal);
-    if (!embeddedForm || embeddedForm.getAttribute('src')) return;
-
-    embeddedForm.src = embeddedForm.dataset.ghlSrc;
-    if (document.querySelector('script[src*="link.msgsndr.com/js/form_embed.js"]')) return;
-
-    const embedScript = document.createElement('script');
-    embedScript.src = 'https://link.msgsndr.com/js/form_embed.js';
-    embedScript.async = true;
-    embedScript.dataset.ripGhlEmbed = 'true';
-    document.body.appendChild(embedScript);
-  };
-  const openAudit = (event, opener) => {
-    event?.preventDefault();
-    if (!modal.classList.contains('is-open')) {
-      lastFocus = opener || document.activeElement;
-    }
-
-    clearTimeout(focusTimer);
-    loadEmbeddedForm();
-    modal.inert = false;
-    modal.classList.add('is-open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('audit-modal-open');
-    setExpanded(true);
-    focusTimer = setTimeout(() => {
-      $('.audit-modal__close', modal)?.focus({ preventScroll: true });
-    }, 40);
-  };
-  const closeAudit = event => {
-    event?.preventDefault();
-    clearTimeout(focusTimer);
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('audit-modal-open');
-    setExpanded(false);
-
-    const focusTarget = lastFocus;
-    lastFocus = null;
-    if (focusTarget?.isConnected) focusTarget.focus?.({ preventScroll: true });
-    modal.inert = true;
-  };
-
-  modal.inert = true;
-  setExpanded(false);
   document.addEventListener('click', event => {
     const link = event.target.closest?.('a[href="#audit"]');
-    if (link) openAudit(event, link);
-  });
-  $$('[data-audit-close]', modal).forEach(element => element.addEventListener('click', closeAudit));
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && modal.classList.contains('is-open')) closeAudit(event);
+    if (!link) return;
+    event.preventDefault();
+    history.pushState(null, '', '#audit');
+
+    // Jump reliably even while the third-party iframe is settling its height.
+    // A long CSS smooth-scroll can otherwise chase a moving target.
+    const root = document.documentElement;
+    const previousScrollBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    target.scrollIntoView({ block: 'start' });
+    target.focus({ preventScroll: true });
+    requestAnimationFrame(() => { root.style.scrollBehavior = previousScrollBehavior; });
   });
 }
 

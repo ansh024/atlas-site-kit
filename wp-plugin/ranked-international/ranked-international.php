@@ -20,45 +20,6 @@ require_once RIP_DIR . 'includes/seed.php';
 require_once RIP_DIR . 'includes/seo.php';
 require_once RIP_DIR . 'includes/leads.php';
 
-const RIP_AUDIT_WPFORMS_ID = 2845;
-
-function rip_wpforms_audit_available() {
-	return shortcode_exists( 'wpforms' )
-		&& get_post_type( RIP_AUDIT_WPFORMS_ID ) === 'wpforms'
-		&& get_post_status( RIP_AUDIT_WPFORMS_ID ) !== 'trash';
-}
-
-function rip_wpforms_audit_html() {
-	static $html = null;
-	if ( $html !== null ) return $html;
-	if ( ! rip_wpforms_audit_available() ) {
-		$html = '<p class="audit-modal__unavailable">The audit form is temporarily unavailable. Please use the Contact page or call us.</p>';
-		return $html;
-	}
-	$html = do_shortcode( '[wpforms id="2845" title="false"]' );
-	return $html;
-}
-
-function rip_render_audit_modal() {
-	// Paid-traffic landers render the audit form inline instead — a popup that
-	// covers the page is the wrong pattern for the one action they exist for.
-	if ( rip_is_seo_businesses_landing() ) return;
-	if ( ! rip_is_turf_tree_landing() ) {
-		rip_render_ghl_audit_modal( 'organic' );
-		return;
-	}
-	?>
-	<div class="audit-modal" id="auditModal" aria-hidden="true">
-		<div class="audit-modal__backdrop" data-audit-close></div>
-		<div class="audit-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="auditTitle">
-			<button class="audit-modal__close" type="button" data-audit-close aria-label="Close audit form"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-			<h2 class="screen-reader-text" id="auditTitle">Request a free audit</h2>
-			<div class="audit-modal__wpforms"><?php echo rip_wpforms_audit_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
-		</div>
-	</div>
-	<?php
-}
-
 /**
  * GHL embed per campaign: form ID, form name and iframe height, exactly as the
  * GHL embed snippet supplies them. Which thank-you page a lead lands on is the
@@ -88,40 +49,11 @@ function rip_ghl_form_id( $campaign = 'default' ) {
 	return $form['id'];
 }
 
-/** Render the campaign-specific GHL audit form without changing other pages. */
-function rip_render_ghl_audit_modal( $campaign = 'default' ) {
-	$form = rip_ghl_form( $campaign );
-	$form_id = $form['id'];
-	$form_name = $form['name'];
-	$form_height = $form['height'];
-	?>
-	<div class="audit-modal audit-modal--ghl" id="auditModal" aria-hidden="true">
-		<div class="audit-modal__backdrop" data-audit-close></div>
-		<div class="audit-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="auditTitle">
-			<button class="audit-modal__close" type="button" data-audit-close aria-label="Close audit form"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-			<div class="ghl-modal__layout">
-				<aside class="ghl-modal__value" aria-labelledby="auditTitle">
-					<h2 id="auditTitle">Get a clearer path to more leads.</h2>
-					<p class="ghl-modal__intro">See the search opportunities most likely to bring in more calls.</p>
-					<ul class="ghl-modal__benefits">
-						<li>Clear local SEO opportunities</li>
-						<li>A practical plan for more calls</li>
-					</ul>
-				</aside>
-				<div class="ghl-modal__form-panel">
-					<iframe class="ghl-audit-form" data-ghl-src="https://api.leadconnectorhq.com/widget/form/<?php echo esc_attr( $form_id ); ?>" style="width:100%;height:100%;border:none;border-radius:20px" id="inline-<?php echo esc_attr( $form_id ); ?>" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-trigger-value="" data-activation-type="alwaysActivated" data-activation-value="" data-deactivation-type="neverDeactivate" data-deactivation-value="" data-form-name="<?php echo esc_attr( $form_name ); ?>" data-height="<?php echo esc_attr( $form_height ); ?>" data-layout-iframe-id="inline-<?php echo esc_attr( $form_id ); ?>" data-form-id="<?php echo esc_attr( $form_id ); ?>" title="<?php echo esc_attr( $form_name ); ?>" loading="lazy"></iframe>
-				</div>
-			</div>
-		</div>
-	</div>
-	<?php
-}
-
 /**
- * The audit form as an in-page section, for landing pages whose every CTA is
- * an `#audit` anchor. main.js drops the modal when this section is present and
- * trade-landing.js takes over the smooth scroll, so a page must render one or
- * the other — never both.
+ * The audit form as an in-page section, for landing pages that drop the theme
+ * footer and so have to carry the form themselves. Every other page scrolls to
+ * the footer's form instead (see main.js), so a page must have one audit form
+ * or the other — never both, since both answer to the same `#audit` anchor.
  */
 function rip_render_inline_ghl_audit( $campaign = 'default', $intro = '', $reassurance = 'No contract. No obligation. Just a clear next step.' ) {
 	$form = rip_ghl_form( $campaign );
@@ -143,11 +75,6 @@ function rip_render_inline_ghl_audit( $campaign = 'default', $intro = '', $reass
 	</section>
 	<?php
 }
-
-add_action( 'admin_notices', function () {
-	if ( ! current_user_can( 'manage_options' ) || rip_wpforms_audit_available() ) return;
-	echo '<div class="notice notice-error"><p><strong>Ranked audit modal:</strong> WPForms form 2845 is unavailable. Activate WPForms and publish form 2845.</p></div>';
-} );
 
 /**
  * Map of template file => label shown in the Page Attributes dropdown.
@@ -441,14 +368,11 @@ function rip_enqueue_assets() {
 	if ( $is_turf_tree || $is_seo_businesses ) {
 		wp_enqueue_script( 'rip-turf-tree', RIP_URL . 'assets/js/trade-landing.js', array( 'gsap', 'gsap-scrolltrigger', 'rip-main' ), RIP_VERSION, true );
 	}
-	// Both landers embed the GHL form inline, so it needs the resize script up
-	// front rather than the lazy injection the modal path uses on open.
+	// The landers embed the GHL form in the page, so they need the resize script.
+	// Everywhere else the form lives in the theme footer, which ships its own copy.
 	if ( $is_turf_tree || $is_seo_businesses ) {
 		wp_enqueue_script( 'rip-ghl-form-embed', 'https://link.msgsndr.com/js/form_embed.js', array(), null, true );
 	}
-
-	// Render once before styles/scripts print so WPForms can enqueue its assets.
-	rip_wpforms_audit_html();
 }
 
 /**

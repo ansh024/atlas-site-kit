@@ -54,7 +54,7 @@ After the plugin release is deployed:
 1. In WordPress, create a Page titled `Turf & Tree Service` with the slug
    `turf-tree-service`.
 2. In Page Attributes or Template, select `Ranked Intl: Turf & Tree Service`.
-3. Keep the page as a draft while reviewing the theme navigation, footer and
-   shared WPForms audit modal.
+3. Keep the page as a draft while reviewing the theme navigation and the
+   lander's own in-page audit form.
 4. Publish only after the page is approved. If the landing page should appear
    in navigation, add that menu item in Appearance, not in the template.
