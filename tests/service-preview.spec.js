@@ -73,25 +73,37 @@ test('audit CTA opens the Organic GHL modal', async ({ page }) => {
   await expect(form).toHaveAttribute('data-height', '792');
 });
 
-// This campaign runs its own GHL form, not the site-wide Organic one.
-test('SEO businesses campaign uses its own Meta Form', async ({ page }) => {
+// This campaign runs its own GHL form, not the site-wide Organic one, and it
+// sits in the page like the turf lander's — a popup over the page was costing
+// conversions here.
+test('SEO businesses campaign renders its own Meta Form inline', async ({ page }) => {
   await page.goto('/seo-for-businesses/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#auditModal')).toHaveCount(0);
   await expect(page.locator('.audit-modal__wpforms')).toHaveCount(0);
   await expect(page.locator('#inline-f0ApiaQNdHgKKFOqtp8q')).toHaveCount(0);
 
-  const form = page.locator('#inline-NnlAud8uVZoK09OlAAFj');
+  const form = page.locator('#audit.trade-audit .ghl-audit-form');
   await expect(form).toHaveCount(1);
+  await expect(form).toHaveAttribute('id', 'inline-NnlAud8uVZoK09OlAAFj');
   await expect(form).toHaveAttribute('data-form-name', 'Meta Form - General');
   await expect(form).toHaveAttribute('data-form-id', 'NnlAud8uVZoK09OlAAFj');
   await expect(form).toHaveAttribute('data-height', '772');
-
-  // The iframe stays unloaded until the modal opens, then takes its real src.
-  await expect(form).not.toHaveAttribute('src', /./);
-  await page.locator('a[href="#audit"]:visible').first().click();
   await expect(form).toHaveAttribute(
     'src',
     'https://api.leadconnectorhq.com/widget/form/NnlAud8uVZoK09OlAAFj'
   );
+  await expect(page.frameLocator('#audit .ghl-audit-form').locator('input')).not.toHaveCount(0);
+});
+
+// Every CTA on the lander is an #audit anchor. With the form in the page they
+// must scroll to it, never re-open a popup or leave the page scroll-locked.
+test('SEO businesses CTAs scroll to the inline audit form', async ({ page }) => {
+  await page.goto('/seo-for-businesses/', { waitUntil: 'domcontentloaded' });
+  await page.locator('a[href="#audit"]:visible').first().click();
+
+  await expect(page.locator('#auditModal')).toHaveCount(0);
+  await expect(page.locator('body')).not.toHaveClass(/audit-modal-open/);
+  await expect(page.locator('#audit.trade-audit')).toBeInViewport();
 });
 
 // The desktop case-study rules only win from the "must remain last" block in

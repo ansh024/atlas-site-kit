@@ -40,8 +40,11 @@ function rip_wpforms_audit_html() {
 }
 
 function rip_render_audit_modal() {
+	// Paid-traffic landers render the audit form inline instead — a popup that
+	// covers the page is the wrong pattern for the one action they exist for.
+	if ( rip_is_seo_businesses_landing() ) return;
 	if ( ! rip_is_turf_tree_landing() ) {
-		rip_render_ghl_audit_modal( rip_is_seo_businesses_landing() ? 'seo-businesses' : 'organic' );
+		rip_render_ghl_audit_modal( 'organic' );
 		return;
 	}
 	?>
@@ -111,6 +114,33 @@ function rip_render_ghl_audit_modal( $campaign = 'default' ) {
 			</div>
 		</div>
 	</div>
+	<?php
+}
+
+/**
+ * The audit form as an in-page section, for landing pages whose every CTA is
+ * an `#audit` anchor. main.js drops the modal when this section is present and
+ * trade-landing.js takes over the smooth scroll, so a page must render one or
+ * the other — never both.
+ */
+function rip_render_inline_ghl_audit( $campaign = 'default', $intro = '', $reassurance = 'No contract. No obligation. Just a clear next step.' ) {
+	$form = rip_ghl_form( $campaign );
+	$form_id = $form['id'];
+	$form_name = $form['name'];
+	$form_height = (int) $form['height'];
+	?>
+	<section class="trade-audit" id="audit" aria-labelledby="auditTitle" style="--rip-audit-h:<?php echo esc_attr( $form_height ); ?>px">
+		<div class="trade-audit__inner">
+			<div class="trade-audit__value">
+				<h2 id="auditTitle">Get a clearer path to more leads.</h2>
+				<?php if ( $intro ) : ?><p class="trade-audit__intro"><?php echo esc_html( $intro ); ?></p><?php endif; ?>
+				<?php if ( $reassurance ) : ?><p class="trade-audit__reassurance"><?php echo esc_html( $reassurance ); ?></p><?php endif; ?>
+			</div>
+			<div class="trade-audit__form-panel">
+				<iframe class="ghl-audit-form" src="https://api.leadconnectorhq.com/widget/form/<?php echo esc_attr( $form_id ); ?>" id="inline-<?php echo esc_attr( $form_id ); ?>" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-activation-type="alwaysActivated" data-deactivation-type="neverDeactivate" data-form-name="<?php echo esc_attr( $form_name ); ?>" data-height="<?php echo esc_attr( $form_height ); ?>" data-layout-iframe-id="inline-<?php echo esc_attr( $form_id ); ?>" data-form-id="<?php echo esc_attr( $form_id ); ?>" title="Request your free SEO audit"></iframe>
+			</div>
+		</div>
+	</section>
 	<?php
 }
 
@@ -411,7 +441,9 @@ function rip_enqueue_assets() {
 	if ( $is_turf_tree || $is_seo_businesses ) {
 		wp_enqueue_script( 'rip-turf-tree', RIP_URL . 'assets/js/trade-landing.js', array( 'gsap', 'gsap-scrolltrigger', 'rip-main' ), RIP_VERSION, true );
 	}
-	if ( $is_turf_tree ) {
+	// Both landers embed the GHL form inline, so it needs the resize script up
+	// front rather than the lazy injection the modal path uses on open.
+	if ( $is_turf_tree || $is_seo_businesses ) {
 		wp_enqueue_script( 'rip-ghl-form-embed', 'https://link.msgsndr.com/js/form_embed.js', array(), null, true );
 	}
 

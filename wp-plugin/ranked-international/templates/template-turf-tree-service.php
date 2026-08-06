@@ -70,19 +70,7 @@ $case_study_url = home_url( '/case-studies/turf-and-design/' );
 
   <section class="cta" id="cta-final"><div class="cta__inner"><div class="cta__copy"><p class="cta__title">Stop losing customers to businesses with worse work and better <em>rankings.</em></p><p class="cta__sub">Every month you are invisible on Google is a month of jobs going to someone else. Let’s fix that.</p></div><div class="trade-cta__actions"><div class="trade-cta__buttons"><a href="#audit" class="btn btn--dark btn--lg" data-track="final-audit">Get free SEO audit</a><a href="tel:+18334024789" class="btn btn--lg trade-call-btn" data-track="final-call" data-track-event="call_cta_click" aria-label="Call Ranked International at 833-402-4789">Call 833-402-4789</a></div><span>No contract. No obligation.</span></div></div></section>
 
-  <?php $audit_form_id = rip_ghl_form_id( 'turf' ); ?>
-  <section class="trade-audit" id="audit" aria-labelledby="auditTitle">
-    <div class="trade-audit__inner">
-      <div class="trade-audit__value">
-        <h2 id="auditTitle">Get a clearer path to more leads.</h2>
-        <p class="trade-audit__intro">See the search opportunities most likely to bring in more calls for your turf, tree care, or outdoor service business.</p>
-        <p class="trade-audit__reassurance">No contract. No obligation. Just a clear next step.</p>
-      </div>
-      <div class="trade-audit__form-panel">
-        <iframe class="ghl-audit-form" src="https://api.leadconnectorhq.com/widget/form/<?php echo esc_attr( $audit_form_id ); ?>" id="inline-<?php echo esc_attr( $audit_form_id ); ?>" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-activation-type="alwaysActivated" data-deactivation-type="neverDeactivate" data-form-name="Meta Form" data-height="1000" data-layout-iframe-id="inline-<?php echo esc_attr( $audit_form_id ); ?>" data-form-id="<?php echo esc_attr( $audit_form_id ); ?>" title="Request your free SEO audit"></iframe>
-      </div>
-    </div>
-  </section>
+  <?php rip_render_inline_ghl_audit( 'turf', 'See the search opportunities most likely to bring in more calls for your turf, tree care, or outdoor service business.' ); ?>
 </main>
 
 <div class="mobile-sticky-actions" aria-label="Contact Ranked International">
