@@ -35,7 +35,7 @@ function rip_ghl_forms() {
 		'organic'        => array( 'id' => 'f0ApiaQNdHgKKFOqtp8q', 'name' => 'Organic', 'height' => 792 ),
 		// Redirect this one to /turf-thank-you/ inside GHL.
 		'turf'           => array( 'id' => 'NnlAud8uVZoK09OlAAFj', 'name' => 'Meta Form', 'height' => 1000 ),
-		'seo-businesses' => array( 'id' => 'NnlAud8uVZoK09OlAAFj', 'name' => 'Meta Form - General', 'height' => 772 ),
+		'seo-businesses' => array( 'id' => 'hQTRuheSQNg66eN7NdVt', 'name' => 'Meta Form - General', 'height' => 772 ),
 	);
 }
 
