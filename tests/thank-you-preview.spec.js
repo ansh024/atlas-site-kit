@@ -24,6 +24,15 @@ for (const [path, number] of [
   });
 }
 
+// The turf campaign's pixel is pasted into WP by hand, so the plugin must emit
+// no block of its own here — two Lead events would double-count every lead.
+test('turf thank-you carries no plugin-emitted Meta pixel', async ({ page }) => {
+  await page.goto('/turf-thank-you/', { waitUntil: 'networkidle' });
+
+  await expect(page.locator('#rip-meta-lead')).toHaveCount(0);
+  await expect(page.locator('#rip-meta-seo-businesses-conversion')).toHaveCount(0);
+});
+
 test('SEO businesses thank-you fires only its dedicated Meta conversion pixel', async ({ page }) => {
   await page.goto('/thank-you-seo-for-businesses-lp/', { waitUntil: 'networkidle' });
 
