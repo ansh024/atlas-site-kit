@@ -113,13 +113,13 @@ test('SEO businesses campaign renders its own Meta Form inline', async ({ page }
 
   const form = page.locator('#audit.trade-audit .ghl-audit-form');
   await expect(form).toHaveCount(1);
-  await expect(form).toHaveAttribute('id', 'inline-NnlAud8uVZoK09OlAAFj');
+  await expect(form).toHaveAttribute('id', 'inline-hQTRuheSQNg66eN7NdVt');
   await expect(form).toHaveAttribute('data-form-name', 'Meta Form - General');
-  await expect(form).toHaveAttribute('data-form-id', 'NnlAud8uVZoK09OlAAFj');
+  await expect(form).toHaveAttribute('data-form-id', 'hQTRuheSQNg66eN7NdVt');
   await expect(form).toHaveAttribute('data-height', '772');
   await expect(form).toHaveAttribute(
     'src',
-    'https://api.leadconnectorhq.com/widget/form/NnlAud8uVZoK09OlAAFj'
+    'https://api.leadconnectorhq.com/widget/form/hQTRuheSQNg66eN7NdVt'
   );
   await expect(page.frameLocator('#audit .ghl-audit-form').locator('input')).not.toHaveCount(0);
 });
