@@ -178,6 +178,15 @@ function rip_is_seo_businesses_thank_you() {
 	return rip_thank_you_route() === 'seo-businesses-lp';
 }
 
+/**
+ * The turf campaign's Meta Pixel is managed by hand in WordPress rather than
+ * here, so the plugin emits no pixel on this route and leaves whatever is
+ * pasted into <head> alone. See the conversion-pixel and head-cleaner hooks.
+ */
+function rip_is_turf_thank_you() {
+	return rip_thank_you_route() === 'turf';
+}
+
 add_filter( 'redirect_canonical', function ( $redirect_url ) {
 	return ( rip_is_audit_thank_you() || rip_is_legal_page() || rip_is_seo_businesses_landing() ) ? false : $redirect_url;
 } );
@@ -420,9 +429,13 @@ add_action( 'wp_head', function () {
 	<?php
 }, 20 );
 
-/** Meta conversion events are intentionally limited to post-submission routes. */
+/**
+ * Meta conversion events are intentionally limited to post-submission routes.
+ * The turf thank-you is excluded: that campaign's pixel is pasted into
+ * WordPress by hand, so emitting one here would double-count every Lead.
+ */
 add_action( 'wp_head', function () {
-	if ( ! rip_is_audit_thank_you() ) return;
+	if ( ! rip_is_audit_thank_you() || rip_is_turf_thank_you() ) return;
 	$seo_businesses = rip_is_seo_businesses_thank_you();
 	?>
 	<!-- Meta Pixel Code -->
@@ -456,13 +469,17 @@ add_action( 'wp_head', function () {
  * initialised pixel, so leaving the site-wide 1686472339304024 block in that
  * page's <head> would silently bill it a second PageView plus the campaign's
  * Lead. On that route every foreign Meta Pixel block is dropped.
+ *
+ * The turf thank-you is skipped entirely. Its pixel is hand-managed in
+ * WordPress, and that pasted block is precisely the Lead-firing kind this
+ * filter deletes — running here would strip the only pixel the page has.
  */
 add_action( 'wp_head', function () {
-	if ( rip_is_audit_thank_you() ) ob_start();
+	if ( rip_is_audit_thank_you() && ! rip_is_turf_thank_you() ) ob_start();
 }, 0 );
 
 add_action( 'wp_head', function () {
-	if ( ! rip_is_audit_thank_you() || ! ob_get_level() ) return;
+	if ( ! rip_is_audit_thank_you() || rip_is_turf_thank_you() || ! ob_get_level() ) return;
 	$head          = ob_get_clean();
 	$seo_exclusive = rip_is_seo_businesses_thank_you();
 
