@@ -2,6 +2,8 @@
   "key": "group_rip_industry_page",
   "title": "Industry Page Details",
   "fields": [
+    {"key":"field_rip_ind_start_note","label":"Editing an industry page","name":"","type":"message","message":"<p><strong>Safe to duplicate:</strong> duplicate a completed Industry Page, then personalize its fields. This editor controls content and media only—the page layout is fixed and protected. Use the tabs below in order; sections marked optional can be left blank to hide them.</p>"},
+    {"key":"field_rip_ind_tab_hero","label":"1. Hero & proof","name":"","type":"tab","placement":"top"},
     {
       "key": "field_rip_ind_name",
       "label": "Industry name",
@@ -23,7 +25,7 @@
       "name": "hero_title",
       "type": "text",
       "required": 1,
-      "instructions": "HTML allowed, e.g. <em>...</em> to italicize a phrase."
+      "instructions": "Large opening headline. For one italic accent phrase only, wrap it in <em>...</em>; otherwise use plain text."
     },
     {
       "key": "field_rip_ind_hero_sub",
@@ -62,10 +64,11 @@
     },
     {
       "key": "field_rip_ind_hero_video_poster",
-      "label": "Hero visual poster image",
+      "label": "Hero visual poster image (fallback image)",
       "name": "hero_video_poster",
       "type": "image",
-      "return_format": "url"
+      "return_format": "url",
+      "instructions": "Wide image shown while the hero video loads, and whenever video cannot play. Use a landscape image with the subject centered."
     },
     {
       "key": "field_rip_ind_hero_video",
@@ -73,7 +76,8 @@
       "name": "hero_video",
       "type": "file",
       "return_format": "url",
-      "mime_types": "mp4"
+      "mime_types": "mp4",
+      "instructions": "Optional short MP4 hero video. Keep the poster image above as the fallback; do not upload a video if the poster alone tells the story."
     },
     {
       "key": "field_rip_ind_hero_chips",
@@ -135,6 +139,7 @@
       "type": "text",
       "default_value": "#1 on Google"
     },
+    {"key":"field_rip_ind_tab_trust","label":"2. Trust & audience","name":"","type":"tab","placement":"top"},
     {
       "key": "field_rip_ind_trusted_logos",
       "label": "Trusted-by logos",
@@ -151,7 +156,7 @@
       ],
       "layout": "block",
       "button_label": "Add row",
-      "instructions": "Client logos for the scrolling marquee. Rendered twice automatically for a seamless loop.",
+      "instructions": "Add up to 12 client logos for the scrolling marquee. Use clear horizontal logos with transparent backgrounds where possible; each logo is repeated automatically for a seamless loop.",
       "min": 0,
       "max": 12
     },
@@ -254,6 +259,7 @@
       "min": 0,
       "max": 4
     },
+    {"key":"field_rip_ind_tab_comparison","label":"3. Comparison & spotlight","name":"","type":"tab","placement":"top"},
     {
       "key": "field_rip_ind_compare_title",
       "label": "Comparison table title",
@@ -295,7 +301,7 @@
           "label": "Ranked International value",
           "name": "ranked_value",
           "type": "text",
-          "instructions": "For \"check\" rows, type yes or no."
+          "instructions": "For a “Check / cross” row, type yes or no. For a “Two numbers” row, enter the exact value visitors should see."
         },
         {
           "key": "field_rip_ind_cmp_agency",
@@ -402,6 +408,7 @@
       "min": 0,
       "max": 3
     },
+    {"key":"field_rip_ind_tab_services","label":"4. Services, process & FAQ","name":"","type":"tab","placement":"top"},
     {
       "key": "field_rip_ind_services_title",
       "label": "Services diagram title",
@@ -444,7 +451,7 @@
       ],
       "layout": "block",
       "button_label": "Add row",
-      "instructions": "Exactly 6 recommended \u2014 this section is a fixed 6-slot wiring diagram.",
+      "instructions": "Add exactly 6 service chips for the balanced wiring-diagram layout. Keep titles short; the order controls their fixed positions around the center label.",
       "min": 0,
       "max": 6
     },
@@ -568,5 +575,5 @@
   "label_placement": "top",
   "instruction_placement": "label",
   "active": true,
-  "modified": 1783627995
+  "modified": 1786643200
 }

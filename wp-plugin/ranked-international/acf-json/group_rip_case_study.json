@@ -3,6 +3,14 @@
   "title": "Case Study Details",
   "fields": [
     {
+      "key": "field_rip_cs_start_note",
+      "label": "Editing a case study",
+      "name": "",
+      "type": "message",
+      "message": "<p><strong>Safe to duplicate:</strong> duplicate an existing Case Study, then replace the text, logo, metrics, and proof below. These fields change content only; they do not change the page design. Required fields are the minimum needed for a complete page.</p>"
+    },
+    {"key":"field_rip_cs_tab_hero","label":"1. Client, hero & chart","name":"","type":"tab","placement":"top"},
+    {
       "key": "field_rip_cs_client_name",
       "label": "Client name",
       "name": "client_name",
@@ -17,7 +25,7 @@
       "type": "image",
       "return_format": "url",
       "preview_size": "medium",
-      "instructions": "Wide logo mark, shown at ~150x14px."
+      "instructions": "Upload a wide, horizontal logo with transparent background where possible. It is displayed small in the hero (about 150 × 14 px), so avoid square logos or logos with tiny text."
     },
     {
       "key": "field_rip_cs_industry_tag",
@@ -39,7 +47,7 @@
       "name": "hero_title",
       "type": "text",
       "required": 1,
-      "instructions": "HTML allowed, e.g. wrap a phrase in <em>...</em> to highlight it in italic serif."
+      "instructions": "Large headline in the opening hero. For one italic accent phrase only, wrap it in <em>...</em>; otherwise use plain text."
     },
     {
       "key": "field_rip_cs_hero_sub",
@@ -70,7 +78,7 @@
       ],
       "layout": "block",
       "button_label": "Add row",
-      "instructions": "2-3 short stat rows shown under the hero copy.",
+      "instructions": "Add 2–3 short proof points shown under the hero copy. Each row needs a small label and a prominent value; the layout is handled automatically.",
       "min": 1,
       "max": 3
     },
@@ -131,7 +139,7 @@
       ],
       "layout": "block",
       "button_label": "Add row",
-      "instructions": "Plain numbers, in order (e.g. monthly traffic). The chart line/shape is drawn automatically from these \u2014 any number of points works.",
+      "instructions": "Enter plain numbers only, oldest to newest (for example monthly traffic). The chart line is drawn automatically; do not add commas, % signs, or labels here.",
       "min": 2
     },
     {
@@ -146,7 +154,7 @@
           "name": "icon",
           "type": "text",
           "default_value": "tag",
-          "instructions": "A lucide.dev icon name: tag, map-pin, calendar, search, etc."
+      "instructions": "Use a simple Lucide icon name, e.g. tag, map-pin, calendar, or search. If unsure, leave the existing icon and change only the text."
         },
         {
           "key": "field_rip_cs_pill_text",
@@ -157,10 +165,11 @@
       ],
       "layout": "block",
       "button_label": "Add row",
-      "instructions": "Small pills under the hero \u2014 industry, location, engagement length, service type.",
+      "instructions": "Add 1–4 short context pills below the hero, such as industry, location, engagement length, or service type.",
       "min": 1,
       "max": 4
     },
+    {"key":"field_rip_cs_tab_strategy","label":"2. Strategy","name":"","type":"tab","placement":"top"},
     {
       "key": "field_rip_cs_strategy_title",
       "label": "Strategy section title",
@@ -198,10 +207,11 @@
       ],
       "layout": "block",
       "button_label": "Add row",
-      "instructions": "Usually 3 cards, numbered automatically (01, 02, 03...).",
+      "instructions": "Add 1–4 strategy cards. They are numbered automatically in the order shown, so no numbering is needed in the text.",
       "min": 1,
       "max": 4
     },
+    {"key":"field_rip_cs_tab_results","label":"3. Results & keywords","name":"","type":"tab","placement":"top"},
     {
       "key": "field_rip_cs_results_title",
       "label": "Results section title",
@@ -287,6 +297,7 @@
       "min": 0,
       "max": 8
     },
+    {"key":"field_rip_cs_tab_links_seo","label":"4. Related pages & SEO","name":"","type":"tab","placement":"top"},
     {
       "key": "field_rip_cs_related",
       "label": "Related case studies",
@@ -332,5 +343,5 @@
   "label_placement": "top",
   "instruction_placement": "label",
   "active": true,
-  "modified": 1783627995
+  "modified": 1786643200
 }
