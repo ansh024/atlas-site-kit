@@ -135,6 +135,13 @@ switch, and each is independently reversible:
    safe to use it.
 4. Publish. No developer, no code, no template picker.
 
+Each reusable editor starts with a collapsible **annotated visual page map**.
+It is a static reference image bundled with the plugin and appears only in
+wp-admin; it does not load an iframe or affect the public page. FAQ-capable
+pages also have an explicit mode selector: keep the standard questions, use
+the editable repeater rows, or hide the FAQ section. Repeater rows can be
+added, removed, and dragged into a new order.
+
 The easiest way to "duplicate" an existing page for a new one: open an
 existing Industry Page or Case Study in wp-admin, use **Duplicate Post** (or
 any duplication plugin) or just copy field values across manually into a new

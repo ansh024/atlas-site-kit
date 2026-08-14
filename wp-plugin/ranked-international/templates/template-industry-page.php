@@ -370,22 +370,26 @@ $spotlights = is_array( $raw_spotlights ) ? array_map( function( $row ) use ( $s
   </section>
   <?php endif; ?>
 
-  <?php if ( have_rows( 'faqs' ) ) : ?>
+  <?php
+  $industry_faqs = get_field( 'faq_mode' ) === 'hidden' ? array() : ( get_field( 'faqs' ) ?: array() );
+  ?>
+  <?php if ( $industry_faqs ) : ?>
   <!-- ===== FAQ ===== -->
   <section class="faq" id="faq">
     <div class="faq__head">
       <?php if ( $ft = get_field( 'faq_title' ) ) : ?><h2><?php echo esc_html( $ft ); ?></h2><?php endif; ?>
+      <?php if ( $fs = get_field( 'faq_sub' ) ) : ?><p><?php echo esc_html( $fs ); ?></p><?php endif; ?>
     </div>
     <div class="faq__list">
-      <?php $i = 0; while ( have_rows( 'faqs' ) ) : the_row(); $i++; ?>
-      <article class="faq__item<?php echo $i === 1 ? ' is-open' : ''; ?>">
-        <button class="faq__question" type="button" aria-expanded="<?php echo $i === 1 ? 'true' : 'false'; ?>">
-          <span><?php echo esc_html( get_sub_field( 'question' ) ); ?></span>
+      <?php foreach ( $industry_faqs as $i => $faq ) : ?>
+      <article class="faq__item<?php echo $i === 0 ? ' is-open' : ''; ?>">
+        <button class="faq__question" type="button" aria-expanded="<?php echo $i === 0 ? 'true' : 'false'; ?>">
+          <span><?php echo esc_html( $faq['question'] ?? '' ); ?></span>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <div class="faq__answer"><p><?php echo esc_html( get_sub_field( 'answer' ) ); ?></p></div>
+        <div class="faq__answer"><p><?php echo esc_html( $faq['answer'] ?? '' ); ?></p></div>
       </article>
-      <?php endwhile; ?>
+      <?php endforeach; ?>
     </div>
   </section>
   <?php endif; ?>

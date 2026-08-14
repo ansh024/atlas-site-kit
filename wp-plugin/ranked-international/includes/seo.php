@@ -95,7 +95,7 @@ function rip_extend_yoast_schema_graph( $graph, $context ) {
 		'provider'    => array( '@id' => home_url( '/#organization' ) ),
 		'areaServed'  => wp_strip_all_tags( get_field( 'primary_market', $post_id ) ?: 'Dallas-Fort Worth, Texas' ),
 	);
-	$faqs = get_field( 'faqs', $post_id );
+	$faqs = get_field( 'faq_mode', $post_id ) === 'hidden' ? array() : get_field( 'faqs', $post_id );
 	if ( is_array( $faqs ) && $faqs ) {
 		$graph[] = array(
 			'@type'      => 'FAQPage',

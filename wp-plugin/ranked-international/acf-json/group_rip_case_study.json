@@ -297,7 +297,15 @@
       "min": 0,
       "max": 8
     },
-    {"key":"field_rip_cs_tab_links_seo","label":"4. Related pages & SEO","name":"","type":"tab","placement":"top"},
+    {"key":"field_rip_cs_tab_faq","label":"4. FAQs","name":"","type":"tab","placement":"top"},
+    {"key":"field_rip_cs_faq_mode","label":"FAQ section mode","name":"faq_mode","type":"select","instructions":"Add optional case-specific FAQs or hide the section. Existing case studies remain unchanged until FAQ rows are added.","choices":{"default":"Show FAQ rows when added","hidden":"Hide the FAQ section"},"default_value":"default","ui":1},
+    {"key":"field_rip_cs_faq_title","label":"FAQ section heading","name":"faq_title","type":"text","instructions":"Optional. Leave blank to use “Questions about this project”."},
+    {"key":"field_rip_cs_faq_sub","label":"FAQ section introduction","name":"faq_sub","type":"textarea","instructions":"Optional short paragraph shown below the FAQ heading.","rows":3},
+    {"key":"field_rip_cs_faqs","label":"FAQ questions and answers","name":"faqs","type":"repeater","instructions":"Add, remove, or drag rows to reorder the questions. The entire section stays hidden when no rows are present.","layout":"block","min":0,"max":12,"button_label":"Add FAQ","sub_fields":[
+      {"key":"field_rip_cs_faq_q","label":"Question","name":"question","type":"text","required":1},
+      {"key":"field_rip_cs_faq_a","label":"Answer","name":"answer","type":"textarea","rows":4,"required":1}
+    ]},
+    {"key":"field_rip_cs_tab_links_seo","label":"5. Related pages & SEO","name":"","type":"tab","placement":"top"},
     {
       "key": "field_rip_cs_related",
       "label": "Related case studies",
@@ -343,5 +351,5 @@
   "label_placement": "top",
   "instruction_placement": "label",
   "active": true,
-  "modified": 1786643200
+  "modified": 1786729600
 }

@@ -44,7 +44,15 @@
     {"key":"field_rip_city_review5_context","label":"Review 5 location/context","name":"review_5_context","type":"text"},
     {"key":"field_rip_city_review5_quote","label":"Review 5 quote","name":"review_5_quote","type":"textarea","rows":3},
     {"key":"field_rip_city_review6_context","label":"Review 6 location/context","name":"review_6_context","type":"text"},
-    {"key":"field_rip_city_seo_tab","label":"5. SEO fallback","name":"","type":"tab","placement":"top"},
+    {"key":"field_rip_city_faq_tab","label":"5. FAQs","name":"","type":"tab","placement":"top"},
+    {"key":"field_rip_city_faq_mode","label":"FAQ section mode","name":"faq_mode","type":"select","instructions":"Choose “Custom FAQ rows” to add, remove, or reorder the questions below. Choose “Hide” to remove the entire FAQ section.","choices":{"default":"Use the standard FAQs","custom":"Use custom FAQ rows below","hidden":"Hide the FAQ section"},"default_value":"default","ui":1},
+    {"key":"field_rip_city_faq_title","label":"FAQ section heading","name":"faq_title","type":"text","instructions":"Optional. Leave blank to keep the standard heading."},
+    {"key":"field_rip_city_faq_sub","label":"FAQ section introduction","name":"faq_sub","type":"textarea","instructions":"Optional short paragraph shown below the FAQ heading.","rows":3},
+    {"key":"field_rip_city_faqs","label":"FAQ questions and answers","name":"faqs","type":"repeater","instructions":"Drag rows to reorder them. Removing a row removes that question from this page when Custom FAQ rows is selected above.","layout":"block","min":0,"max":12,"button_label":"Add FAQ","sub_fields":[
+      {"key":"field_rip_city_faq_q","label":"Question","name":"question","type":"text","required":1},
+      {"key":"field_rip_city_faq_a","label":"Answer","name":"answer","type":"textarea","rows":4,"required":1}
+    ]},
+    {"key":"field_rip_city_seo_tab","label":"6. SEO fallback","name":"","type":"tab","placement":"top"},
     {"key":"field_rip_city_seo_title","label":"Fallback SEO title (Yoast takes priority)","name":"seo_title","type":"text","instructions":"Use only when Yoast SEO is not setting a title for this page. Keep it around 50–60 characters."},
     {"key":"field_rip_city_seo_description","label":"Fallback meta description (Yoast takes priority)","name":"seo_description","type":"textarea","instructions":"Use only when Yoast SEO is not setting a meta description. Aim for one clear sentence, about 150–160 characters.","rows":3}
   ],
@@ -57,5 +65,5 @@
   "active": true,
   "description": "Editable location copy for reusable City Pages.",
   "show_in_rest": 0,
-  "modified": 1786643200
+  "modified": 1786729600
 }

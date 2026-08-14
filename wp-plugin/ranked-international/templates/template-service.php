@@ -95,13 +95,17 @@ $phases = rip_service_rows( 'phases', array(
 	array( 'timeframe' => 'Days 31-90', 'title' => 'Expand market coverage', 'actions' => 'Publish pages, strengthen reviews, citations and local authority.', 'client_input' => 'Fast feedback and participation in the review workflow.', 'output' => 'More relevant entry points across the target market.', 'signal' => 'Broader rankings and more qualified actions.' ),
 	array( 'timeframe' => 'Ongoing', 'title' => 'Optimize what creates leads', 'actions' => 'Measure, test, maintain and focus resources on the winners.', 'client_input' => 'Lead-quality and booked-work feedback.', 'output' => 'Monthly work and outcome reporting.', 'signal' => 'Compounding calls, forms and market coverage.' ),
 ) );
-$faqs = rip_service_rows( 'faqs', array(
+$faq_fallback = array(
 	array( 'question' => 'How long does local SEO take?', 'answer' => 'Early corrections can create movement within weeks, while competitive market coverage usually builds over several months. Timing depends on your starting point, competition, location and ability to support the work. We report progress without guaranteeing rankings.' ),
 	array( 'question' => 'Do I need a physical storefront?', 'answer' => 'Not always. Eligible service-area businesses can use local SEO without displaying a public address, provided the Google Business Profile follows the applicable guidelines.' ),
 	array( 'question' => 'What do I own?', 'answer' => 'Your profiles, website content, tracking accounts and approved assets remain yours. We do not hold core business assets hostage.' ),
 	array( 'question' => 'How do you measure results?', 'answer' => 'We connect market coverage and profile activity to calls, forms and other lead actions, then use your feedback to understand lead quality and booked work.' ),
 	array( 'question' => 'How is this different from organic SEO?', 'answer' => 'Local SEO emphasizes proximity, Google Business Profile, reviews and local entity signals. Organic SEO focuses more broadly on website rankings. Strong local campaigns usually coordinate both.' ),
-) );
+);
+$faq_mode = get_field( 'faq_mode' ) ?: 'default';
+$faqs = $faq_mode === 'hidden'
+	? array()
+	: rip_service_rows( 'faqs', $faq_mode === 'custom' ? array() : $faq_fallback );
 
 $proof_mode = get_field( 'proof_mode' ) ?: 'case_study';
 $proof_post = get_field( 'proof_case_study' );
@@ -170,7 +174,9 @@ $proof = array(
 
   <section class="svc-fit svc-section"><div class="svc-wrap"><div class="svc-section-head"><p class="svc-eyebrow svc-eyebrow--dark"><span></span>Is this a fit?</p><h2>Good partnerships start with <em>honest alignment</em>.</h2></div><div class="fit-grid"><div><div class="fit-grid__icon is-fit"><i data-lucide="check"></i></div><h3>A strong fit if…</h3><ul><?php foreach ( rip_service_rows( 'fit_items', array( array('text'=>'You can respond quickly when qualified leads arrive.'), array('text'=>'You are willing to participate in review generation.'), array('text'=>'You see search as a sustained growth channel.'), array('text'=>'You want clear work and outcome reporting.') ) ) as $item ) : ?><li><i data-lucide="check"></i><?php echo esc_html( $item['text'] ); ?></li><?php endforeach; ?></ul></div><div><div class="fit-grid__icon not-fit"><i data-lucide="x"></i></div><h3>Probably not right if…</h3><ul><?php foreach ( rip_service_rows( 'not_fit_items', array( array('text'=>'You need guaranteed rankings by a fixed date.'), array('text'=>'No one can answer or follow up with new leads.'), array('text'=>'The business details or offer are still changing weekly.'), array('text'=>'You want a one-time trick instead of ongoing improvement.') ) ) as $item ) : ?><li><i data-lucide="x"></i><?php echo esc_html( $item['text'] ); ?></li><?php endforeach; ?></ul></div></div></div></section>
 
-  <section class="svc-faq svc-section" id="faqs"><div class="svc-wrap svc-faq__grid"><div><p class="svc-eyebrow svc-eyebrow--dark"><span></span>FAQs</p><h2>What business owners ask <em>before starting</em>.</h2><p>Clear answers about fit, ownership, timing and measurement.</p></div><div class="svc-faq__list"><?php foreach ( $faqs as $i => $faq ) : ?><article class="svc-faq__item<?php echo $i === 0 ? ' is-open' : ''; ?>"><button type="button" aria-expanded="<?php echo $i === 0 ? 'true' : 'false'; ?>"><span><?php echo esc_html( $faq['question'] ); ?></span><i data-lucide="chevron-down"></i></button><div class="svc-faq__answer"><div><p><?php echo esc_html( $faq['answer'] ); ?></p></div></div></article><?php endforeach; ?></div></div></section>
+  <?php if ( $faqs ) : ?>
+  <section class="svc-faq svc-section" id="faqs"><div class="svc-wrap svc-faq__grid"><div><p class="svc-eyebrow svc-eyebrow--dark"><span></span>FAQs</p><h2><?php echo wp_kses_post( get_field( 'faq_title' ) ?: 'What business owners ask <em>before starting</em>.' ); ?></h2><p><?php echo esc_html( get_field( 'faq_sub' ) ?: 'Clear answers about fit, ownership, timing and measurement.' ); ?></p></div><div class="svc-faq__list"><?php foreach ( $faqs as $i => $faq ) : ?><article class="svc-faq__item<?php echo $i === 0 ? ' is-open' : ''; ?>"><button type="button" aria-expanded="<?php echo $i === 0 ? 'true' : 'false'; ?>"><span><?php echo esc_html( $faq['question'] ?? '' ); ?></span><i data-lucide="chevron-down"></i></button><div class="svc-faq__answer"><div><p><?php echo esc_html( $faq['answer'] ?? '' ); ?></p></div></div></article><?php endforeach; ?></div></div></section>
+  <?php endif; ?>
 
   <?php if ( $guide = get_field( 'service_guide' ) ) : ?><section class="svc-guide svc-section"><div class="svc-wrap"><p class="svc-eyebrow svc-eyebrow--dark"><span></span>Service guide</p><div class="svc-guide__content"><?php echo wp_kses_post( $guide ); ?></div></div></section><?php endif; ?>
 

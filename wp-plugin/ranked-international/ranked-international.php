@@ -19,6 +19,7 @@ require_once RIP_DIR . 'includes/cpt.php';
 require_once RIP_DIR . 'includes/seed.php';
 require_once RIP_DIR . 'includes/seo.php';
 require_once RIP_DIR . 'includes/leads.php';
+require_once RIP_DIR . 'includes/editor-guides.php';
 
 /**
  * GHL embed per campaign: form ID, form name and iframe height, exactly as the
@@ -240,6 +241,29 @@ function rip_home_copy( $field, $neutral_fallback ) {
 	}
 	$value = get_field( $field, get_queried_object_id() );
 	return $value !== null && $value !== '' ? $value : $neutral_fallback;
+}
+
+/**
+ * Resolve an optional FAQ repeater without changing existing pages.
+ * "default" preserves the supplied built-in rows, "custom" uses only ACF
+ * rows (an empty list hides the section), and "hidden" always hides it.
+ */
+function rip_get_faq_rows( $fallback = array() ) {
+	if ( ! function_exists( 'get_field' ) ) return $fallback;
+
+	$mode = get_field( 'faq_mode' ) ?: 'default';
+	if ( $mode === 'hidden' ) return array();
+
+	$rows = get_field( 'faqs' );
+	if ( is_array( $rows ) && $rows ) return $rows;
+
+	return $mode === 'custom' ? array() : $fallback;
+}
+
+function rip_get_field_or( $name, $fallback = '' ) {
+	if ( ! function_exists( 'get_field' ) ) return $fallback;
+	$value = get_field( $name );
+	return $value !== null && $value !== '' ? $value : $fallback;
 }
 
 /**

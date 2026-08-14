@@ -107,4 +107,26 @@ if (get_post_meta($copy_id, "_hero_eyebrow", true) !== "field_rip_city_hero_eyeb
 wp_delete_post($copy_id, true);
 '
 
-echo "Smoke tests passed: routing, plugin activation, reusable City Page/ACF, single H1/title/canonical, schema, and legacy-content guard."
+# Every reusable editor exposes flexible FAQ controls and its visual page map.
+# Exercise add/reorder/hide behavior on a disposable post only.
+"$WP_ENV_BIN" run cli wp eval '
+$required = array("field_rip_city_faqs", "field_rip_ind_faqs", "field_rip_svc_faqs", "field_rip_cs_faqs", "field_rip_page_faqs");
+foreach ($required as $key) {
+    if (!acf_get_field($key)) { exit(1); }
+}
+$guide = acf_get_field("field_rip_city_intro_note");
+$guide = apply_filters("acf/prepare_field/key=field_rip_city_intro_note", $guide);
+if (strpos($guide["message"], "annotated visual page map") === false || strpos($guide["message"], "editor-guides/home.jpg") === false) { exit(1); }
+$faq_post_id = wp_insert_post(array("post_type" => "rip_city", "post_status" => "draft", "post_title" => "FAQ smoke test"));
+update_field("field_rip_city_faq_mode", "custom", $faq_post_id);
+update_field("field_rip_city_faqs", array(array("question" => "Test question", "answer" => "Test answer")), $faq_post_id);
+$GLOBALS["post"] = get_post($faq_post_id);
+setup_postdata($GLOBALS["post"]);
+$rows = rip_get_faq_rows(array(array("question" => "Fallback", "answer" => "Fallback")));
+if (count($rows) !== 1 || $rows[0]["question"] !== "Test question") { wp_delete_post($faq_post_id, true); exit(1); }
+update_field("field_rip_city_faq_mode", "hidden", $faq_post_id);
+if (rip_get_faq_rows(array(array("question" => "Fallback", "answer" => "Fallback"))) !== array()) { wp_delete_post($faq_post_id, true); exit(1); }
+wp_delete_post($faq_post_id, true);
+'
+
+echo "Smoke tests passed: routing, plugin activation, reusable ACF/FAQ controls, visual editor guides, single H1/title/canonical, schema, and legacy-content guard."

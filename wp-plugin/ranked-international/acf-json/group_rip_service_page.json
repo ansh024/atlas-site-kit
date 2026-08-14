@@ -64,7 +64,10 @@
     {"key":"field_rip_svc_tab_fit","label":"4. Fit, FAQ & conversion","type":"tab"},
     {"key":"field_rip_svc_fit","label":"Strong fit criteria","name":"fit_items","type":"repeater","layout":"table","max":6,"button_label":"Add criterion","sub_fields":[{"key":"field_rip_svc_fit_text","label":"Criterion","name":"text","type":"text"}]},
     {"key":"field_rip_svc_not_fit","label":"Not a fit criteria","name":"not_fit_items","type":"repeater","layout":"table","max":6,"button_label":"Add criterion","sub_fields":[{"key":"field_rip_svc_not_fit_text","label":"Criterion","name":"text","type":"text"}]},
-    {"key":"field_rip_svc_faqs","label":"Purchase-decision FAQs","name":"faqs","type":"repeater","layout":"block","min":0,"max":10,"button_label":"Add FAQ","sub_fields":[
+    {"key":"field_rip_svc_faq_mode","label":"FAQ section mode","name":"faq_mode","type":"select","instructions":"Use the standard FAQs, replace them with the rows below, or hide the FAQ section completely.","choices":{"default":"Use standard FAQs unless rows are added","custom":"Use only FAQ rows below","hidden":"Hide the FAQ section"},"default_value":"default","ui":1},
+    {"key":"field_rip_svc_faq_title","label":"FAQ section heading","name":"faq_title","type":"text","instructions":"Optional. Leave blank to keep the standard service-page heading."},
+    {"key":"field_rip_svc_faq_sub","label":"FAQ section introduction","name":"faq_sub","type":"textarea","instructions":"Optional short paragraph shown below the FAQ heading.","rows":3},
+    {"key":"field_rip_svc_faqs","label":"Purchase-decision FAQs","name":"faqs","type":"repeater","instructions":"Add, remove, or drag rows to reorder the questions. Select Custom FAQ rows above if an empty list should hide this section.","layout":"block","min":0,"max":12,"button_label":"Add FAQ","sub_fields":[
       {"key":"field_rip_svc_faq_q","label":"Question","name":"question","type":"text","required":1},
       {"key":"field_rip_svc_faq_a","label":"Answer","name":"answer","type":"textarea","rows":4,"required":1}
     ]},
@@ -86,5 +89,5 @@
   "active": true,
   "description": "Controlled, reusable Search Command Center fields for every Ranked International service page.",
   "show_in_rest": 0,
-  "modified": 1786643200
+  "modified": 1786729600
 }

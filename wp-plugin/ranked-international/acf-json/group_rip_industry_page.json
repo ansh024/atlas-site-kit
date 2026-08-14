@@ -495,10 +495,21 @@
       "max": 6
     },
     {
+      "key": "field_rip_ind_faq_mode",
+      "label": "FAQ section mode",
+      "name": "faq_mode",
+      "type": "select",
+      "instructions": "Show the FAQ rows below or hide the entire FAQ section.",
+      "choices": {"default":"Show FAQ rows below","hidden":"Hide the FAQ section"},
+      "default_value": "default",
+      "ui": 1
+    },
+    {
       "key": "field_rip_ind_faq_title",
       "label": "FAQ title",
       "name": "faq_title",
-      "type": "text"
+      "type": "text",
+      "instructions": "Heading displayed above the FAQ accordion."
     },
     {
       "key": "field_rip_ind_faq_sub",
@@ -512,6 +523,7 @@
       "label": "FAQ items",
       "name": "faqs",
       "type": "repeater",
+      "instructions": "Add, remove, or drag rows to reorder the questions. Select Hide above to remove the entire section.",
       "sub_fields": [
         {
           "key": "field_rip_ind_faq_q",
@@ -530,7 +542,7 @@
       "layout": "block",
       "button_label": "Add row",
       "min": 0,
-      "max": 10
+      "max": 12
     },
     {
       "key": "field_rip_ind_cta_title",
@@ -575,5 +587,5 @@
   "label_placement": "top",
   "instruction_placement": "label",
   "active": true,
-  "modified": 1786643200
+  "modified": 1786729600
 }

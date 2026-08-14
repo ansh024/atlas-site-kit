@@ -23,6 +23,7 @@ $strategy_lede  = get_field( 'strategy_lede' );
 $results_title  = get_field( 'results_title' );
 $table_caption  = get_field( 'table_caption' ) ?: 'A sample of the keywords ranking today';
 $table_source   = get_field( 'table_source' ) ?: 'Source: live rank tracking';
+$case_faqs      = get_field( 'faq_mode' ) === 'hidden' ? array() : ( get_field( 'faqs' ) ?: array() );
 $related_ids    = array_filter( (array) ( get_field( 'related_case_studies' ) ?: array() ),
 	function ( $rid ) { return get_post_status( $rid ) === 'publish'; } ); // hide drafts from related cards
 $hub_url        = rip_url_for_template( 'templates/template-case-studies-hub.php', '/case-studies/' );
@@ -164,6 +165,27 @@ if ( have_rows( 'chart_points' ) ) {
       </table>
     </div>
     <?php endif; ?>
+  </div>
+</section>
+<?php endif; ?>
+
+<?php if ( $case_faqs ) : ?>
+<!-- ===== FAQ ===== -->
+<section class="faq" id="faq">
+  <div class="faq__head">
+    <h2><?php echo esc_html( get_field( 'faq_title' ) ?: 'Questions about this project' ); ?></h2>
+    <?php if ( $faq_sub = get_field( 'faq_sub' ) ) : ?><p><?php echo esc_html( $faq_sub ); ?></p><?php endif; ?>
+  </div>
+  <div class="faq__list">
+    <?php foreach ( $case_faqs as $i => $faq ) : ?>
+    <article class="faq__item<?php echo $i === 0 ? ' is-open' : ''; ?>">
+      <button class="faq__question" type="button" aria-expanded="<?php echo $i === 0 ? 'true' : 'false'; ?>">
+        <span><?php echo esc_html( $faq['question'] ?? '' ); ?></span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq__answer"><p><?php echo esc_html( $faq['answer'] ?? '' ); ?></p></div>
+    </article>
+    <?php endforeach; ?>
   </div>
 </section>
 <?php endif; ?>

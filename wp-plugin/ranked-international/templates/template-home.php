@@ -459,52 +459,36 @@
     <a href="#audit" class="process__btn-mobile">Get free audit <i data-lucide="arrow-right"></i></a>
   </section>
 
+  <?php
+  $home_faqs = rip_get_faq_rows( array(
+    array( 'question' => 'How long does SEO usually take?', 'answer' => 'Most local campaigns start showing directional movement in the first 60 to 90 days. Competitive markets can take longer, but you will know exactly what we are working on and why.' ),
+    array( 'question' => 'What is included in the free audit?', 'answer' => 'We look at your search visibility, website fundamentals, local presence, competitors, and the highest-value keywords you are missing today.' ),
+    array( 'question' => 'Do you work with competing businesses?', 'answer' => 'No. We take one client per industry, per city, so we are not optimizing your competitor against you.' ),
+    array( 'question' => 'Do I need SEO, PPC, or both?', 'answer' => 'It depends on your timeline and market. PPC can create faster lead flow, while SEO builds durable visibility. Many businesses benefit from using both together.' ),
+  ) );
+  ?>
+  <?php if ( $home_faqs ) : ?>
   <!-- ===== 10. FAQ ===== -->
   <section class="faq" id="faq">
     <div class="faq__head">
-
-      <h2>FAQ's: What Every Business Owner Should Know</h2>
-      <p>Curious about how SEO works or what to expect? We've answered the most common questions to help you understand how Ranked International can support your digital growth.</p>
+      <h2><?php echo esc_html( rip_get_field_or( 'faq_title', "FAQ's: What Every Business Owner Should Know" ) ); ?></h2>
+      <p><?php echo esc_html( rip_get_field_or( 'faq_sub', "Curious about how SEO works or what to expect? We've answered the most common questions to help you understand how Ranked International can support your digital growth." ) ); ?></p>
     </div>
     <div class="faq__list">
-      <article class="faq__item is-open">
-        <button class="faq__question" type="button" aria-expanded="true">
-          <span>How long does SEO usually take?</span>
+      <?php foreach ( $home_faqs as $i => $faq ) : ?>
+      <article class="faq__item<?php echo $i === 0 ? ' is-open' : ''; ?>">
+        <button class="faq__question" type="button" aria-expanded="<?php echo $i === 0 ? 'true' : 'false'; ?>">
+          <span><?php echo esc_html( $faq['question'] ?? '' ); ?></span>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq__answer">
-          <p>Most local campaigns start showing directional movement in the first 60 to 90 days. Competitive markets can take longer, but you will know exactly what we are working on and why.</p>
+          <p><?php echo esc_html( $faq['answer'] ?? '' ); ?></p>
         </div>
       </article>
-      <article class="faq__item">
-        <button class="faq__question" type="button" aria-expanded="false">
-          <span>What is included in the free audit?</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="faq__answer">
-          <p>We look at your search visibility, website fundamentals, local presence, competitors, and the highest-value keywords you are missing today.</p>
-        </div>
-      </article>
-      <article class="faq__item">
-        <button class="faq__question" type="button" aria-expanded="false">
-          <span>Do you work with competing businesses?</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="faq__answer">
-          <p>No. We take one client per industry, per city, so we are not optimizing your competitor against you.</p>
-        </div>
-      </article>
-      <article class="faq__item">
-        <button class="faq__question" type="button" aria-expanded="false">
-          <span>Do I need SEO, PPC, or both?</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="faq__answer">
-          <p>It depends on your timeline and market. PPC can create faster lead flow, while SEO builds durable visibility. Many businesses benefit from using both together.</p>
-        </div>
-      </article>
+      <?php endforeach; ?>
     </div>
   </section>
+  <?php endif; ?>
 
   <?php if ( rip_is_seo_businesses_landing() ) : ?>
   <?php rip_render_inline_ghl_audit( 'seo-businesses', 'See the search opportunities most likely to bring in more calls for your business.' ); ?>
