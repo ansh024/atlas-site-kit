@@ -162,6 +162,30 @@ function rip_seed_city_content() {
 	update_option( 'rip_city_content_seeded', true );
 }
 
+/** Populate the Homepage Editor once, without replacing client edits. */
+function rip_seed_homepage_editor() {
+	if ( ! function_exists( 'update_field' ) || ! function_exists( 'acf_get_field' ) || ! acf_get_field( 'field_rip_home_hero_title' ) ) return;
+	$pages = get_posts( array( 'post_type' => 'page', 'post_status' => 'any', 'posts_per_page' => -1, 'meta_key' => '_wp_page_template', 'meta_value' => 'templates/template-home.php' ) );
+	foreach ( $pages as $page ) {
+		if ( get_post_meta( $page->ID, '_rip_homepage_editor_seeded', true ) || get_post_meta( $page->ID, 'home_hero_title', true ) !== '' ) continue;
+		$fields = array(
+			'home_hero_eyebrow' => 'SEO AGENCY FOR GROWING BUSINESSES', 'home_hero_title' => "Your customers are Googling. You're on page&nbsp;2.", 'home_hero_subtitle' => 'We move service businesses from buried on page two to the top of Google, then turn those clicks into booked jobs.', 'home_hero_cta_label' => 'Get my free audit', 'home_hero_cta_url' => '#audit',
+			'home_hero_stats' => array( array( 'value'=>'100+', 'label'=>'Businesses Ranked' ), array( 'value'=>'5 Star', 'label'=>'Rated on Google' ) ), 'home_trust_label' => 'Trusted by',
+			'home_promise_tag' => "[ why we're different ]", 'home_promise_intro' => 'Ranked International takes',
+			'home_promise_highlights' => array( array('text'=>'one client per industry, per city','after'=>' so we ','icon'=>'lock'), array('text'=>'never optimize your competitor against you','after'=>'. ','icon'=>'shield'), array('text'=>'No 12-month contracts.','after'=>' Every report ends with one number: ','icon'=>'bolt'), array('text'=>'keywords ranked.','after'=>'','icon'=>'trending-up') ),
+			'home_services_heading' => 'All Services Under One Roof', 'home_services_cta_label' => 'Get You Ranked', 'home_services_cta_url' => '#audit',
+			'home_services' => array( array('title'=>'Local SEO','description'=>'Boost your visibility in local search results and map listings.'), array('title'=>'Technical SEO','description'=>'A strong technical foundation supports better rankings and user experience.'), array('title'=>'Organic SEO','description'=>'On-page SEO lays the groundwork for long-term success.'), array('title'=>'Link Building','description'=>'High-quality backlinks that improve your domain authority & rankings.'), array('title'=>'Google Ads','description'=>'Campaign tailored to your goals - increase traffic or generate leads.'), array('title'=>'PPC Management','description'=>'Manage entire process across Google Ads, Microsoft Ads, and Meta Ads.') ),
+			'home_results_heading' => 'Results business owners<br>actually talk about.', 'home_results_link_label' => 'See all results', 'home_results_link_url' => '/case-studies/',
+			'home_industries_eyebrow' => 'Built for your trade', 'home_industries_heading' => 'We rank the businesses customers search for.', 'home_industries' => array_map( function( $name ) { return array( 'name' => $name ); }, array( 'Roofing','HVAC','Med Spa','Dentist','Plumbing','Law Firm','Auto Repair','Landscaping','Electrician','Med Clinic','Real Estate','Restaurant','Chiropractor','Pest Control','Garage Doors','Pool Service','Solar','Flooring','Veterinary' ) ),
+			'home_reviews_rating' => '5 Star Rated on Google', 'home_reviews_heading' => 'Businesses trust Ranked to <em>get them found.</em>', 'home_reviews_intro' => 'Search growth is only useful when it brings the right customers through the door.', 'home_process_eyebrow' => 'How it works',
+			'home_process' => array( array('title'=>'Free audit','description'=>"I show you the 3 keywords you're losing to competitors right now.",'cta_label'=>'Get free audit','cta_url'=>'#audit','icon'=>'search'), array('title'=>'90-day plan','description'=>'A focused plan for the searches that bring you paying customers.','cta_label'=>'Get free audit','cta_url'=>'#audit','icon'=>'calendar'), array('title'=>'Build & rank','description'=>'We do the work — technical, content, local, links — and get you up.','cta_label'=>'Get free audit','cta_url'=>'#audit','icon'=>'trend'), array('title'=>'Report leads booked','description'=>'Every month, one number that matters: jobs in your calendar.','cta_label'=>'Get free audit','cta_url'=>'#audit','icon'=>'bars') ),
+			'home_faq_mode'=>'default', 'home_faq_title'=>"FAQ's: What Every Business Owner Should Know", 'home_faq_sub'=>"Curious about how SEO works or what to expect? We've answered the most common questions to help you understand how Ranked International can support your digital growth."
+		);
+		rip_update_fields( $page->ID, $fields, 'group_rip_home_page.json' );
+		update_post_meta( $page->ID, '_rip_homepage_editor_seeded', '1' );
+	}
+}
+
 /**
  * ACF's update_field() only works with field NAMES on posts that were
  * previously saved through the ACF UI (the field-key reference must already

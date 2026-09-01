@@ -234,6 +234,7 @@ function rip_on_activate() {
 add_action( 'init', 'rip_seed_content', 20 );
 add_action( 'init', 'rip_seed_service_content', 21 );
 add_action( 'init', 'rip_seed_city_content', 22 );
+add_action( 'init', 'rip_seed_homepage_editor', 23 );
 
 /**
  * One-time migration from the short-lived Page Template implementation.
@@ -299,6 +300,7 @@ function rip_maybe_reseed() {
 	rip_seed_content();
 	rip_seed_service_content();
 	rip_seed_city_content();
+	rip_seed_homepage_editor();
 
 	add_action( 'admin_notices', function () {
 		$done = get_option( 'rip_content_seeded' ) ? 'Content re-seeded successfully.' : 'Re-seed could not run — is ACF active?';
