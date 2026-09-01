@@ -12,7 +12,6 @@
     ]}
   ],
   "location": [
-    [{"param":"page_template","operator":"==","value":"templates/template-home.php"}],
     [{"param":"page_template","operator":"==","value":"templates/template-turf-tree-service.php"}]
   ],
   "menu_order": 10,

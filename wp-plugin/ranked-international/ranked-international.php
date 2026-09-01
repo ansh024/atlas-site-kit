@@ -244,6 +244,36 @@ function rip_home_copy( $field, $neutral_fallback ) {
 }
 
 /**
+ * Homepage-only ACF values. City Pages deliberately render template-home.php
+ * too, so this must be kept separate from rip_home_copy().
+ */
+function rip_is_home_template_page() {
+	return is_page() && get_page_template_slug( get_queried_object_id() ) === 'templates/template-home.php';
+}
+
+function rip_home_field( $field, $fallback = '' ) {
+	if ( ! rip_is_home_template_page() || ! function_exists( 'get_field' ) ) return $fallback;
+	$value = get_field( $field, get_queried_object_id() );
+	return $value !== null && $value !== '' ? $value : $fallback;
+}
+
+function rip_home_rows( $field, $fallback = array() ) {
+	if ( ! rip_is_home_template_page() || ! function_exists( 'get_field' ) ) return $fallback;
+	$rows = get_field( $field, get_queried_object_id() );
+	return is_array( $rows ) && $rows ? $rows : $fallback;
+}
+
+function rip_home_process_icon( $icon ) {
+	$icons = array(
+		'search' => '<circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path>',
+		'calendar' => '<rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"></path>',
+		'trend' => '<path d="m3 17 6-6 4 4 8-8"></path><path d="M14 7h7v7"></path>',
+		'bars' => '<line x1="18" x2="18" y1="20" y2="10"></line><line x1="12" x2="12" y1="20" y2="4"></line><line x1="6" x2="6" y1="20" y2="14"></line>',
+	);
+	return $icons[ $icon ] ?? $icons['search'];
+}
+
+/**
  * Resolve an optional FAQ repeater without changing existing pages.
  * "default" preserves the supplied built-in rows, "custom" uses only ACF
  * rows (an empty list hides the section), and "hidden" always hides it.

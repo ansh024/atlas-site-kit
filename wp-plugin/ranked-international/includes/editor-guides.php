@@ -5,6 +5,17 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 function rip_editor_guide_configs() {
 	return array(
+		'field_rip_home_start_note' => array(
+			'image'   => 'home.jpg',
+			'caption' => 'Homepage reference. The numbered tabs below edit fixed sections while preserving the approved layout.',
+			'markers' => array(
+				array( 4, '1', 'Hero & trust' ),
+				array( 20, '2', 'Promise & services' ),
+				array( 42, '3', 'Results & industries' ),
+				array( 63, '4', 'Reviews & process' ),
+				array( 79, '5', 'FAQs' ),
+			),
+		),
 		'field_rip_city_intro_note' => array(
 			'image'   => 'home.jpg',
 			'caption' => 'City Pages use this shared page layout. Numbered labels match the ACF tabs below.',

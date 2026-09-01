@@ -505,10 +505,12 @@ function why() {
 
 /* ---------- INDUSTRIES marquee ---------- */
 function marquee() {
-  const inds = ['Roofing','HVAC','Med Spa','Dentist','Plumbing','Law Firm','Auto Repair',
-    'Landscaping','Electrician','Med Clinic','Real Estate','Restaurant','Chiropractor',
-    'Pest Control','Garage Doors','Pool Service','Solar','Flooring','Veterinary'];
-  const rows = $$('.marquee__row');
+  const marqueeEl = $('#marquee');
+  if (!marqueeEl) return;
+  let inds = [];
+  try { inds = JSON.parse(marqueeEl.dataset.industries || '[]'); } catch (_) { inds = []; }
+  if (!Array.isArray(inds) || !inds.length) return;
+  const rows = $$('.marquee__row', marqueeEl);
   rows.forEach(row => {
     // duplicate the set so a -50% / +50% shift is seamless
     const set = inds.map((t, i) =>
