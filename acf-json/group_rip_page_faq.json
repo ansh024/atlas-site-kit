@@ -1,0 +1,26 @@
+{
+  "key": "group_rip_page_faq",
+  "title": "Page FAQ Editor",
+  "fields": [
+    {"key":"field_rip_page_faq_start_note","label":"Editing this page’s FAQs","name":"","type":"message","message":"<p>This panel controls only the FAQ section near the bottom of the page. It does not change the rest of the design or content.</p>"},
+    {"key":"field_rip_page_faq_mode","label":"FAQ section mode","name":"faq_mode","type":"select","instructions":"Keep the current standard FAQs, replace them with the rows below, or hide the section completely.","choices":{"default":"Use standard FAQs unless rows are added","custom":"Use only FAQ rows below","hidden":"Hide the FAQ section"},"default_value":"default","ui":1},
+    {"key":"field_rip_page_faq_title","label":"FAQ section heading","name":"faq_title","type":"text","instructions":"Optional. Leave blank to keep the current heading."},
+    {"key":"field_rip_page_faq_sub","label":"FAQ section introduction","name":"faq_sub","type":"textarea","instructions":"Optional short paragraph shown below the FAQ heading.","rows":3},
+    {"key":"field_rip_page_faqs","label":"FAQ questions and answers","name":"faqs","type":"repeater","instructions":"Add, remove, or drag rows to reorder questions. Select Custom FAQ rows above to use these rows.","layout":"block","min":0,"max":12,"button_label":"Add FAQ","sub_fields":[
+      {"key":"field_rip_page_faq_q","label":"Question","name":"question","type":"text","required":1},
+      {"key":"field_rip_page_faq_a","label":"Answer","name":"answer","type":"textarea","rows":4,"required":1}
+    ]}
+  ],
+  "location": [
+    [{"param":"page_template","operator":"==","value":"templates/template-turf-tree-service.php"}]
+  ],
+  "menu_order": 10,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "description": "Optional FAQ controls for plugin-owned WordPress Page templates.",
+  "show_in_rest": 0,
+  "modified": 1786729600
+}
