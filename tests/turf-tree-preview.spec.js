@@ -16,6 +16,18 @@ test('uses one strategy-call action at each conversion point', async ({ page }) 
   }
 });
 
+test('shows commitments as a horizontal card rail on desktop and mobile', async ({ page }) => {
+  const layout = await page.locator('.trade-commitments__list').evaluate((list) => ({
+    display: getComputedStyle(list).display,
+    scrollWidth: list.scrollWidth,
+    clientWidth: list.clientWidth,
+    cardPosition: getComputedStyle(list.firstElementChild).position
+  }));
+  expect(layout.display).toBe('flex');
+  expect(layout.scrollWidth).toBeGreaterThan(layout.clientWidth);
+  expect(layout.cardPosition).toBe('relative');
+});
+
 test('takes every audit CTA to the inline form instead of opening a popup', async ({ page }) => {
   await expect(page.locator('#auditModal')).toHaveCount(0);
   await expect(page.locator('#audit.trade-audit')).toHaveCount(1);
