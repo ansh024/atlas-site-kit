@@ -1,0 +1,18 @@
+body.rip-audit-thank-you .uicore-page-title { display:none; }
+.rip-thank-you { min-height:100vh; display:grid; place-items:center; padding:150px 24px 96px; background:radial-gradient(circle at 50% 0, #1b59c8 0, #0a1b38 48%, #07162f 100%); color:#fff; text-align:center; }
+.rip-thank-you__inner { width:min(720px, 100%); }
+.rip-thank-you__eyebrow { display:inline-flex; padding:.55em .9em; border-radius:999px; background:rgba(202,255,0,.14); color:#caff00; font-size:.75rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+/* The theme sets a bare h1{color:#070707}, which beats the white inherited from
+   .rip-thank-you, so state the colour on the heading itself. */
+.rip-thank-you h1 { max-width:12ch; margin:24px auto 0; color:#fff; font-family:var(--font-display); font-size:clamp(2.7rem, 7vw, 5rem); line-height:1.02; }
+.rip-thank-you h1 em { color:#caff00; font-family:var(--font-serif); }
+.rip-thank-you__inner > p:not(.rip-thank-you__eyebrow):not(.rip-thank-you__note) { max-width:52ch; margin:24px auto 0; color:rgba(255,255,255,.8); font-size:1.08rem; line-height:1.6; }
+.rip-thank-you__actions { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:32px; }
+.rip-thank-you__cta { display:inline-flex; min-height:52px; align-items:center; justify-content:center; gap:.7em; padding:1em 1.5em; border:2px solid #caff00; border-radius:999px; background:#caff00; color:#07162f; font-family:var(--font-display); font-weight:800; font-size:1.05rem; line-height:1; white-space:nowrap; }
+.rip-thank-you__cta--phone { background:transparent; color:#fff; border-color:rgba(255,255,255,.72); }
+.rip-thank-you__cta:hover, .rip-thank-you__cta:focus-visible { color:#07162f; background:#fff; border-color:#fff; }
+.rip-thank-you__note { margin-top:16px; color:rgba(255,255,255,.58); font-size:.86rem; }
+@media (max-width:560px) {
+  .rip-thank-you__actions { flex-direction:column; }
+  .rip-thank-you__cta { width:100%; }
+}
