@@ -192,3 +192,16 @@ body.rip-seo-businesses-landing main.trade-landing { --trade-navy:#07162f; --tra
   .trade-commitments__list::-webkit-scrollbar-thumb { background:#1256d6; border-radius:999px; }
   .trade-commitments__list li { position:relative; top:auto; flex:0 0 clamp(320px,46vw,610px); height:min(70vh,620px); min-height:0; scroll-snap-align:start; }
 }
+
+/* The shared hero keeps a 700px height at tablet widths, which clips the
+   stacked ranking card. Let this page's tablet hero grow with its content. */
+@media (min-width:641px) and (max-width:980px) {
+  body.page-template-template-turf-tree-service .trade-hero { height:auto; min-height:0; }
+  body.page-template-template-turf-tree-service .trade-hero .hero__inner { height:auto; gap:36px; padding:110px 40px 72px; }
+  body.page-template-template-turf-tree-service .trade-hero .hero__copy,
+  body.page-template-template-turf-tree-service .trade-hero .hero__visual { width:100%; max-width:720px; margin:0; padding:0; }
+  body.page-template-template-turf-tree-service .trade-hero .hero__card,
+  body.page-template-template-turf-tree-service .trade-hero .hero__text-block { align-items:flex-start; text-align:left; }
+  body.page-template-template-turf-tree-service .trade-hero .hero__sub { margin-left:0; margin-right:0; text-align:left; }
+  body.page-template-template-turf-tree-service .trade-hero .hero__stats { justify-content:flex-start; }
+}

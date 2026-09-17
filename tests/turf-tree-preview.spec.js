@@ -28,6 +28,19 @@ test('shows commitments as a horizontal card rail on desktop and mobile', async 
   expect(layout.cardPosition).toBe('relative');
 });
 
+test('keeps the full hero ranking card visible at tablet width', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop');
+  await page.setViewportSize({ width: 919, height: 863 });
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  const bounds = await page.locator('.trade-hero').evaluate((hero) => ({
+    heroBottom: hero.getBoundingClientRect().bottom,
+    visualBottom: hero.querySelector('.hero__visual').getBoundingClientRect().bottom,
+    visualRight: hero.querySelector('.hero__visual').getBoundingClientRect().right
+  }));
+  expect(bounds.heroBottom).toBeGreaterThanOrEqual(bounds.visualBottom);
+  expect(bounds.visualRight).toBeLessThanOrEqual(919);
+});
+
 test('takes every audit CTA to the inline form instead of opening a popup', async ({ page }) => {
   await expect(page.locator('#auditModal')).toHaveCount(0);
   await expect(page.locator('#audit.trade-audit')).toHaveCount(1);
