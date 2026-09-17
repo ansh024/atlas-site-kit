@@ -14,7 +14,7 @@ get_header();
 <script>
   document.querySelectorAll('#wrapper-navbar .uicore-cta-wrapper a').forEach((cta) => {
     cta.href = '#audit';
-    cta.textContent = 'Get Free SEO Audit';
+    cta.textContent = 'Book Free Strategy Call';
   });
 </script>
 <?php
@@ -29,13 +29,12 @@ $case_study_url = home_url( '/case-studies/turf-and-design/' );
       <div class="hero__copy">
         <div class="hero__card">
           <div class="hero__text-block">
-            <p class="hero__eyebrow">SEO FOR TURF, TREE CARE &amp; OUTDOOR SERVICES</p>
+            <p class="hero__eyebrow">SEO FOR LOCAL SERVICE BUSINESSES</p>
             <h1 class="hero__title">Show up <em>first</em> on Google and get the calls.</h1>
-            <p class="hero__sub">We get turf, tree service and outdoor businesses to the top of Google and Google Maps, so your phone rings with ready-to-buy customers.</p>
+            <p class="hero__sub">We rank your business at the top of Google and Google Maps, so the customers already searching for what you sell find you first — and call.</p>
           </div>
           <div class="hero__bottom trade-hero__actions">
-            <a href="#audit" class="btn btn--primary btn--lg" data-track="hero-audit">Get free SEO audit</a>
-            <a href="tel:+18334024789" class="btn btn--lg trade-call-btn" data-track="hero-call" data-track-event="call_cta_click" aria-label="Call Ranked International at 833-402-4789">Call 833-402-4789</a>
+            <a href="#audit" class="btn btn--primary btn--lg" data-track="hero-audit">Book Free Strategy Call</a>
           </div>
           <div class="hero__stats">
             <div class="hero__stat"><span class="trade-icon" aria-hidden="true">⌕</span><div class="hero__stat-text"><strong>Google + Google Maps</strong><span>where ready-to-buy customers search</span></div></div>
@@ -81,14 +80,13 @@ $case_study_url = home_url( '/case-studies/turf-and-design/' );
   </section>
   <?php endif; ?>
 
-  <section class="cta" id="cta-final"><div class="cta__inner"><div class="cta__copy"><p class="cta__title">Stop losing customers to businesses with worse work and better <em>rankings.</em></p><p class="cta__sub">Every month you are invisible on Google is a month of jobs going to someone else. Let’s fix that.</p></div><div class="trade-cta__actions"><div class="trade-cta__buttons"><a href="#audit" class="btn btn--dark btn--lg" data-track="final-audit">Get free SEO audit</a><a href="tel:+18334024789" class="btn btn--lg trade-call-btn" data-track="final-call" data-track-event="call_cta_click" aria-label="Call Ranked International at 833-402-4789">Call 833-402-4789</a></div><span>No contract. No obligation.</span></div></div></section>
+  <section class="cta" id="cta-final"><div class="cta__inner"><div class="cta__copy"><p class="cta__title">Stop losing customers to businesses with worse work and better <em>rankings.</em></p><p class="cta__sub">Every month you are invisible on Google is a month of jobs going to someone else. Let’s fix that.</p></div><div class="trade-cta__actions"><div class="trade-cta__buttons"><a href="#audit" class="btn btn--dark btn--lg" data-track="final-audit">Book Free Strategy Call</a></div><span>No contract. No obligation.</span></div></div></section>
 
   <?php rip_render_inline_ghl_audit( 'turf', 'See the search opportunities most likely to bring in more calls for your turf, tree care, or outdoor service business.' ); ?>
 </main>
 
 <div class="mobile-sticky-actions" aria-label="Contact Ranked International">
-  <a href="#audit" class="mobile-sticky-audit" data-track="mobile-sticky-audit">Free audit</a>
-  <a href="tel:+18334024789" class="mobile-sticky-call" data-track="mobile-sticky-call" data-track-event="call_cta_click" aria-label="Call Ranked International at 833-402-4789">Call now</a>
+  <a href="#audit" class="mobile-sticky-audit" data-track="mobile-sticky-audit">Book Free Strategy Call</a>
 </div>
 
 <?php get_footer(); ?>

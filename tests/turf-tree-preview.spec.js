@@ -6,24 +6,14 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/seo-for-turf-tree-care-outdoor-services/', { waitUntil: 'domcontentloaded' });
 });
 
-test('offers tracked audit and phone actions at every conversion point', async ({ page }) => {
-  const callLinks = page.locator('a[href="tel:+18334024789"]');
-  await expect(callLinks).toHaveCount(3);
-  await expect(page.locator('.trade-hero__actions .trade-call-btn')).toContainText('Call 833-402-4789');
-  await expect(page.locator('.trade-cta__buttons .trade-call-btn')).toContainText('Call 833-402-4789');
-  await expect(page.locator('.mobile-sticky-call')).toHaveAttribute('aria-label', /833-402-4789/);
-
-  await page.evaluate(() => {
-    window.__rankedAnalytics = [];
-    window.addEventListener('ranked:analytics', event => window.__rankedAnalytics.push(event.detail));
-    const call = document.querySelector('[data-track="hero-call"]');
-    call.addEventListener('click', event => event.preventDefault(), { once: true });
-    call.click();
-  });
-  expect(await page.evaluate(() => window.__rankedAnalytics)).toContainEqual({
-    event: 'call_cta_click',
-    placement: 'hero-call'
-  });
+test('uses one strategy-call action at each conversion point', async ({ page }) => {
+  await expect(page.locator('.trade-hero__actions a')).toHaveCount(1);
+  await expect(page.locator('.trade-cta__buttons a')).toHaveCount(1);
+  await expect(page.locator('.mobile-sticky-actions a')).toHaveCount(1);
+  await expect(page.locator('a[href="tel:+18334024789"]')).toHaveCount(0);
+  for (const placement of ['hero-audit', 'final-audit', 'mobile-sticky-audit']) {
+    await expect(page.locator(`[data-track="${placement}"]`)).toHaveText('Book Free Strategy Call');
+  }
 });
 
 test('takes every audit CTA to the inline form instead of opening a popup', async ({ page }) => {
@@ -77,7 +67,7 @@ test('prevents long-lived browser or CDN caching of campaign HTML', async ({ req
   expect(response.headers()['cdn-cache-control']).toBe('no-store');
 });
 
-test('keeps the mobile audit and call actions visible and touch safe', async ({ page }, testInfo) => {
+test('keeps the mobile strategy-call action visible and touch safe', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile');
   const sticky = page.locator('.mobile-sticky-actions');
   await expect.poll(async () => page.evaluate(() => {
@@ -86,7 +76,7 @@ test('keeps the mobile audit and call actions visible and touch safe', async ({ 
     return document.querySelector('.mobile-sticky-actions').classList.contains('is-visible');
   })).toBe(true);
 
-  for (const selector of ['.mobile-sticky-audit', '.mobile-sticky-call']) {
+  for (const selector of ['.mobile-sticky-audit']) {
     const box = await page.locator(selector).boundingBox();
     expect(box.height).toBeGreaterThanOrEqual(52);
   }
